@@ -1,0 +1,28 @@
+{
+  "name": "project-test",
+  "version": "1.0.0",
+  "description": "MergeTest",
+  "main": "test.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --write .",
+    "prepare": "husky"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/juho-creator/project-test.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/juho-creator/project-test/issues"
+  },
+  "homepage": "https://github.com/juho-creator/project-test#readme",
+  "dependencies": {
+    "prettier": "^3.6.2"
+  },
+  "devDependencies": {
+    "husky": "^9.1.7"
+  }
+}
