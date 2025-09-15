@@ -1,1 +1,1 @@
-console.log("test");
+subtract =(a,b)=>{ return a-b;}
