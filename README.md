@@ -99,36 +99,30 @@
 ## 파일 구조
 ```plaintext
 src
-┣ config
-┃ ┗ db.ts
-┣ controllers
-┃ ┣ auth.controller.ts
-┃ ┗ user.controller.ts
-┣ middleware
-┃ ┣ auth.middleware.ts
-┃ ┗ error.middleware.ts
-┣ models
-┃ ┣ user.model.ts
-┃ ┗ course.model.ts
-┣ routes
-┃ ┣ auth.routes.ts
-┃ ┗ user.routes.ts
-┣ services
-┃ ┣ auth.service.ts
-┃ ┗ user.service.ts
-┣ utils
-┃ ┣ jwt.ts
-┃ ┣ constants.ts
-┃ ┗ logger.ts
-┣ app.ts
-┗ server.ts
+┣ 01-app
+┃ ┗ server.js
+┣ 02-controller
+┃ ┣ req-validator
+┃ ┗ res-dto
+┃ ┗ base.controller.js
+┃ ┗ test1.controller.js
+┣ 03-domain
+┃ ┣ entity
+┃ ┗ service
+┣ 04-repo
+┃ ┣ mapper
+┃ ┗ base.repo.js
+┣ common
+┃ ┣ const
+┃ ┗ exception
+┃ ┗ lib
+┣ dependency-injector.js
+┗ index.js
 prisma
-┣ schema.prisma
-┗ seed.ts
-.env
+┗ schema.prisma
 .gitignore
 package.json
-tsconfig.json
+package-lock.json
 README.md
 ```
 
