@@ -11,4 +11,4 @@ divide = (a, b) => {
   return a / b;
 };
 
-console.log("양다온");
+console.log("김경연");
