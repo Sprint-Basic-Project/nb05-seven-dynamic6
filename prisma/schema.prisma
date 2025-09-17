@@ -72,11 +72,7 @@ model Record {
 }
 
 enum Exercise {
-  Cardio
-  Weight_training
-  Running
-  Swimming
-  Cycling
-  Yoga
-  Stretching
+  RUNNING
+  SWIMMING
+  CYCLING
 }
