@@ -76,3 +76,16 @@ enum Exercise {
   SWIMMING
   CYCLING
 }
+
+
+model test1 {
+  id      String @id @default(uuid())
+  title   String @unique
+  content String
+}
+
+model test2 {
+  id      String @id @default(uuid())
+  title   String @unique
+  content String
+}
