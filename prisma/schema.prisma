@@ -14,21 +14,22 @@ datasource db {
 }
 
 model User {
-  id       String @id @default(uuid())
-  nickname String @unique
-  password String
+  user_id   String   @id @default(uuid())
+  nickname  String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   Group         Group[]
-  UserJoinGroup UserJoinGroup[]
+  userJoinGroup userJoinGroup[]
   Record        Record[]
 }
 
 model Group {
-  id          String   @id @default(uuid())
+  group_id    String   @id @default(uuid())
   name        String   @unique
   description String
-  photoUrl    String
-  tags        String
+  imageUrl    String
   goalRep     Int
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -38,37 +39,59 @@ model Group {
   discordWebhookUrl String
   discordInviteUrl  String
 
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [user_id])
   userId String
 
-  UserJoinGroup UserJoinGroup[]
+  userJoinGroup userJoinGroup[]
   Record        Record[]
 }
 
-model UserJoinGroup {
-  id String @id @default(uuid())
+model userJoinGroup {
+  ug_id     String   @id @default(uuid())
+  joinedAt  DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  group   Group  @relation(fields: [groupId], references: [id])
+  group   Group  @relation(fields: [groupId], references: [group_id])
   groupId String
-  user    User   @relation(fields: [userId], references: [id])
+  user    User   @relation(fields: [userId], references: [user_id])
   userId  String
+
+  Record Record[]
 
   @@unique([groupId, userId])
 }
 
 model Record {
-  id           String   @id @default(uuid())
+  record_id    String   @id @default(uuid())
   exerciseType Exercise
   description  String
   time         Int
   distance     Float
-  photos       String
   createdAt    DateTime @default(now())
 
-  group   Group  @relation(fields: [groupId], references: [id])
-  groupId String
-  user    User   @relation(fields: [userId], references: [id])
-  userId  String
+  userJoinGroup userJoinGroup @relation(fields: [ugId], references: [ug_id])
+  ugId          String
+  group         Group         @relation(fields: [groupId], references: [group_id])
+  groupId       String
+  user          User          @relation(fields: [userId], references: [user_id])
+  userId        String
+
+  RecordImage RecordImage[]
+}
+
+model RecordImage {
+  imageId  String @id @default(uuid())
+  imageUrl String
+
+  recordId        Record @relation(fields: [recordRecord_id], references: [record_id])
+  recordRecord_id String
+}
+
+model Tag {
+  tag_id    String   @id @default(uuid())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 enum Exercise {
