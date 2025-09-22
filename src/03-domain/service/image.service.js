@@ -17,7 +17,7 @@ export class ImageService {
 
   createTest(dto) {
     const test1Entity = Test1.forCreate(dto);
-    const responseEntity = this.#repos.testrepo1.save(test1Entity);
+    const responseEntity = this.#repos.imageRepo.save(test1Entity);
     const resDto = new Test1ResDto(responseEntity);
     return resDto;
   }
