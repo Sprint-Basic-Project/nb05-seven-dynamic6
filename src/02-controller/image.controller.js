@@ -1,6 +1,5 @@
 import { Exception } from "../common/exception/exception.js";
 import { BaseController } from "./base.controller.js";
-import { Test1DTO } from "./req-dto/test1.dto.js";
 
 export class ImageController extends BaseController {
   #service;
@@ -34,7 +33,7 @@ export class ImageController extends BaseController {
 
   imageUpload = (req, res) => {
     if (!req.files || req.files.length === 0) {
-      throw new Exception(500, "File should be an image file");
+      throw new Exception(400, "File should be an image file");
     } else {
       console.log(
         "Files uploaded:",
