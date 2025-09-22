@@ -2,68 +2,67 @@ export const test1Data = [
   {
     id: 1,
     title: "title 1",
-    content: "content 1"
+    content: "content 1",
   },
   {
     id: 2,
     title: "title 2",
-    content: "content 2"
+    content: "content 2",
   },
   {
     id: 3,
     title: "title 3",
-    content: "content 3"
+    content: "content 3",
   },
   {
     id: 4,
     title: "title 4",
-    content: "content 4"
+    content: "content 4",
   },
   {
     id: 5,
     title: "title 5",
-    content: "content 5"
+    content: "content 5",
   },
   {
     id: 6,
     title: "title 6",
-    content: "content 6"
+    content: "content 6",
   },
   {
     id: 7,
     title: "title 7",
-    content: "content 7"
+    content: "content 7",
   },
   {
     id: 8,
     title: "title 8",
-    content: "content 8"
+    content: "content 8",
   },
   {
     id: 9,
     title: "title 9",
-    content: "content 9"
+    content: "content 9",
   },
   {
     id: 10,
     title: "title 10",
-    content: "content 10"
-  }
+    content: "content 10",
+  },
 ];
 
 export const test2Data = [
   {
     id: 1,
     title: "title 1",
-    content: "content 1"
+    content: "content 1",
   },
   {
     id: 2,
     title: "title 2",
-    content: "content 2"
-  }
+    content: "content 2",
+  },
 ];
-
 
 export const groupDummyData = [
   {
@@ -77,7 +76,7 @@ export const groupDummyData = [
     discordInviteUrl: "https://discord.gg/alpha",
     likeCount: 5,
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
   },
   {
     id: "c1e1f0b8-2222-4c3e-9a99-222222222222",
@@ -90,7 +89,7 @@ export const groupDummyData = [
     discordInviteUrl: "https://discord.gg/beta",
     likeCount: 12,
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
   },
   {
     id: "c1e1f0b8-3333-4c3e-9a99-333333333333",
@@ -103,7 +102,7 @@ export const groupDummyData = [
     discordInviteUrl: null,
     likeCount: 8,
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
   },
   {
     id: "c1e1f0b8-4444-4c3e-9a99-444444444444",
@@ -116,7 +115,7 @@ export const groupDummyData = [
     discordInviteUrl: null,
     likeCount: 0,
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
   },
   {
     id: "c1e1f0b8-5555-4c3e-9a99-555555555555",
@@ -129,6 +128,6 @@ export const groupDummyData = [
     discordInviteUrl: "https://discord.gg/epsilon",
     likeCount: 20,
     createdAt: new Date(),
-    updatedAt: new Date()
-  }
+    updatedAt: new Date(),
+  },
 ];

@@ -1,11 +1,11 @@
 export class Test1ResDto {
-    id 
-    title
-    content
+  id;
+  title;
+  content;
 
-    constructor({id, title, content}){
-        this.id = id;
-        this.title= title;
-        this.content= content;
-    }
+  constructor({ id, title, content }) {
+    this.id = id;
+    this.title = title;
+    this.content = content;
+  }
 }

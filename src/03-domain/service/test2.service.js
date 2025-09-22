@@ -1,11 +1,9 @@
 export class TestService2 {
-    #repos
+  #repos;
 
-    constructor(repos){
-        this.#repos = repos;
-    }
-    
-    getUsers(){
-        
-    }
+  constructor(repos) {
+    this.#repos = repos;
+  }
+
+  getUsers() {}
 }
