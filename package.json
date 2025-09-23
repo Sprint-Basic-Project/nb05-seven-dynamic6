@@ -3,10 +3,12 @@
   "version": "1.0.0",
   "description": "MergeTest",
   "main": "test.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "format": "prettier --write .",
-    "prepare": "husky"
+    "prepare": "husky",
+    "dev": "nodemon ./src/index.js"
   },
   "repository": {
     "type": "git",
@@ -20,9 +22,15 @@
   },
   "homepage": "https://github.com/juho-creator/project-test#readme",
   "dependencies": {
+    "@prisma/client": "^6.16.2",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "morgan": "^1.10.1",
+    "nodemon": "^3.1.10",
     "prettier": "^3.6.2"
   },
   "devDependencies": {
-    "husky": "^9.1.7"
+    "husky": "^9.1.7",
+    "prisma": "^6.16.2"
   }
 }
