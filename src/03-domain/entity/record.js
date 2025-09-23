@@ -1,4 +1,4 @@
-import RecodeImage from "./record.image.js"
+import RecordImage from "./record.image.js"
 
 export class Record {
   #recordId;
@@ -80,15 +80,36 @@ export class Record {
   }
   // 검증 + 생성
   // 1. 운동종류 enum으로 정해져 있음 / 2. 시간 > 0 & 정수 / 3. 거리 > 0, 실수 / 4. 이미지 3장까지만 등록
-  static forCreate({exerciseType, description, time, distance, groupId, userId, userJoinGroupId, images}) {
+  static forCreate({
+    exerciseType,
+    description,
+    time,
+    distance,
+    groupId,
+    userId,
+    userJoinGroupId,
+    images,
+  }) {
     const allowedExercise = ["RUNNING", "SWIMMING", "CYCLING"];
-    if (!allowedExercise.includes(exerciseType)) throw Error ("운동 종류는 RUNNING, SWIMMING, CYCLING 중 하나여야 한다.");
-    if (!Number.isInteger(time) || time < 0) throw Error ("시간은 0이상의 정수여야 한다");
-    if (typeof distance !== "number" || distance < 0) throw Error ("거리는 0이상의 실수여야 한다.");
+    if (!allowedExercise.includes(exerciseType))
+      throw Error("운동 종류는 RUNNING, SWIMMING, CYCLING 중 하나여야 한다.");
+    if (!Number.isInteger(time) || time < 0)
+      throw Error("시간은 0이상의 정수여야 한다");
+    if (typeof distance !== "number" || distance < 0)
+      throw Error("거리는 0이상의 실수여야 한다.");
     // 숫자가 DB에 들어가게 변환해야될걸..? 아마도..(거리, 시간)
-    if (images && images.length > 3) throw Error ("사진은 최대 3장까지만 등록 가능");
+    if (images && images.length > 3)
+      throw Error("사진은 최대 3장까지만 등록 가능");
 
-      return new Record ({recordId, description, time, distance, groupId, userId, userJoinGroupId, images});
+    return new Record({
+      recordId,
+      description,
+      time,
+      distance,
+      groupId,
+      userId,
+      userJoinGroupId,
+      images,
+    });
   }
-
 }
