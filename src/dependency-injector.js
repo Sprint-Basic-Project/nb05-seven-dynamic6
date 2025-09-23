@@ -1,5 +1,9 @@
 import { Server } from "./01-app/server.js";
 import { PrismaClient } from "@prisma/client";
+// import { GroupRepo } from "./04-repo/group.repo.js"; // 기존 DB 레포 주석
+import { GroupDummyRepo } from "./04-repo/group.dummy.repo.js";
+import { GroupService } from "./03-domain/service/group.service.js";
+import { GroupController } from "./02-controller/group.controller.js";
 import { TestController2 } from "./02-controller/test2.controller.js";
 import { TestService2 } from "./03-domain/service/test2.service.js";
 import { TestRepo2 } from "./04-repo/test2.repo.js";
@@ -20,17 +24,22 @@ export class DependencyInjector {
     const prisma = new PrismaClient();
     const imageUploader = multer({ storage: storage });
 
+    const groupRepo = new GroupDummyRepo();
     const testRepo2 = new TestRepo2(prisma);
     const imageRepo = new ImageRepository(prisma);
-    const repos = { imageRepo: imageRepo, testrepo2: testRepo2 };
 
-    const testService2 = new TestService2(repos);
+    const repos = { groupRepo, imageRepo, testRepo2 };
+
+    const groupService = new GroupService(repos);
     const imageService = new ImageService(repos);
+    const testService2 = new TestService2(repos);
 
-    const testController2 = new TestController2(testService2);
+    const groupController = new GroupController(groupService);
     const imageController = new ImageController(imageService, imageUploader);
+    const testController2 = new TestController2(testService2);
 
-    const controllers = [imageController, testController2];
+    const controllers = [groupController, imageController, testController2];
+
     const server = new Server(controllers);
     return server;
   }
