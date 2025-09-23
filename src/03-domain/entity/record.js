@@ -1,3 +1,4 @@
+import RecordImage from "./record.image.js"
 
 export class Record {
   #recordId;
@@ -25,7 +26,7 @@ export class Record {
     groupId,
     userId,
     userJoinGroupId,
-    images = [],
+    images = []
   }) {
     this.#recordId = recordId;
     this.#exerciseType = exerciseType;

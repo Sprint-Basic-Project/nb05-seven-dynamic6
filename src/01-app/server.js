@@ -16,6 +16,7 @@ export class Server {
     this.#server.use(express.json());
     this.#server.use(cors());
     this.#server.use(morgan("dev"));
+    this.#server.use("/images", express.static("photos"));
   }
 
   registerControllers() {
@@ -29,8 +30,10 @@ export class Server {
       if (err instanceof Exception) {
         res.status(err.statusCode).json({ message: err.message });
       } else {
+
+        console.log(err);
         res.status(500).json({ message: "알 수 없는 에러입니다." });
-        console.log(err.message);
+
       }
     });
   }
