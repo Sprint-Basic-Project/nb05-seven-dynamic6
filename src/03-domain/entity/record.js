@@ -1,4 +1,4 @@
-import RecordImage from "./record.image.js"
+import RecordImage from "./record.image.js";
 
 export class Record {
   #recordId;
@@ -26,7 +26,7 @@ export class Record {
     groupId,
     userId,
     userJoinGroupId,
-    images = []
+    images = [],
   }) {
     this.#recordId = recordId;
     this.#exerciseType = exerciseType;
@@ -43,40 +43,40 @@ export class Record {
   }
 
   get recordId() {
-    return this.#recordId
+    return this.#recordId;
   }
   get exerciseType() {
-    return this.#exerciseType
+    return this.#exerciseType;
   }
   get description() {
-    return this.#description
+    return this.#description;
   }
   get time() {
-    return this.#time
+    return this.#time;
   }
   get distance() {
-    return this.#distance
+    return this.#distance;
   }
   get createdAt() {
-    return this.#createdAt
+    return this.#createdAt;
   }
   get updatedAt() {
-    return this.#updatedAt
+    return this.#updatedAt;
   }
   get deletedAt() {
-    return this.#deletedAt
+    return this.#deletedAt;
   }
   get groupId() {
-    return this.#groupId
+    return this.#groupId;
   }
   get userId() {
-    return this.#userId
+    return this.#userId;
   }
   get userJoinGroupId() {
-    return this.#userJoinGroupId
+    return this.#userJoinGroupId;
   }
   get images() {
-    return this.#images
+    return this.#images;
   }
   // 검증 + 생성
   // 1. 운동종류 enum으로 정해져 있음 / 2. 시간 > 0 & 정수 / 3. 거리 > 0, 실수 / 4. 이미지 3장까지만 등록
