@@ -1,6 +1,5 @@
 import { Server } from "./01-app/server.js";
 import { PrismaClient } from "@prisma/client";
-// import { GroupRepo } from "./04-repo/group.repo.js"; // 기존 DB 레포 주석
 import { GroupService } from "./03-domain/service/group.service.js";
 import { GroupController } from "./02-controller/group.controller.js";
 import { TestController2 } from "./02-controller/test2.controller.js";
@@ -9,9 +8,7 @@ import { TestRepo2 } from "./04-repo/test2.repo.js";
 import { ImageController } from "./02-controller/image.controller.js";
 import { ImageService } from "./03-domain/service/image.service.js";
 import { ImageRepository } from "./04-repo/image.repo.js";
-import { GroupRepository } from "./04-repo/group-repository.js";
-import { GroupDummyRepo } from "./04-repo/group.dummy.repo.js";
-
+import { GroupRepo } from "./04-repo/group.repo.js";
 
 export class DependencyInjector {
   #server;
@@ -23,8 +20,7 @@ export class DependencyInjector {
   inject() {
     const prisma = new PrismaClient();
 
-    const groupRepo = new GroupDummyRepo();
-    // const groupRepo = new GroupRepository(prisma);
+    const groupRepo = new GroupRepo(prisma);
     const testRepo2 = new TestRepo2(prisma);
     const imageRepo = new ImageRepository(prisma);
 
