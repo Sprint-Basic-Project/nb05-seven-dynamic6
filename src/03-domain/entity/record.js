@@ -1,5 +1,5 @@
+// 비즈니스 규칙 최종보스 , DTO에서 넘어온 값이 도메인규칙을 만족하는지 확인
 import { Exception } from "../../common/exception/exception.js";
-import RecordImage from "./record.image.js";
 
 export class Record {
   #recordId;

@@ -1,5 +1,6 @@
-import { Exception } from "../common/exception/exception";
-import { BaseController } from "./base.controller";
+import { Exception } from "../common/exception/exception.js";
+import { RecordReqDTO } from "./req-dto/record.req.dto.js";
+import { BaseController } from "./base.controller.js";
 
 export class RecordController extends BaseController {
   #service;
@@ -24,12 +25,12 @@ export class RecordController extends BaseController {
     // 운동기록 목록 조회
     this.router.get("/", this.catchException(this.getRecords));
     // 운동기록 상세 조회
-    this.router.get("/recordId", this.catchException(this.getRecordById));
+    this.router.get("/:recordId", this.catchException(this.getRecordById));
   }
 
   // 등록
   createRecord = async (req, res) => {
-    const dto = new RecordReqDto({
+    const dto = new RecordReqDTO({
       body: req.body,
       params: req.params,
       files: req.files,
@@ -43,7 +44,7 @@ export class RecordController extends BaseController {
       userId,
       userJoinGroupId,
     });
-    return (res.status(201), json(created));
+    return res.status(201), json(created);
   };
 
   // 목록 조회
