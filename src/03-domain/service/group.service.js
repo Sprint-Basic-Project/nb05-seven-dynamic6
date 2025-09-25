@@ -46,4 +46,37 @@ export class GroupService {
     const deleted = await this.#repos.groupRepo.delete(groupId);
     return deleted.toJSON();
   }
+
+  async createGroup({ payload, userUserId, files }) {
+    const group = Group.fromValidator(payload, userUserId);
+    const created = await this.repos.group.create({
+      data: group.toPrismaCreateInput().data,
+      files,
+    });
+
+    return created;
+  }
+  async getGroupById(groupId) {
+    const found = await this.repos.group.findById(groupId);
+    if (!found) {
+      throw new Exception(EXCEPTION_INFO.GROUP_NOT_FOUND);
+    }
+    return found;
+  }
+
+  async updateGroup({ groupId, password, ...updateFields }) {
+    const found = await this.repos.group.findById(groupId);
+    if (!found) {
+      throw new Exception(EXCEPTION_INFO.GROUP_NOT_FOUND);
+    }
+    if (!found.isPasswordMatch(password)) {
+      throw new Exception(EXCEPTION_INFO.FORBIDDEN_ACTION);
+    }
+    const updated = await this.repos.group.update({
+      groupId,
+      updateFields,
+    });
+
+    return updated;
+  }
 }
