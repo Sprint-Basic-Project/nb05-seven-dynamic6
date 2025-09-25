@@ -44,7 +44,7 @@ export class RecordController extends BaseController {
       userId,
       userJoinGroupId,
     });
-    return res.status(201), json(created);
+    return (res.status(201), json(created));
   };
 
   // 목록 조회
