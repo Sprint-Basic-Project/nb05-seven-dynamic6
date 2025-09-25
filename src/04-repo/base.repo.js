@@ -1,7 +1,8 @@
-// src/mapper/base.repo.js
+// 담당범위에 맞게 커스텀해서 사용해주세요 :)
+
 export class BaseRepo {
   prisma;
-  modelName; // ★ Prisma 모델 이름(문자열) ex) "group", "user"
+  modelName;
 
   constructor(prisma, modelName) {
     this.prisma = prisma;

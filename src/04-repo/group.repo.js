@@ -1,6 +1,11 @@
+import { PrismaClient, Prisma } from "@prisma/client";
 import { GroupMapper } from "./mapper/group.mapper.js";
+import { EXCEPTION_INFO } from "../../../local-workproject/src/common/const/exception-info.js";
+import { BaseRepo } from "./base.repo.js";
 
-export class GroupRepo {
+const { PrismaClientKnownRequestError } = Prisma; 
+
+export class GroupRepository extends BaseRepo{
   #prisma;
   #includeOption;
 
@@ -15,19 +20,14 @@ export class GroupRepo {
   }
   /**
    * POST /groups
-   * 그룹 생성
    */
   async create({ entity, ownerId }) {
     try {
-      const created = await this.prisma.group.create({
+      const created = await this.#prisma.group.create({
         data: {
-          // Group 엔티티 → DB 저장용 순수 객체
           ...GroupMapper.toCreateUpdateData(entity),
-
-          // 그룹 생성자 연결 (스키마상 user 관계, PK는 userId)
           ...(ownerId ? { user: { connect: { userId: ownerId } } } : {}),
         },
-        // 함께 조회할 관계
         include: this.#includeOption,
       });
 
@@ -48,7 +48,6 @@ export class GroupRepo {
   }
   /**
    * GET /groups/{groupId}
-   * 그룹 단건 조회
    */
   async findById(id) {
     const record = await this.#prisma.group.findUnique({
@@ -87,7 +86,7 @@ export class GroupRepo {
    */
   async update({ groupId, updateFields }) {
     try {
-      const updated = await this.prisma.group.update({
+      const updated = await this.#prisma.group.update({
         where: { groupId },
         data: updateFields,
         include: this.#includeOption,

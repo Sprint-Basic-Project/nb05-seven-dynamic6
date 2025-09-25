@@ -9,7 +9,7 @@ import { TestRepo2 } from "./04-repo/test2.repo.js";
 import { ImageController } from "./02-controller/image.controller.js";
 import { ImageService } from "./03-domain/service/image.service.js";
 import { ImageRepository } from "./04-repo/image.repo.js";
-import { GroupRepository } from "./04-repo/group-repository.js";
+import { GroupRepository } from "./04-repo/group.repo.js";
 import { GroupDummyRepo } from "./04-repo/group.dummy.repo.js";
 
 export class DependencyInjector {
@@ -26,6 +26,7 @@ export class DependencyInjector {
     // const groupRepo = new GroupRepository(prisma);
     const testRepo2 = new TestRepo2(prisma);
     const imageRepo = new ImageRepository(prisma);
+    //const groupRepo2 = new GroupRepository(prisma);
 
     const repos = { groupRepo, imageRepo, testRepo2 };
 
