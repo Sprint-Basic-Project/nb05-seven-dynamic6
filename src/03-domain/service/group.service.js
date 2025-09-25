@@ -1,8 +1,21 @@
+import { GroupResDto } from "../../02-controller/res-dto/group.res.dto.js";
+
 export class GroupService {
   #repos;
 
   constructor(repos) {
     this.#repos = repos;
+  }
+
+  async getGroups(query) {
+    const groupEntities = await this.#repos.groupRepo.findAll(query);
+    const groupDtos = groupEntities.map((entity) => new GroupResDto(entity));
+    return groupDtos;
+  }
+
+  async getGroupRankings(params) {
+    const groupRankings = await this.#repos.groupRepo.findByRanking(params);
+    return groupRankings;
   }
 
   async likeGroup({ groupId }) {

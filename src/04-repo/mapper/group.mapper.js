@@ -11,17 +11,6 @@ export class GroupMapper {
       id: record.groupId,
       name: record.name,
       description: record.description,
-      nickname: record.nickname ?? undefined,
-      goalRep: record.goalRep,
-      tags: Array.isArray(record.Tag) ? record.Tag.map((t) => t.name) : [],
-      discordWebhookUrl: record.discordWebhookUrl,
-      discordInviteUrl: record.discordInviteUrl,
-      imageUrl: record.imageUrl,
-      recordCount: record.recordCount ?? 0,
-      likeCount: record.likeCount ?? 0,
-      createdAt: record.createdAt,
-      updatedAt: record.updatedAt,
-      userUserId: record.userUserId,
     });
   }
 
