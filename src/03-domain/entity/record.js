@@ -110,6 +110,7 @@ export class Record {
     }
 
     return new Record({
+      exerciseType,
       description,
       time,
       distance,

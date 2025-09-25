@@ -50,7 +50,7 @@ export class RecordController extends BaseController {
   // 목록 조회
   getRecords = async (req, res) => {
     const { groupId } = req.params;
-    const { orderBy = "latest", nickname, page = 1, pageSize = 10 } = req.qurey;
+    const { orderBy = "latest", nickname, page = 1, pageSize = 10 } = req.query;
 
     const records = await this.#service.getRecords({
       groupId,
