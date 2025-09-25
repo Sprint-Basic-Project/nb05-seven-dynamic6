@@ -56,4 +56,26 @@ export class GroupRepo {
 
     return GroupMapper.toEntity(deleted);
   }
+
+  findByRanking(params) {
+    this.#prisma.group;
+  }
+
+  async findAll(query) {
+    const result = await this.#prisma.group.findMany({
+      include: {
+        Tag: true,
+        user: true,
+        userJoinGroup: {
+          include: {
+            user: true, // 그룹에 참여한 유저
+          },
+        },
+      },
+    });
+
+    const entities = result.map((record) => GroupMapper.toEntity(record));
+    entities.forEach((entity) => console.log(entity.participants));
+    return entities;
+  }
 }
