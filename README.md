@@ -1,12 +1,10 @@
+[![English](https://img.shields.io/badge/lang-English-blue.svg)](https://github.com/Sprint-Basic-Project/nb05-seven-dynamic6/tree/develop/README.EN.md)
+[![한국어](https://img.shields.io/badge/lang-한국어-red.svg)](https://github.com/Sprint-Basic-Project/nb05-seven-dynamic6/tree/develop)
 
-  [![English](https://img.shields.io/badge/lang-English-blue.svg)](https://github.com/Sprint-Basic-Project/nb05-seven-dynamic6/tree/develop/README.EN.md)
-  [![한국어](https://img.shields.io/badge/lang-한국어-red.svg)](https://github.com/Sprint-Basic-Project/nb05-seven-dynamic6/tree/develop)
-  
-  
-  # 다이나믹 6
-  (팀 협업 문서 링크 게시) 
-  
-  
+# 다이나믹 6
+
+(팀 협업 문서 링크 게시)
+
   </br>
   
   ## 팀원 구성
@@ -174,5 +172,3 @@
   # 프로젝트 회고록 
   (제작한 발표자료 링크 혹은 첨부파일 첨부)
   - [노션 페이지](https://www.notion.so/1-2025-09-15-25ee9d59f596808f8dbde297962d624b)
-  
- 

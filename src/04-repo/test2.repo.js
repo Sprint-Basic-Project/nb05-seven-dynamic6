@@ -1,7 +1,7 @@
 export class TestRepo2 {
-    #prisma
+  #prisma;
 
-    constructor(prisma){ 
-        this.#prisma = prisma;
-    }
+  constructor(prisma) {
+    this.#prisma = prisma;
+  }
 }
