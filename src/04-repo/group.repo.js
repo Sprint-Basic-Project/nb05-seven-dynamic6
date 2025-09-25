@@ -50,20 +50,36 @@ export class GroupRepo {
    * GET /groups/{groupId}
    * 그룹 단건 조회
    */
-  async findById(groupId) {
-    try {
-      const found = await this.prisma.group.findUnique({
-        where: { groupId },
-        include: this.#includeOption,
-      });
-      return found ? GroupMapper.toEntity(found) : null;
-    } catch (err) {
-      throw new Exception({
-        info: EXCEPTION_INFO.UNKOWN_SERVER_ERROR,
-        originalErr: err,
-      });
-    }
+  async findById(id) {
+    const record = await this.#prisma.group.findUnique({
+      where: { groupId: id },
+      include: {
+        _count: {
+          select: {
+            userJoinGroup: true,
+            record: true,
+          },
+        },
+      },
+    });
+    if (!record) throw new Error("그룹을 찾을 수 없습니다.");
+    return GroupMapper.toEntity(record);
   }
+
+  // async findById(groupId) {
+  //   try {
+  //     const found = await this.prisma.group.findUnique({
+  //       where: { groupId },
+  //       include: this.#includeOption,
+  //     });
+  //     return found ? GroupMapper.toEntity(found) : null;
+  //   } catch (err) {
+  //     throw new Exception({
+  //      // info: EXCEPTION_INFO.UNKOWN_SERVER_ERROR,
+  //       originalErr: err,
+  //     });
+  //   }
+  // }
 
   /**
    * PATCH /groups/{groupId}
@@ -90,21 +106,6 @@ export class GroupRepo {
       });
     }
   }
-  // async findById(id) {
-  //   const record = await this.#prisma.group.findUnique({
-  //     where: { groupId: id },
-  //     include: {
-  //       _count: {
-  //         select: {
-  //           userJoinGroup: true,
-  //           record: true,
-  //         },
-  //       },
-  //     },
-  //   });
-  //   if (!record) throw new Error("그룹을 찾을 수 없습니다.");
-  //   return GroupMapper.toEntity(record);
-  // }
 
   async save(groupEntity) {
     const updated = await this.#prisma.group.update({
