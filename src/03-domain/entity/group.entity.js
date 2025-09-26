@@ -35,7 +35,8 @@ export class Group {
     owner,
     participants,
     ownerPassword,
-  }) {
+  })
+  {
     this.#id = id;
     this.#description = description;
     this.#imageUrl = imageUrl;
