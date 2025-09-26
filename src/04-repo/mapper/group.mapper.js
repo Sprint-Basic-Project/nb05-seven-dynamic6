@@ -20,7 +20,7 @@ export class GroupMapper {
       tags: record.Tag.map((tag) => tag.name),
       owner: record.user,
       participants: record.userJoinGroup.map((group) => group.user),
-      ownerPassword: record.ownerPassword,
+      ownerPassword: record.ownerPassword, //ownerPassword 추가
     });
   }
-}
+} 
