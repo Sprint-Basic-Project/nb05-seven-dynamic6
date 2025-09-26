@@ -8,6 +8,7 @@ export const EXCEPTION_INFO = {
     statusCode: 404,
     message: "Group not found",
   },
+  
   WRONG_PASSWORD: {
     statusCode: 401,
     path: "password",
