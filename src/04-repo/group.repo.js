@@ -19,7 +19,7 @@ export class GroupRepo {
         },
       },
     });
-    return record ? GroupMapper.toEntity(record) : null;
+    return record ? GroupMapper.toEntity(record) : null; //null반환
   }
 
   async save(groupEntity) {
