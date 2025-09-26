@@ -1,42 +1,46 @@
 [![English](https://img.shields.io/badge/lang-English-blue.svg)](https://github.com/Sprint-Basic-Project/nb05-seven-dynamic6/tree/develop/README.EN.md)
 [![Korean](https://img.shields.io/badge/lang-Korean-red.svg)](https://github.com/Sprint-Basic-Project/nb05-seven-dynamic6/tree/develop)
 
-# Dynamic 6  
+# Dynamic 6
+
 (Link to team collaboration documents)
 
 </br>
 
-## Team Members  
-| Project Manager | UX Designer | Backend Developer | UI Designer | Security Developer | Data Analyst |
-|-----------------|-------------|-------------------|--------------|--------------------|---------------|
-| **juho-creator** | **lapel0314** | **gyeongyeonkmy** | **june5815** | **try08253-crypto** | **918-jihye** |
-| ![Juho](https://avatars.githubusercontent.com/juho-creator) | ![Lapel](https://avatars.githubusercontent.com/lapel0314) | ![Gyeongyeon](https://avatars.githubusercontent.com/gyeongyeonkmy) | ![June](https://avatars.githubusercontent.com/june5815) | ![Younghwan](https://avatars.githubusercontent.com/try08253-crypto) | ![Jihye](https://avatars.githubusercontent.com/918-jihye) |
+## Team Members
+
+| Project Manager                                                       | UX Designer                                                         | Backend Developer                                                            | UI Designer                                                        | Security Developer                                                             | Data Analyst                                                         |
+| --------------------------------------------------------------------- | ------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------ | ------------------------------------------------------------------------------ | -------------------------------------------------------------------- |
+| **juho-creator**                                                      | **lapel0314**                                                       | **gyeongyeonkmy**                                                            | **june5815**                                                       | **try08253-crypto**                                                            | **918-jihye**                                                        |
+| ![Juho](https://avatars.githubusercontent.com/juho-creator)           | ![Lapel](https://avatars.githubusercontent.com/lapel0314)           | ![Gyeongyeon](https://avatars.githubusercontent.com/gyeongyeonkmy)           | ![June](https://avatars.githubusercontent.com/june5815)            | ![Younghwan](https://avatars.githubusercontent.com/try08253-crypto)            | ![Jihye](https://avatars.githubusercontent.com/918-jihye)            |
 | <div align="center">[Juho Kim](https://github.com/juho-creator)</div> | <div align="center">[Woojin Ko](https://github.com/lapel0314)</div> | <div align="center">[Gyeongyeon Kim](https://github.com/gyeongyeonkmy)</div> | <div align="center">[Daon Yang](https://github.com/june5815)</div> | <div align="center">[Younghwan Jang](https://github.com/try08253-crypto)</div> | <div align="center">[Jihye Choi](https://github.com/918-jihye)</div> |
 
 </br>
 
------
+---
 
 </br>
 
-# Project Overview  
+# Project Overview
+
 Backend system development for a programming education platform.  
 **Project Period:** 2025.09.15 ~ 2025.10.02
 
 </br>
 
------
+---
 
 </br>
 
 ## Tech Stack
-- **Backend:** Express.js, PrismaORM  
-- **Database:** PostgreSQL  
+
+- **Backend:** Express.js, PrismaORM
+- **Database:** PostgreSQL
 - **Tools:** Git & GitHub, Discord, Notion
 
 </br>
 
------
+---
 
 </br>
 
@@ -130,6 +134,7 @@ Backend system development for a programming education platform.
 </br></br>
 
 ## File Structure
+
 ```plaintext
 src
 ┣ 01-app
@@ -159,19 +164,21 @@ package-lock.json
 README.md
 ```
 
-----
+---
 
 ## Live Website
+
 (Link to the deployed site)  
 https://www.codeit.kr/
 
 </br>
 
-----
+---
 
 </br>
 
-# Project Retrospective  
-(Link or file attachment of presentation materials)
-- [Notion Page](https://www.notion.so/1-2025-09-15-25ee9d59f596808f8dbde297962d624b)
+# Project Retrospective
 
+(Link or file attachment of presentation materials)
+
+- [Notion Page](https://www.notion.so/1-2025-09-15-25ee9d59f596808f8dbde297962d624b)

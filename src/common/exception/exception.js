@@ -1,10 +1,11 @@
 export class Exception extends Error {
-    statusCode
-    message
+  statusCode;
+  message;
 
-    constructor(statusCode, message){
-        super(message);
-        this.statusCode = statusCode;
-        this.message = message;
-    }
+  constructor(statusCode, message, path) {
+    super(message);
+    this.statusCode = statusCode;
+    this.message = message;
+    if (path) this.path = path;
+  }
 }

@@ -41,6 +41,8 @@ model Group {
   discordWebhookUrl String
   discordInviteUrl  String
 
+  ownerPassword String
+
   user       User   @relation(fields: [userUserId], references: [userId])
   userUserId String
 

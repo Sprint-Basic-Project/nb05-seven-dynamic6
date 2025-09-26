@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
-import { Exception } from "../common/exception/exception.js";
+import { errorHandler } from "../common/middlewares/error-handler.js";
 
 export class Server {
   #server;
@@ -26,14 +26,7 @@ export class Server {
   }
 
   registerExceptions() {
-    this.#server.use((err, req, res, next) => {
-      if (err instanceof Exception) {
-        res.status(err.statusCode).json({ message: err.message });
-      } else {
-        console.log(err);
-        res.status(500).json({ message: "알 수 없는 에러입니다." });
-      }
-    });
+    this.#server.use(errorHandler);
   }
 
   listen() {
