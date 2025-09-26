@@ -46,7 +46,7 @@ export class GroupService {
         EXCEPTION_INFO.GROUP_NOT_FOUND.message,
       );
     }
-    // 비밀번호 반환 대신 메시지 반환
+    // 비밀번호 반환 대신 삭제 메시지 반환
     return { message: "그룹 삭제가 완료되었습니다." };
   }
 }
