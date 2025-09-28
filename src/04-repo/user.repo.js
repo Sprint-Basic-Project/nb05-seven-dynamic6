@@ -1,6 +1,6 @@
 import { UserMapper } from "../04-repo/mapper/user.mapper.js";
 
-export class UserRepository {
+export class UserRepo {
   #prisma;
 
   constructor(prisma) {

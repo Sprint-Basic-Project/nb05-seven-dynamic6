@@ -22,6 +22,15 @@ export class AuthService extends BaseService {
 
   async createUser({ nickname, password }) {
     const passwordHash = await bcrypt.hash(password, 10);
-    return await this.repos.userRepo.create({ nickname, passwordHash });
+
+    const userEntity = User.forCreate({
+      nickname, 
+      passwordHash
+    })
+
+    return await this.repos.userRepo.create({
+      nickname: userEntity.nickname,
+      passwordHash: userEntity.passwordHash
+    });
   }
 }

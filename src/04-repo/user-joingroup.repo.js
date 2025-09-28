@@ -1,6 +1,6 @@
 import { UserJoinGroupMapper } from "./mapper/userJoinGroup.mapper.js";
 
-export class UserJoinGroupRepository {
+export class UserJoinGroupRepo {
   #prisma;
 
   constructor(prisma) {
