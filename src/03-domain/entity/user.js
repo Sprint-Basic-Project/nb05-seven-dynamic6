@@ -1,5 +1,5 @@
 export class User {
-  #userId;
+  #id;
   #nickname;
   #passwordHash;
   #createdAt;
@@ -7,20 +7,21 @@ export class User {
   #deletedAt;
 
   constructor({
-    userId = undefined,
+    id = undefined,
     nickname,
     passwordHash,
     createdAt = new Date(),
     updatedAt = new Date(),
     deletedAt = undefined,
   }) {
-    this.#userId = userId;
+    this.#id = id;
     this.#nickname = nickname;
     this.#passwordHash = passwordHash;
     this.#createdAt = createdAt;
     this.#updatedAt = updatedAt;
     this.#deletedAt = deletedAt;
   }
+
  static forCreate({
     nickname,
     passwordHash,
@@ -38,7 +39,8 @@ export class User {
       deletedAt,
     });
   }
-    static validateNickname(nickname) {
+
+   static validateNickname(nickname) {
     if (nickname.length > 10) {
       throw new Exception({
         info: EXCEPTION_INFO.NICKNAME_TOO_LONG,
@@ -53,8 +55,8 @@ export class User {
       });
     }
   }
-  get userId() {
-    return this.#userId;
+  get id() {
+    return this.#id;
   }
     get nickname() {
     return this.#nickname;

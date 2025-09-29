@@ -120,13 +120,8 @@ export class Group {
     return this.#discordInviteUrl;
   }
 
-
   get badges() {
     return this.#badges;
-  }
-
-  get ownerPassword() {
-    return this.#ownerPassword;
   }
 
   increaseLike() {
