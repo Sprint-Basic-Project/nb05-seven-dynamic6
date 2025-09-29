@@ -1,4 +1,6 @@
+// DB저장, 조회
 import { Exception } from "../common/exception/exception.js";
+import { RecordMapper } from "./mapper/record.mapper.js";
 
 export class RecordRepo {
   #prisma;
@@ -8,56 +10,62 @@ export class RecordRepo {
 
   async save(entity) {
     try {
-      return await this.#prisma.record.create({
-        data: {
-          exerciseType: entity.exerciseType,
-          description: entity.description,
-          time: entity.time,
-          distance: entity.distance,
-          groupGroupId: entity.groupGroupId,
-          userUserId: entity.userUserId,
-          userJoinGroupUgid: entity.userJoinGroupUgid,
-          recordImage: {create: (entity.images || []).map((url) => ({imageUrl: url}))},
+      const data = RecordMapper.toPersistence(entity);
+      const saved = await this.#prisma.record.create({
+        data,
+        include: {
+          recordImages: true,
+          user: {
+            select: {
+              nickname: true,
+            },
+          },
         },
-        include: { recordImage: true, user: {select: {nickname: true }}},
       });
+      return RecordMapper.toEntity(saved);
     } catch (e) {
       throw new Exception(500, "운동 기록 저장 중에 오류 발생");
     }
   }
 
-  async findMany({groupId, orderBy, nickname, skip, take}) {
-    const order = orderBy === "time" ? {time: "desc"} : {createdAt: "desc"};
-    return await this.#prisma.record.findMany({
+  async findMany({ groupId, orderBy, nickname, skip, take }) {
+    const order = orderBy === "time" ? { time: "desc" } : { createdAt: "desc" };
+    const results = await this.#prisma.record.findMany({
       where: {
-        groupGroupId: groupId,
-        user: nickname ? {nickname: {contains: nickname}}: undefined
+        groupId,
+        user: nickname ? { nickname: { contains: nickname } } : undefined,
       },
       orderBy: order,
       skip,
       take,
       include: {
-        recordImage: true,
+        recordImages: true,
         user: {
           select: {
-            nickname: true
-          }
-        }
+            nickname: true,
+          },
+        },
       },
     });
+    return results.map(RecordMapper.toEntity);
   }
-  async findById({groupId, recordId}) {
-    return await this.#prisma.record.findUnique({
-      where: {recordId},
+
+  async findById({ groupId, recordId }) {
+    const record = await this.#prisma.record.findFirst({
+      where: {
+        id: recordId,
+        groupId,
+      },
       include: {
-        recordImage: true,
+        recordImages: true,
         user: {
-          selet: {nickname: true}
+          select: { nickname: true },
         },
         group: {
-          select: {groupId: true}
-        }
+          select: { id: true },
+        },
       },
     });
+    return record ? RecordMapper.toEntity(record) : null;
   }
 }

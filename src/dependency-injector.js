@@ -9,9 +9,11 @@ import { TestRepo2 } from "./04-repo/test2.repo.js";
 import { ImageController } from "./02-controller/image.controller.js";
 import { ImageService } from "./03-domain/service/image.service.js";
 import { ImageRepository } from "./04-repo/image.repo.js";
-import { GroupRepository } from "./04-repo/group-repository.js";
+import { GroupRepo } from "./04-repo/group.repo.js";
 import { GroupDummyRepo } from "./04-repo/group.dummy.repo.js";
-
+import { RecordRepo } from "./04-repo/record.repo.js";
+import { RecordService } from "./03-domain/service/record.service.js";
+import { RecordController } from "./02-controller/record.controller.js";
 
 export class DependencyInjector {
   #server;
@@ -27,18 +29,26 @@ export class DependencyInjector {
     // const groupRepo = new GroupRepository(prisma);
     const testRepo2 = new TestRepo2(prisma);
     const imageRepo = new ImageRepository(prisma);
+    const recordRepo = new RecordRepo(prisma);
 
-    const repos = { groupRepo, imageRepo, testRepo2 };
+    const repos = { groupRepo, imageRepo, recordRepo, testRepo2 };
 
     const groupService = new GroupService(repos);
     const imageService = new ImageService(repos);
+    const recordService = new RecordService(repos);
     const testService2 = new TestService2(repos);
 
     const groupController = new GroupController(groupService);
     const imageController = new ImageController(imageService);
+    const recordController = new RecordController(recordService);
     const testController2 = new TestController2(testService2);
 
-    const controllers = [groupController, imageController, testController2];
+    const controllers = [
+      groupController,
+      imageController,
+      recordController,
+      testController2,
+    ];
 
     const server = new Server(controllers);
     return server;

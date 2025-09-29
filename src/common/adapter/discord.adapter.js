@@ -2,9 +2,9 @@ import axios from "axios";
 import { Exception } from "../exception/exception.js";
 
 export class DiscordAdapter {
-  static async sendRecordCreated({group, record}) {
-    const url = group?.WebhookUrl;
-    if(!url) {
+  static async sendRecordCreated({ group, record }) {
+    const url = group?.discordWebhookUrl;
+    if (!url) {
       return;
     }
     try {
