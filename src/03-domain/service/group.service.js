@@ -1,7 +1,7 @@
 import { GroupResDto } from "../../02-controller/res-dto/group.res.dto.js";
 import { GroupsResDto } from "../../02-controller/res-dto/groups.res.dto.js";
-import { Exception } from "../common/exception/exception.js";
-import { EXCEPTION_INFO } from "../common/const/exception-info.js";
+import { Exception } from "../../common/exception/exception.js";
+import { EXCEPTION_INFO } from "../../common/const/exception-info.js";
 
 
 export class GroupService {
