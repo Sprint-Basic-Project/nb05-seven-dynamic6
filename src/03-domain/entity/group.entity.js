@@ -15,6 +15,7 @@ export class Group {
   #tags;
   #owner;
   #participants;
+  #ownerPassword;
 
   constructor({
     id,
@@ -33,6 +34,7 @@ export class Group {
     tags,
     owner,
     participants,
+    ownerPassword,
   }) {
     this.#id = id;
     this.#description = description;
@@ -50,6 +52,7 @@ export class Group {
     this.#tags = tags;
     this.#owner = owner;
     this.#participants = participants;
+    this.#ownerPassword = ownerPassword;
   }
 
   get id() {
@@ -58,10 +61,6 @@ export class Group {
 
   get name() {
     return this.#name;
-  }
-
-  get likeCount() {
-    return this.#likeCount;
   }
 
   get description() {
@@ -88,8 +87,8 @@ export class Group {
     return this.#deletedAt;
   }
 
-  get name() {
-    return this.#name;
+  get likeCount() {
+    return this.#likeCount;
   }
 
   get recordCount() {
@@ -111,9 +110,13 @@ export class Group {
   get discordWebhookUrl() {
     return this.#discordWebhookUrl;
   }
-  
+
   get discordInviteUrl() {
-      return this.#discordInviteUrl;
+    return this.#discordInviteUrl;
+  }
+
+  get ownerPassword() {
+    return this.#ownerPassword;
   }
 
   increaseLike() {
@@ -128,12 +131,11 @@ export class Group {
 
   evaluateBadges() {
     const toAdd = [];
-    const toRemove = [];
 
     if (this.#memberCount >= 10) toAdd.push("PARTICIPATION_10");
     if (this.#recordCount >= 100) toAdd.push("RECORD_100");
     if (this.#likeCount >= 100) toAdd.push("LIKE_100");
 
-    return { toAdd, toRemove };
+    return { toAdd };
   }
 }
