@@ -11,7 +11,8 @@ export class GroupController extends BaseController {
 
   initializeRoutes() {
     this.router.get("/", this.getAllGroups);
-    this.router.get("/:groupId/rank", this.getGroupRankings);
+    this.router.get("/:groupId", this.getGroup);
+    this.router.get("/:groupId/records", this.getRecords);
 
     this.router.post("/:groupId/likes", this.likeGroupMiddleware);
     this.router.delete("/:groupId/likes", this.unlikeGroupMiddleware);
@@ -24,11 +25,19 @@ export class GroupController extends BaseController {
     return res.status(200).json(result);
   };
 
-  getGroupRankings = async (req, res) => {
-    const params = req.params;
-    const result = await this.#service.getGroupRankings(params);
+
+  getGroup = async (req, res) => {
+    const id = req.params.groupId
+    const result = await this.#service.getGroup(id);
     return res.status(200).json(result);
   };
+
+  getRecords = async (req, res) => {
+    const id = req.params.groupId 
+    const result = await this.#service.getRecords(id);
+    return res.status(200).json(result);
+  };
+
 
   likeGroupMiddleware = async (req, res) => {
     const groupId = req.params.groupId;
