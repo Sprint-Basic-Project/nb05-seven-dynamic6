@@ -57,14 +57,14 @@ export class UserJoinGroupRepo {
         },
         select: {
           id: true,
-          deletedAt: true, 
+          deletedAt: true,
         },
       });
 
       if (!record || record.deletedAt !== null) {
         return null;
       }
- 
+
       const deleteRecords = await tx.record.updateMany({
         where: {
           userJoinGroupId: record.id,

@@ -18,7 +18,6 @@ export class Group {
   #badges;
   #ownerPassword;
 
-
   constructor({
     id,
     name,
@@ -91,7 +90,6 @@ export class Group {
     return this.#deletedAt;
   }
 
-
   get likeCount() {
     return this.#likeCount;
   }
@@ -135,7 +133,6 @@ export class Group {
   }
 
   evaluateBadges() {
-
     if (this.#memberCount >= 10 && !this.#badges.includes("PARTICIPATION_10"))
       this.#badges.push("PARTICIPATION_10");
     if (this.#recordCount >= 100 && !this.#badges.includes("RECORD_100"))

@@ -3,7 +3,6 @@ import cors from "cors";
 import morgan from "morgan";
 import { errorHandler } from "../common/middleware/error-handler.js";
 
-
 export class Server {
   #server;
   #controller;

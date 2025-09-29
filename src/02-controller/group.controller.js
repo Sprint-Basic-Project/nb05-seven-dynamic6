@@ -31,13 +31,11 @@ export class GroupController extends BaseController {
     return res.status(200).json(result);
   };
 
-
   getGroup = async (req, res) => {
-    const id = req.params.groupId
+    const id = req.params.groupId;
     const result = await this.#groupService.getGroup(id);
     return res.status(200).json(result);
   };
-
 
   likeGroup = async (req, res) => {
     const groupId = req.params.groupId;

@@ -10,9 +10,9 @@ export class UserJoinGroupService extends BaseService {
 
   async joinGroup({ groupId, nickname, password }) {
     // 그룹 체크
-    const group = await this.repos.groupRepo.findById({ groupId })
+    const group = await this.repos.groupRepo.findById({ groupId });
     if (!group) {
-      throw new Exception(EXCEPTION_INFO.GROUP_NOT_EXIST)
+      throw new Exception(EXCEPTION_INFO.GROUP_NOT_EXIST);
     }
 
     //User 체크
@@ -57,9 +57,9 @@ export class UserJoinGroupService extends BaseService {
 
   async leaveGroup({ groupId, nickname, password }) {
     //group 체크
-    const group = await this.repos.groupRepo.findById({ groupId })
+    const group = await this.repos.groupRepo.findById({ groupId });
     if (!group) {
-      throw new Exception(EXCEPTION_INFO.GROUP_NOT_EXIST)
+      throw new Exception(EXCEPTION_INFO.GROUP_NOT_EXIST);
     }
 
     //User 체크

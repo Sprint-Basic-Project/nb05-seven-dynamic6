@@ -22,7 +22,7 @@ export class User {
     this.#deletedAt = deletedAt;
   }
 
- static forCreate({
+  static forCreate({
     nickname,
     passwordHash,
     createdAt,
@@ -40,7 +40,7 @@ export class User {
     });
   }
 
-   static validateNickname(nickname) {
+  static validateNickname(nickname) {
     if (nickname.length > 10) {
       throw new Exception({
         info: EXCEPTION_INFO.NICKNAME_TOO_LONG,
@@ -58,7 +58,7 @@ export class User {
   get id() {
     return this.#id;
   }
-    get nickname() {
+  get nickname() {
     return this.#nickname;
   }
   get passwordHash() {
