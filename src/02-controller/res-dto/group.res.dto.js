@@ -1,3 +1,4 @@
+// photoUrl,createdAt, updatedAt, badges, total
 export class GroupResDto {
   id;
   name;
@@ -11,20 +12,27 @@ export class GroupResDto {
   memberCount;
   tags;
   owner;
+  participants;
+  createdAt;
+  updatedAt;
+  badges;
 
   constructor(entity) {
     this.id = entity.id;
     this.name = entity.name;
     this.description = entity.description;
-    this.photoUrl = entity.photoUrl;
-    this.goalRep = entity.goalRep;
+    this.photoUrl = entity.imageUrl ?? "";
+    this.goalRep = entity.goalRep ?? 0;
     this.discordWebhookUrl = entity.discordWebhookUrl;
     this.discordInviteUrl = entity.discordInviteUrl;
-    this.likeCount = entity.likeCount;
-    this.recordCount = entity.recordCount;
-    this.memberCount = entity.memberCount;
+    this.likeCount = entity.likeCount ?? 0;
+    this.recordCount = entity.recordCount ?? 0;
+    this.memberCount = entity.memberCount ?? 1;
     this.tags = entity.tags;
     this.owner = entity.owner;
     this.participants = entity.participants;
+    this.createdAt = entity.createdAt;
+    this.updatedAt = entity.updatedAt;
+    this.badges = entity.badges ?? [];
   }
 }
