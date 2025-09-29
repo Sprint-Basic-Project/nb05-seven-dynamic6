@@ -2,7 +2,7 @@
 import { Exception } from "../../common/exception/exception.js";
 
 export class Record {
-  #recordId;
+  #id;
   #exerciseType;
   #description;
   #time;
@@ -16,7 +16,7 @@ export class Record {
   #images;
 
   constructor({
-    recordId,
+    id,
     exerciseType,
     description,
     time,
@@ -29,7 +29,7 @@ export class Record {
     userJoinGroupId,
     images = [],
   }) {
-    this.#recordId = recordId;
+    this.#id = id;
     this.#exerciseType = exerciseType;
     this.#description = description;
     this.#time = time;
@@ -43,8 +43,8 @@ export class Record {
     this.#images = images;
   }
 
-  get recordId() {
-    return this.#recordId;
+  get id() {
+    return this.#id;
   }
   get exerciseType() {
     return this.#exerciseType;
@@ -98,10 +98,18 @@ export class Record {
         "운동 종류는 RUNNING, SWIMMING, CYCLING 중 하나여야 한다.",
       );
     }
+    const desc = description ? String(description).trim() : "";
+    if (!desc) {
+      throw new Exception(400, "설명은 필수");
+    }
     if (!Number.isInteger(time) || time < 0) {
       throw new Exception(400, "시간은 0이상의 정수여야 한다");
     }
-    if (typeof distance !== "number" || distance < 0) {
+    if (
+      typeof distance !== "number" ||
+      Number.isNaN(distance) ||
+      distance < 0
+    ) {
       throw new Exception(400, "거리는 0이상의 실수여야 한다.");
     }
     // 숫자가 DB에 들어가게 변환해야될걸..? 아마도..(거리, 시간)
@@ -110,7 +118,8 @@ export class Record {
     }
 
     return new Record({
-      description,
+      exerciseType,
+      description: desc,
       time,
       distance,
       groupId,
