@@ -1,6 +1,6 @@
 import { BaseController } from "./base.controller.js";
 import { verifyGroupPassword } from "../common/middleware/auth.js";
-
+import { CreateGroupDTO } from "./req-dto/create-group.req.dto.js";
 export class GroupController extends BaseController {
   #groupService;
   #repo;
@@ -59,7 +59,6 @@ export class GroupController extends BaseController {
       body: req.body,
     }).validate();
     const group = await this.#groupService.createGroup(reqDto);
-    // resDto로 요청에 전송
     const resDto = new CreateGroupResDto(group);
     return res.json(resDto);
   };

@@ -1,3 +1,4 @@
+import { EXCEPTION_INFO } from "../../common/exception-info";
 export class Group {
   #id;
   #name;
