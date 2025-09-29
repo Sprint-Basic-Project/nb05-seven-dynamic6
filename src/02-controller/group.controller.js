@@ -2,12 +2,12 @@ import { BaseController } from "./base.controller.js";
 import { verifyGroupPassword } from "../common/middleware/auth.js";
 
 export class GroupController extends BaseController {
-  #service;
+  #groupService;
   #repo;
 
   constructor(groupService, groupRepo) {
     super("/groups");
-    this.#service = groupService;
+    this.#groupService = groupService;
     this.#repo = groupRepo;
     this.registerRoutes();
   }
@@ -27,33 +27,33 @@ export class GroupController extends BaseController {
 
   getAllGroups = async (req, res) => {
     const query = req.query;
-    const result = await this.#service.getGroups(query);
+    const result = await this.#groupService.getGroups(query);
     return res.status(200).json(result);
   };
 
 
   getGroup = async (req, res) => {
     const id = req.params.groupId
-    const result = await this.#service.getGroup(id);
+    const result = await this.#groupService.getGroup(id);
     return res.status(200).json(result);
   };
 
 
   likeGroup = async (req, res) => {
     const groupId = req.params.groupId;
-    const result = await this.#service.increaseLike({ groupId });
+    const result = await this.#groupService.increaseLike({ groupId });
     return res.status(200).json(result);
   };
 
   unlikeGroup = async (req, res) => {
     const groupId = req.params.groupId;
-    const result = await this.#service.decreaseLike({ groupId });
+    const result = await this.#groupService.decreaseLike({ groupId });
     return res.status(200).json(result);
   };
 
   deleteGroup = async (req, res) => {
     const groupId = req.params.groupId;
-    await this.#service.deleteGroup({ groupId });
+    await this.#groupService.deleteGroup({ groupId });
     return res.status(200).json({ message: "그룹 삭제가 완료되었습니다." });
   };
 }
