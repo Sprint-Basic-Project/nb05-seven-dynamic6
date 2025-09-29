@@ -14,7 +14,7 @@ export class GroupController extends BaseController {
 
   registerRoutes() {
     this.router.get("/", this.getAllGroups);
-    this.router.get("/:groupId", this.getGroup);
+    this.router.get("/:groupId/rank", this.getGroupRankings);
 
     this.router.post("/:groupId/likes", this.likeGroup);
     this.router.delete("/:groupId/likes", this.unlikeGroup);
@@ -31,13 +31,11 @@ export class GroupController extends BaseController {
     return res.status(200).json(result);
   };
 
-
-  getGroup = async (req, res) => {
-    const id = req.params.groupId
-    const result = await this.#service.getGroup(id);
+  getGroupRankings = async (req, res) => {
+    const params = req.params;
+    const result = await this.#service.getGroupRankings(params);
     return res.status(200).json(result);
   };
-
 
   likeGroup = async (req, res) => {
     const groupId = req.params.groupId;
