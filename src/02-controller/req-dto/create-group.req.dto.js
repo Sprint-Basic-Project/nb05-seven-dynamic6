@@ -1,7 +1,6 @@
 import { EXCEPTION_INFO } from "../common/exception-info";
 import { BaseReqValidator } from "../controller/base.req.validator";
 
-
 export class CreateGroupValidator extends BaseReqValidator {
   constructor(reqData) {
     super(reqData);
@@ -54,7 +53,7 @@ export class CreateGroupValidator extends BaseReqValidator {
       });
     }
 
-    const tagPattern = /^#[0-9A-Za-z가-힣]+$/; 
+    const tagPattern = /^#[0-9A-Za-z가-힣]+$/;
     if (!tagPattern.test(tag)) {
       throw Exception({
         info: EXCEPTION_INFO.TAGS_ITEM_INVALID,

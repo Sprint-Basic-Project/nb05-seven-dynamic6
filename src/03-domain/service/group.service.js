@@ -61,7 +61,7 @@ export class GroupService {
   }
 
   //create
-   async createGroup({
+  async createGroup({
     name,
     description,
     photoUrl,

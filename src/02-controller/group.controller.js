@@ -21,7 +21,7 @@ export class GroupController extends BaseController {
     this.router.delete(
       "/:groupId",
       verifyGroupPassword(this.#repo),
-      this.deleteGroup
+      this.deleteGroup,
     );
   }
 

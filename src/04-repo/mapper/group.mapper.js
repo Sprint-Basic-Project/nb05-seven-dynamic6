@@ -23,7 +23,7 @@ export class GroupMapper {
       ownerPassword: record.ownerPassword, //ownerPassword 추가
     });
   }
-//create
+  //create
   static toPersistent(entity) {
     return {
       id: entity.id,
