@@ -1,7 +1,8 @@
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
-import { errorHandler } from "../common/middlewares/error-handler.js";
+import { errorHandler } from "../common/middleware/error-handler.js";
+
 
 export class Server {
   #server;
