@@ -111,9 +111,9 @@ export class Group {
   get discordWebhookUrl() {
     return this.#discordWebhookUrl;
   }
-  
+
   get discordInviteUrl() {
-      return this.#discordInviteUrl;
+    return this.#discordInviteUrl;
   }
 
   increaseLike() {

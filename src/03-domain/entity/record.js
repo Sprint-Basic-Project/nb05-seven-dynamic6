@@ -2,7 +2,7 @@
 import { Exception } from "../../common/exception/exception.js";
 
 export class Record {
-  #recordId;
+  #id;
   #exerciseType;
   #description;
   #time;
@@ -16,7 +16,7 @@ export class Record {
   #images;
 
   constructor({
-    recordId,
+    id,
     exerciseType,
     description,
     time,
@@ -29,7 +29,7 @@ export class Record {
     userJoinGroupId,
     images = [],
   }) {
-    this.#recordId = recordId;
+    this.#id = id;
     this.#exerciseType = exerciseType;
     this.#description = description;
     this.#time = time;
@@ -43,8 +43,8 @@ export class Record {
     this.#images = images;
   }
 
-  get recordId() {
-    return this.#recordId;
+  get id() {
+    return this.#id;
   }
   get exerciseType() {
     return this.#exerciseType;
