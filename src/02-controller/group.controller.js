@@ -55,7 +55,7 @@ export class GroupController extends BaseController {
     return res.status(200).json({ message: "그룹 삭제가 완료되었습니다." });
   };
   createGroupMiddleware = async (req, res, next) => {
-    const reqDto = new CreateGroupValidator({
+    const reqDto = new CreateGroupDTO({
       body: req.body,
     }).validate();
     const group = await this.#groupService.createGroup(reqDto);

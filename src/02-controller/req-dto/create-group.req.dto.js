@@ -1,7 +1,7 @@
 import { EXCEPTION_INFO } from "../common/exception-info";
-import { BaseReqValidator } from "../controller/base.req.validator";
+import { BaseReqDTO } from "../controller/base.req.validator";
 
-export class CreateGroupValidator extends BaseReqValidator {
+export class CreateGroupDTO extends BaseReqDTO {
   constructor(reqData) {
     super(reqData);
   }
