@@ -26,6 +26,7 @@ export class RecordMapper {
       distance: recordModel.distance,
       createdAt: recordModel.createdAt,
       updatedAt: recordModel.updatedAt,
+      deletedAt: recordModel.deletedAt,
       groupId: recordModel.groupId,
       userId: recordModel.userId,
       userJoinGroupId: recordModel.userJoinGroupId,

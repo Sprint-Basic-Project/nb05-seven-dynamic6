@@ -1,4 +1,4 @@
-import { Exception } from "../../common/exception/exception";
+import { Exception } from "../../common/exception/exception.js";
 
 export class RecordImage {
   #id;
