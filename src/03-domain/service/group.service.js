@@ -59,4 +59,35 @@ export class GroupService {
     // 비밀번호 반환 대신 삭제 메시지 반환
     return { message: "그룹 삭제가 완료되었습니다." };
   }
+
+  //create
+   async createGroup({
+    name,
+    description,
+    photoUrl,
+    goalRep,
+    discordWebhookUrl,
+    discordInviteUrl,
+    tags,
+    userNickname,
+    userPasswrod,
+  }) {
+    // const user = await this.repos.user.findUserByNickname(useNickname);
+    // if (!user) {
+    // }
+    const group = Group.forCreate({
+      name,
+      description,
+      photoUrl,
+      goalRep,
+      discordWebhookUrl,
+      discordInviteUrl,
+      tags,
+    });
+    const createdGroup = await this.repos.group.create({
+      entity: group,
+      userNickname,
+    });
+    return createdGroup;
+  }
 }

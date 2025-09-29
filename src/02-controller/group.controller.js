@@ -15,13 +15,13 @@ export class GroupController extends BaseController {
   registerRoutes() {
     this.router.get("/", this.getAllGroups);
     this.router.get("/:groupId", this.getGroup);
-
+    this.router.post("/", this.catchException(this.createGroupMiddleware));
     this.router.post("/:groupId/likes", this.likeGroup);
     this.router.delete("/:groupId/likes", this.unlikeGroup);
     this.router.delete(
       "/:groupId",
       verifyGroupPassword(this.#repo),
-      this.deleteGroup,
+      this.deleteGroup
     );
   }
 
@@ -53,5 +53,14 @@ export class GroupController extends BaseController {
     const groupId = req.params.groupId;
     await this.#groupService.deleteGroup({ groupId });
     return res.status(200).json({ message: "그룹 삭제가 완료되었습니다." });
+  };
+  createGroupMiddleware = async (req, res, next) => {
+    const reqDto = new CreateGroupValidator({
+      body: req.body,
+    }).validate();
+    const group = await this.#groupService.createGroup(reqDto);
+    // resDto로 요청에 전송
+    const resDto = new CreateGroupResDto(group);
+    return res.json(resDto);
   };
 }

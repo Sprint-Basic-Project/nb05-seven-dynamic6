@@ -74,7 +74,7 @@ export class GroupRepo {
     if (!validOrderByFields.includes(orderBy)) {
       throw new Exception(
         400,
-        "The orderBy parameter must be one of the following values: [‘likeCount’, ‘participantCount’, ‘createdAt’].",
+        "The orderBy parameter must be one of the following values: [‘likeCount’, ‘participantCount’, ‘createdAt’]."
       );
     }
     const orderByField = orderBy;
@@ -132,5 +132,16 @@ export class GroupRepo {
 
     const entities = result.map((record) => GroupMapper.toEntity(record));
     return entities;
+  }
+
+  //create
+  async create({ entity, ownerId }) {
+    const createdGroup = await this.prisma.post.create({
+      data: {
+        ...GroupMapper.toPersistent(entity),
+        user: { connect: { userUserId: ownerId } },
+      },
+    });
+    return GroupMapper.toEntity(createdGroup);
   }
 }
