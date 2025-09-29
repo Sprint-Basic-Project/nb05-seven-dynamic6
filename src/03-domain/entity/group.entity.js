@@ -7,15 +7,17 @@ export class Group {
   #discordWebhookUrl;
   #discordInviteUrl;
   #likeCount;
-  #recordCount;
-  #createdAt;
-  #updatedAt;
-  #deletedAt;
   #memberCount;
+  #recordCount;
   #tags;
   #owner;
   #participants;
+  #createdAt;
+  #updatedAt;
+  #deletedAt;
+  #badges;
   #ownerPassword;
+
 
   constructor({
     id,
@@ -25,15 +27,15 @@ export class Group {
     goalRep,
     discordWebhookUrl,
     discordInviteUrl,
-    createdAt,
-    updatedAt,
-    deletedAt,
     likeCount,
-    recordCount,
     memberCount,
+    recordCount,
     tags,
     owner,
     participants,
+    createdAt,
+    updatedAt,
+    deletedAt,
     ownerPassword,
   }) {
     this.#id = id;
@@ -46,13 +48,15 @@ export class Group {
     this.#updatedAt = updatedAt;
     this.#deletedAt = deletedAt;
     this.#name = name;
-    this.#likeCount = likeCount;
-    this.#recordCount = recordCount;
-    this.#memberCount = memberCount;
+    this.#likeCount = likeCount ?? 0;
+    this.#recordCount = recordCount ?? 0;
+    this.#memberCount = memberCount ?? 1;
     this.#tags = tags;
     this.#owner = owner;
     this.#participants = participants;
+    this.#badges = [];
     this.#ownerPassword = ownerPassword;
+    this.evaluateBadges();
   }
 
   get id() {
@@ -87,6 +91,7 @@ export class Group {
     return this.#deletedAt;
   }
 
+
   get likeCount() {
     return this.#likeCount;
   }
@@ -115,6 +120,9 @@ export class Group {
     return this.#discordInviteUrl;
   }
 
+  get badges() {
+    return this.#badges;
+  }
 
   increaseLike() {
     this.#likeCount += 1;
@@ -127,12 +135,12 @@ export class Group {
   }
 
   evaluateBadges() {
-    const toAdd = [];
 
-    if (this.#memberCount >= 10) toAdd.push("PARTICIPATION_10");
-    if (this.#recordCount >= 100) toAdd.push("RECORD_100");
-    if (this.#likeCount >= 100) toAdd.push("LIKE_100");
-
-    return { toAdd };
+    if (this.#memberCount >= 10 && !this.#badges.includes("PARTICIPATION_10"))
+      this.#badges.push("PARTICIPATION_10");
+    if (this.#recordCount >= 100 && !this.#badges.includes("RECORD_100"))
+      this.#badges.push("RECORD_100");
+    if (this.#likeCount >= 100 && !this.#badges.includes("LIKE_100"))
+      this.#badges.push("LIKE_100");
   }
 }

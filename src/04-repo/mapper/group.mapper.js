@@ -16,10 +16,10 @@ export class GroupMapper {
       discordInviteUrl: record.discordInviteUrl,
       recordCount: record.recordCount ?? record._count?.record ?? 0,
       memberCount: record._count?.userJoinGroup ?? 0,
-      ownerId: record.userUserId,
-      tags: record.Tag.map((tag) => tag.name),
+      ownerId: record.userId,
+      tags: (record.Tag ?? []).map((tag) => tag.name),
       owner: record.user,
-      participants: record.userJoinGroup.map((group) => group.user),
+      participants: (record.userJoinGroup ?? []).map((group) => group.user),
       ownerPassword: record.ownerPassword, //ownerPassword 추가
     });
   }

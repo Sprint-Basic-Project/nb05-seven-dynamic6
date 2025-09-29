@@ -1,6 +1,8 @@
 import { GroupResDto } from "../../02-controller/res-dto/group.res.dto.js";
+import { GroupsResDto } from "../../02-controller/res-dto/groups.res.dto.js";
 import { Exception } from "../common/exception/exception.js";
 import { EXCEPTION_INFO } from "../common/const/exception-info.js";
+
 
 export class GroupService {
   #repos;
@@ -12,12 +14,17 @@ export class GroupService {
   async getGroups(query) {
     const groupEntities = await this.#repos.groupRepo.findAll(query);
     const groupDtos = groupEntities.map((entity) => new GroupResDto(entity));
-    return groupDtos;
+    return new GroupsResDto(groupDtos);
   }
 
-  async getGroupRankings(params) {
-    const groupRankings = await this.#repos.groupRepo.findByRanking(params);
-    return groupRankings;
+  async getGroup(id) {
+    const groupEntity = await this.#repos.groupRepo.findById(id);
+    return new GroupResDto(groupEntity);
+  }
+
+  async getRecords(id) {
+    const groupEntity = await this.#repos.groupRepo.findRecordsById(id);
+    return new GroupResDto(groupEntity);
   }
 
   async likeGroup({ groupId }) {
@@ -26,7 +33,9 @@ export class GroupService {
       return;
     }
     groupEntity.increaseLike();
-    await this.#repos.groupRepo.save(groupEntity);
+    const saved = await this.#repos.groupRepo.save(groupEntity);
+    const groupDto = new GroupResDto(saved);
+    return groupDto;
   }
 
   async unlikeGroup({ groupId }) {
@@ -35,7 +44,9 @@ export class GroupService {
       return;
     }
     groupEntity.decreaseLike();
-    await this.#repos.groupRepo.save(groupEntity);
+    const saved = await this.#repos.groupRepo.save(groupEntity);
+    const groupDto = new GroupResDto(saved);
+    return groupDto;
   }
 
   async deleteGroup({ groupId }) {

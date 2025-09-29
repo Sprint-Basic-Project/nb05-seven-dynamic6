@@ -1,17 +1,17 @@
-import { Exception } from "../../common/exception/exception";
+import { Exception } from "../../common/exception/exception.js";
 
 export class RecordImage {
-  #imageId;
+  #id;
   #imageUrl;
   #recordId;
 
-  constructor({ imageId, imageUrl, recordId }) {
-    this.#imageId = imageId;
+  constructor({ id, imageUrl, recordId }) {
+    this.#id = id;
     this.#imageUrl = imageUrl;
     this.#recordId = recordId;
   }
   get imageId() {
-    return this.#imageId;
+    return this.#id;
   }
   get imageUrl() {
     return this.#imageUrl;
