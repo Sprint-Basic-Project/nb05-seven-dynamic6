@@ -18,7 +18,6 @@ export class Group {
   #badges;
   #ownerPassword;
 
-
   constructor({
     id,
     name,
@@ -90,7 +89,6 @@ export class Group {
   get deletedAt() {
     return this.#deletedAt;
   }
-
 
   get likeCount() {
     return this.#likeCount;
