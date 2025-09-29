@@ -21,7 +21,7 @@ export class GroupResDto {
     this.id = entity.id;
     this.name = entity.name;
     this.description = entity.description;
-    this.photoUrl = entity.photoUrl ?? "";
+    this.photoUrl = entity.imageUrl ?? "";
     this.goalRep = entity.goalRep ?? 0;
     this.discordWebhookUrl = entity.discordWebhookUrl;
     this.discordInviteUrl = entity.discordInviteUrl;
