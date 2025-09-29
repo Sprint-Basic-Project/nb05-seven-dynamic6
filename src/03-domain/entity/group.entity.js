@@ -7,14 +7,15 @@ export class Group {
   #discordWebhookUrl;
   #discordInviteUrl;
   #likeCount;
-  #recordCount;
-  #createdAt;
-  #updatedAt;
-  #deletedAt;
   #memberCount;
+  #recordCount;
   #tags;
   #owner;
   #participants;
+  #createdAt;
+  #updatedAt;
+  #deletedAt;
+  #badges;
 
   constructor({
     id,
@@ -44,12 +45,14 @@ export class Group {
     this.#updatedAt = updatedAt;
     this.#deletedAt = deletedAt;
     this.#name = name;
-    this.#likeCount = likeCount;
-    this.#recordCount = recordCount;
-    this.#memberCount = memberCount;
+    this.#likeCount = likeCount ?? 0;
+    this.#recordCount = recordCount ?? 0;
+    this.#memberCount = memberCount ?? 1;
     this.#tags = tags;
     this.#owner = owner;
     this.#participants = participants;
+    this.#badges = [];
+    this.evaluateBadges();
   }
 
   get id() {
@@ -88,10 +91,6 @@ export class Group {
     return this.#deletedAt;
   }
 
-  get name() {
-    return this.#name;
-  }
-
   get recordCount() {
     return this.#recordCount;
   }
@@ -111,9 +110,13 @@ export class Group {
   get discordWebhookUrl() {
     return this.#discordWebhookUrl;
   }
-  
+
   get discordInviteUrl() {
-      return this.#discordInviteUrl;
+    return this.#discordInviteUrl;
+  }
+
+  get badges() {
+    return this.#badges;
   }
 
   increaseLike() {
@@ -127,13 +130,11 @@ export class Group {
   }
 
   evaluateBadges() {
-    const toAdd = [];
-    const toRemove = [];
-
-    if (this.#memberCount >= 10) toAdd.push("PARTICIPATION_10");
-    if (this.#recordCount >= 100) toAdd.push("RECORD_100");
-    if (this.#likeCount >= 100) toAdd.push("LIKE_100");
-
-    return { toAdd, toRemove };
+    if (this.#memberCount >= 10 && !this.#badges.includes("PARTICIPATION_10"))
+      this.#badges.push("PARTICIPATION_10");
+    if (this.#recordCount >= 100 && !this.#badges.includes("RECORD_100"))
+      this.#badges.push("RECORD_100");
+    if (this.#likeCount >= 100 && !this.#badges.includes("LIKE_100"))
+      this.#badges.push("LIKE_100");
   }
 }
