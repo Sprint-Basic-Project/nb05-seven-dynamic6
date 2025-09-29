@@ -14,20 +14,20 @@ datasource db {
 }
 
 model User {
-  userId       String    @id @default(uuid())
+  id           String    @id @default(uuid())
   nickname     String    @unique
   passwordHash String
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
   deletedAt    DateTime?
 
-  group         Group[]
-  userJoinGroup UserJoinGroup[]
-  record        Record[]
+  groups         Group[]
+  userJoinGroups UserJoinGroup[]
+  records        Record[]
 }
 
 model Group {
-  groupId     String    @id @default(uuid())
+  id          String    @id @default(uuid())
   name        String    @unique
   description String
   imageUrl    String
@@ -41,67 +41,66 @@ model Group {
   discordWebhookUrl String
   discordInviteUrl  String
 
-  ownerPassword String
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
 
-  user       User   @relation(fields: [userUserId], references: [userId])
-  userUserId String
-
-  userJoinGroup UserJoinGroup[]
-  record        Record[]
-  Tag           Tag[]
+  userJoinGroups UserJoinGroup[]
+  records        Record[]
+  tags           Tag[]
 }
 
 model UserJoinGroup {
-  ugId      String   @id @default(uuid())
-  joinedAt  DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id      String    @id @default(uuid())
+  joinedAt  DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 
-  group        Group  @relation(fields: [groupGroupId], references: [groupId], onDelete: Cascade)
-  groupGroupId String
-  user         User   @relation(fields: [userUserId], references: [userId], onDelete: Cascade)
-  userUserId   String
+  group      Group  @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  groupId    String
+  user       User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
 
-  record Record[]
+  records Record[]
 
-  @@unique([groupGroupId, userUserId])
+  @@unique([groupId, userId])
 }
 
 model Record {
-  recordId     String   @id @default(uuid())
+  id     String    @id @default(uuid())
   exerciseType Exercise
   description  String
   time         Int
   distance     Float
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
   deletedAt    DateTime?
 
-  userJoinGroup UserJoinGroup @relation(fields: [userJoinGroupUgId], references: [ugId])
-  group         Group         @relation(fields: [groupGroupId], references: [groupId])
-  groupGroupId  String
-  user          User          @relation(fields: [userUserId], references: [userId])
-  userUserId    String
+  userJoinGroup UserJoinGroup @relation(fields: [userJoinGroupId], references: [id])
+  userJoinGroupId String
+  group         Group         @relation(fields: [groupId], references: [id])
+  groupId  String
+  user          User          @relation(fields: [userId], references: [id])
+  userId    String
 
-  recordImage       RecordImage[]
-  userJoinGroupUgId String
+  recordImages       RecordImage[]
 }
 
 model RecordImage {
-  imageId  String @id @default(uuid())
+  id  String @id @default(uuid())
   imageUrl String
 
-  record         Record @relation(fields: [recordRecordId], references: [recordId], onDelete: Cascade)
-  recordRecordId String
+  record         Record @relation(fields: [recordId], references: [id], onDelete: Cascade)
+  recordId String
 }
 
 model Tag {
-  tagId     String   @id @default(uuid())
+  id     String   @id @default(uuid())
   name      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  group        Group  @relation(fields: [groupGroupId], references: [groupId], onDelete: Cascade)
-  groupGroupId String
+  group        Group  @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  groupId String
 }
 
 enum Exercise {
