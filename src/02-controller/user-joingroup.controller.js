@@ -39,7 +39,7 @@ export class UserJoinGroupController extends BaseController {
       nickname,
       password,
     });
-    res.status(204).json(result);
+    res.status(204).send();
   };
 
   // 현재방식은 서비스에서 인증까지 처리

@@ -1,4 +1,4 @@
-import { UserMapper } from "../04-repo/mapper/user.mapper.js";
+import { UserMapper } from "./mapper/user.mapper.js";
 
 export class UserRepo {
   #prisma;
