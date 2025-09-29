@@ -19,8 +19,7 @@ export class GroupRepo {
         },
       },
     });
-    if (!record) throw new Error("그룹을 찾을 수 없습니다.");
-    return GroupMapper.toEntity(record);
+    return record ? GroupMapper.toEntity(record) : null; //null반환
   }
 
   async save(groupEntity) {
