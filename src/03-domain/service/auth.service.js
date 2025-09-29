@@ -1,5 +1,7 @@
 import bcrypt from "bcrypt";
 import { BaseService } from "./base.service.js";
+import { Exception } from "../../common/exception/exception.js";
+import { EXCEPTION_INFO } from "../../common/const/exception-info.js";
 
 export class AuthService extends BaseService {
   constructor(repos) {
