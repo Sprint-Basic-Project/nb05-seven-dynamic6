@@ -47,7 +47,7 @@ export class UserJoinGroupController extends BaseController {
   // authenticateUserMiddleware = async (req, res, next) => {
   //   const { groupId } = req.params;
   //   const { nickname, password } = req.body;
-  //   const user = await this.#authservice.authParticipant({
+  //   const user = await this.#authservice.authenticateUser({
   //     nickname,
   //     password,
   //   });
