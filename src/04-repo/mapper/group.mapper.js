@@ -3,7 +3,7 @@ import { Group } from "../../03-domain/entity/group.entity.js";
 export class GroupMapper {
   static toEntity(record) {
     return new Group({
-      id: record.groupId,
+      id: record.id,
       name: record.name,
       description: record.description,
       imageUrl: record.imageUrl,
