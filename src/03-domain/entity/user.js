@@ -7,12 +7,12 @@ export class User {
   #deletedAt;
 
   constructor({
-    userId,
+    userId = undefined,
     nickname,
     passwordHash,
-    createdAt,
-    updatedAt,
-    deletedAt,
+    createdAt = new Date(),
+    updatedAt = new Date(),
+    deletedAt = undefined,
   }) {
     this.#userId = userId;
     this.#nickname = nickname;
@@ -21,29 +21,42 @@ export class User {
     this.#updatedAt = updatedAt;
     this.#deletedAt = deletedAt;
   }
-
-  static forCreate({ nickname, passwordHash }) {
+ static forCreate({
+    nickname,
+    passwordHash,
+    createdAt,
+    updatedAt,
+    deletedAt,
+  }) {
     this.validateNickname(nickname);
     this.validatePassword(passwordHash);
-    return new User({ nickname, passwordHash });
+    return new participant({
+      nickname,
+      passwordHash,
+      createdAt,
+      updatedAt,
+      deletedAt,
+    });
   }
-
-  static validateNickname(nickname) {
-    if (nickname > 10) {
-      throw Error("닉네임은 10글자 이내로 작성해주세요.");
+    static validateNickname(nickname) {
+    if (nickname.length > 10) {
+      throw new Exception({
+        info: EXCEPTION_INFO.NICKNAME_TOO_LONG,
+      });
     }
   }
 
   static validatePassword(passwordHash) {
-    if (passwordHash > 5) {
-      throw Error("비밀번호는 5글자 이상입니다.");
+    if (passwordHash.length > 5) {
+      throw new Exception({
+        info: EXCEPTION_INFO.PASSWORD_TOO_SHORT,
+      });
     }
   }
-
   get userId() {
     return this.#userId;
   }
-  get nickname() {
+    get nickname() {
     return this.#nickname;
   }
   get passwordHash() {
