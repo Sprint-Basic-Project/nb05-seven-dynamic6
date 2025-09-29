@@ -1,5 +1,8 @@
 import { GroupResDto } from "../../02-controller/res-dto/group.res.dto.js";
 import { GroupsResDto } from "../../02-controller/res-dto/groups.res.dto.js";
+import { Exception } from "../common/exception/exception.js";
+import { EXCEPTION_INFO } from "../common/const/exception-info.js";
+
 
 export class GroupService {
   #repos;
@@ -26,6 +29,9 @@ export class GroupService {
 
   async likeGroup({ groupId }) {
     const groupEntity = await this.#repos.groupRepo.findById(groupId);
+    if (!groupEntity) {
+      return;
+    }
     groupEntity.increaseLike();
     const saved = await this.#repos.groupRepo.save(groupEntity);
     const groupDto = new GroupResDto(saved);
@@ -34,15 +40,24 @@ export class GroupService {
 
   async unlikeGroup({ groupId }) {
     const groupEntity = await this.#repos.groupRepo.findById(groupId);
+    if (!groupEntity) {
+      return;
+    }
     groupEntity.decreaseLike();
     const saved = await this.#repos.groupRepo.save(groupEntity);
     const groupDto = new GroupResDto(saved);
-
     return groupDto;
   }
 
   async deleteGroup({ groupId }) {
     const deleted = await this.#repos.groupRepo.delete(groupId);
-    return deleted.toJSON();
+    if (!deleted) {
+      throw new Exception(
+        EXCEPTION_INFO.GROUP_NOT_FOUND.statusCode,
+        EXCEPTION_INFO.GROUP_NOT_FOUND.message,
+      );
+    }
+    // 비밀번호 반환 대신 삭제 메시지 반환
+    return { message: "그룹 삭제가 완료되었습니다." };
   }
 }

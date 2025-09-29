@@ -1,22 +1,28 @@
 import { BaseController } from "./base.controller.js";
+import { verifyGroupPassword } from "../common/middleware/auth.js";
 
 export class GroupController extends BaseController {
   #service;
+  #repo;
 
-  constructor(groupService) {
+  constructor(groupService, groupRepo) {
     super("/groups");
     this.#service = groupService;
-    this.initializeRoutes();
+    this.#repo = groupRepo;
+    this.registerRoutes();
   }
 
-  initializeRoutes() {
+  registerRoutes() {
     this.router.get("/", this.getAllGroups);
     this.router.get("/:groupId", this.getGroup);
-    this.router.get("/:groupId/records", this.getRecords);
 
-    this.router.post("/:groupId/likes", this.likeGroupMiddleware);
-    this.router.delete("/:groupId/likes", this.unlikeGroupMiddleware);
-    this.router.delete("/:groupId", this.deleteGroupMiddleware);
+    this.router.post("/:groupId/likes", this.likeGroup);
+    this.router.delete("/:groupId/likes", this.unlikeGroup);
+    this.router.delete(
+      "/:groupId",
+      verifyGroupPassword(this.#repo),
+      this.deleteGroup,
+    );
   }
 
   getAllGroups = async (req, res) => {
@@ -32,28 +38,22 @@ export class GroupController extends BaseController {
     return res.status(200).json(result);
   };
 
-  getRecords = async (req, res) => {
-    const id = req.params.groupId 
-    const result = await this.#service.getRecords(id);
+
+  likeGroup = async (req, res) => {
+    const groupId = req.params.groupId;
+    const result = await this.#service.increaseLike({ groupId });
     return res.status(200).json(result);
   };
 
-
-  likeGroupMiddleware = async (req, res) => {
+  unlikeGroup = async (req, res) => {
     const groupId = req.params.groupId;
-    const result = await this.#service.likeGroup({ groupId });
+    const result = await this.#service.decreaseLike({ groupId });
     return res.status(200).json(result);
   };
 
-  unlikeGroupMiddleware = async (req, res) => {
+  deleteGroup = async (req, res) => {
     const groupId = req.params.groupId;
-    const result = await this.#service.unlikeGroup({ groupId });
-    return res.status(200).json(result);
-  };
-
-  deleteGroupMiddleware = async (req, res) => {
-    const groupId = req.params.groupId;
-    const result = await this.#service.deleteGroup({ groupId });
-    return res.status(200).json(result);
+    await this.#service.deleteGroup({ groupId });
+    return res.status(200).json({ message: "그룹 삭제가 완료되었습니다." });
   };
 }

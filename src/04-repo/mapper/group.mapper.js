@@ -19,7 +19,8 @@ export class GroupMapper {
       ownerId: record.userId,
       tags: (record.Tag ?? []).map((tag) => tag.name),
       owner: record.user,
-      participants: (record.JoinGroup ?? []).map((group) => group.user),
+      participants: (record.userJoinGroup ?? []).map((group) => group.user),
+      ownerPassword: record.ownerPassword, //ownerPassword 추가
     });
   }
 }
