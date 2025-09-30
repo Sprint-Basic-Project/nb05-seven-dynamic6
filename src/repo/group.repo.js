@@ -10,11 +10,11 @@ export class GroupRepo {
 
   async findById(id) {
     const record = await this.#prisma.group.findUnique({
-      where: { groupId: id },
+      where: { id },
       include: {
-        Tag: true,
+        tags: true,
         user: true, // 그룹 생성자 (owner)
-        userJoinGroup: {
+        userJoinGroups: {
           include: {
             user: true, // 그룹에 참여한 유저 (participant)
           },
