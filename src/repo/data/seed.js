@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcrypt";
 
 import {
   USERS,
@@ -12,6 +13,7 @@ import {
 const prisma = new PrismaClient();
 
 async function main() {
+  // DB 초기화 필요하면 주석 해제
   // await prisma.recordImage.deleteMany();
   // await prisma.record.deleteMany();
   // await prisma.userJoinGroup.deleteMany();
@@ -19,7 +21,12 @@ async function main() {
   // await prisma.user.deleteMany();
   // await prisma.tag.deleteMany();
 
-  await prisma.user.createMany({ data: USERS });
+  const usersWithHashedPasswords = USERS.map((user) => ({
+    ...user,
+    passwordHash: bcrypt.hashSync(user.passwordHash, 10),
+  }));
+
+  await prisma.user.createMany({ data: usersWithHashedPasswords });
   await prisma.group.createMany({ data: GROUPS });
   await prisma.userJoinGroup.createMany({ data: USER_JOIN_GROUPS });
   await prisma.record.createMany({ data: RECORDS });
