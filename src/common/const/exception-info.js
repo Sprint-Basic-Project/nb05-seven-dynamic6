@@ -14,6 +14,12 @@ export const EXCEPTION_INFO = {
     path: "password",
     message: "Wrong password",
   },
+
+  USER_NOT_FOUND: {
+    statusCode: 404,
+    message: "User not found",
+  },
+  
   // 공통
   UNKNOWN_SERVER_ERROR: {
     statusCode: 500,
