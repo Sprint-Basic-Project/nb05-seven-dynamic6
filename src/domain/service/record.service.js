@@ -61,11 +61,19 @@ export class RecordService {
     const saved = await this.#repos.recordRepo.save(entity);
 
     try {
-      await DiscordAdapter.sendRecordCreated({ group, record: saved });
+      await DiscordAdapter.sendRecordCreated({
+        group,
+        record: saved,
+        authorNickname: dto.nickname,
+      });
     } catch (e) {
       console.warn("[Discord 실패] -> 재시도");
       try {
-        await DiscordAdapter.sendRecordCreated({ group, record: saved });
+        await DiscordAdapter.sendRecordCreated({
+          group,
+          record: saved,
+          authorNickname: dto.nickname,
+        });
       } catch (e2) {
         console.error("[Discird 재시도 실패]:", e2.message);
       }

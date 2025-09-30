@@ -80,6 +80,22 @@ export class Record {
   get images() {
     return this.#images;
   }
+  toJSON() {
+    return {
+      id: this.id,
+      exerciseType: this.exerciseType,
+      description: this.description,
+      time: this.time,
+      distance: this.distance,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
+      deletedAt: this.deletedAt,
+      groupId: this.groupId,
+      userId: this.userId,
+      userJoinGroupId: this.userJoinGroupId,
+      images: this.images ?? [],
+    };
+  }
   // 검증 + 생성
   // 1. 운동종류 enum으로 정해져 있음 / 2. 시간 > 0 & 정수 / 3. 거리 > 0, 실수 / 4. 이미지 3장까지만 등록
   static forCreate({
