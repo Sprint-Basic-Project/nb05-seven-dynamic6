@@ -48,7 +48,7 @@ export class GroupService extends BaseService {
     if (!deleted) {
       throw new Exception(
         EXCEPTION_INFO.GROUP_NOT_FOUND.statusCode,
-        EXCEPTION_INFO.GROUP_NOT_FOUND.message
+        EXCEPTION_INFO.GROUP_NOT_FOUND.message,
       );
     }
     return { message: "그룹 삭제가 완료되었습니다." };
@@ -70,13 +70,13 @@ export class GroupService extends BaseService {
     if (!owner) {
       throw new Exception(
         EXCEPTION_INFO.OWNER_AUTH_FAILED.statusCode,
-        EXCEPTION_INFO.OWNER_AUTH_FAILED.message
+        EXCEPTION_INFO.OWNER_AUTH_FAILED.message,
       );
     }
     if (owner.password !== userPassword) {
       throw new Exception(
         EXCEPTION_INFO.WRONG_PASSWORD.statusCode,
-        EXCEPTION_INFO.WRONG_PASSWORD.message
+        EXCEPTION_INFO.WRONG_PASSWORD.message,
       );
     }
     const group = Group.forCreate({
@@ -111,14 +111,14 @@ export class GroupService extends BaseService {
       throw new Exception(
         EXCEPTION_INFO.OWNER_AUTH_FAILED.statusCode,
         EXCEPTION_INFO.OWNER_AUTH_FAILED.message,
-        "ownerNickname"
+        "ownerNickname",
       );
     }
     if (owner.password !== userPassword) {
       throw new Exception(
         EXCEPTION_INFO.WRONG_PASSWORD.statusCode,
         EXCEPTION_INFO.WRONG_PASSWORD.message,
-        "password"
+        "password",
       );
     }
     const group = Group.forCreate({
@@ -151,33 +151,30 @@ export class GroupService extends BaseService {
     ownerNickname,
     ownerPassword,
   }) {
-  
     const groupEntity = await this.#repos.groupRepo.findById(groupId);
     if (!groupEntity) {
       throw new Exception(
         EXCEPTION_INFO.GROUP_NOT_FOUND.statusCode,
         EXCEPTION_INFO.GROUP_NOT_FOUND.message,
-        "groupId"
+        "groupId",
       );
     }
-
 
     const owner = await this.#repos.userRepo.findByNickname(ownerNickname);
     if (!owner) {
       throw new Exception(
         EXCEPTION_INFO.OWNER_AUTH_FAILED.statusCode,
         EXCEPTION_INFO.OWNER_AUTH_FAILED.message,
-        "ownerNickname"
+        "ownerNickname",
       );
     }
     if (owner.password !== ownerPassword) {
       throw new Exception(
         EXCEPTION_INFO.WRONG_PASSWORD.statusCode,
         EXCEPTION_INFO.WRONG_PASSWORD.message,
-        "password"
+        "password",
       );
     }
-
 
     if (name) groupEntity.name = name;
     if (description) groupEntity.description = description;
