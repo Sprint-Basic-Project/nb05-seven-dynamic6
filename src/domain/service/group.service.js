@@ -48,7 +48,7 @@ export class GroupService extends BaseService {
     if (!deleted) {
       throw new Exception(
         EXCEPTION_INFO.GROUP_NOT_FOUND.statusCode,
-        EXCEPTION_INFO.GROUP_NOT_FOUND.message,
+        EXCEPTION_INFO.GROUP_NOT_FOUND.message
       );
     }
     return { message: "그룹 삭제가 완료되었습니다." };
@@ -70,19 +70,19 @@ export class GroupService extends BaseService {
     if (!owner) {
       throw new Exception(
         EXCEPTION_INFO.OWNER_AUTH_FAILED.statusCode,
-        EXCEPTION_INFO.OWNER_AUTH_FAILED.message,
+        EXCEPTION_INFO.OWNER_AUTH_FAILED.message
       );
     }
     if (owner.password !== userPassword) {
       throw new Exception(
         EXCEPTION_INFO.WRONG_PASSWORD.statusCode,
-        EXCEPTION_INFO.WRONG_PASSWORD.message,
+        EXCEPTION_INFO.WRONG_PASSWORD.message
       );
     }
     const group = Group.forCreate({
       name,
       description,
-      photoUrl,
+      imageUrl: photoUrl,
       goalRep,
       discordWebhookUrl,
       discordInviteUrl,
@@ -93,5 +93,102 @@ export class GroupService extends BaseService {
       userId: owner.id,
     });
     return createdGroup;
+  }
+  async updateGroup({
+    groupId,
+    name,
+    description,
+    photoUrl,
+    goalRep,
+    discordWebhookUrl,
+    discordInviteUrl,
+    tags,
+    ownerNickname,
+    ownerPassword,
+  }) {
+    const owner = await this.#repos.userRepo.findByNickname(userNickname);
+    if (!owner) {
+      throw new Exception(
+        EXCEPTION_INFO.OWNER_AUTH_FAILED.statusCode,
+        EXCEPTION_INFO.OWNER_AUTH_FAILED.message,
+        "ownerNickname"
+      );
+    }
+    if (owner.password !== userPassword) {
+      throw new Exception(
+        EXCEPTION_INFO.WRONG_PASSWORD.statusCode,
+        EXCEPTION_INFO.WRONG_PASSWORD.message,
+        "password"
+      );
+    }
+    const group = Group.forCreate({
+      name,
+      description,
+      imageUrl: photoUrl, // Entity는 imageUrl 사용
+      goalRep,
+      discordWebhookUrl,
+      discordInviteUrl,
+      tags,
+      userId: owner.id,
+    });
+    const createdGroup = await this.#repos.groupRepo.create({
+      entity: group,
+      userId: owner.id,
+    });
+    return createdGroup;
+  }
+
+  // ✅ update
+  async updateGroup({
+    groupId,
+    name,
+    description,
+    photoUrl,
+    goalRep,
+    discordWebhookUrl,
+    discordInviteUrl,
+    tags,
+    ownerNickname,
+    ownerPassword,
+  }) {
+  
+    const groupEntity = await this.#repos.groupRepo.findById(groupId);
+    if (!groupEntity) {
+      throw new Exception(
+        EXCEPTION_INFO.GROUP_NOT_FOUND.statusCode,
+        EXCEPTION_INFO.GROUP_NOT_FOUND.message,
+        "groupId"
+      );
+    }
+
+
+    const owner = await this.#repos.userRepo.findByNickname(ownerNickname);
+    if (!owner) {
+      throw new Exception(
+        EXCEPTION_INFO.OWNER_AUTH_FAILED.statusCode,
+        EXCEPTION_INFO.OWNER_AUTH_FAILED.message,
+        "ownerNickname"
+      );
+    }
+    if (owner.password !== ownerPassword) {
+      throw new Exception(
+        EXCEPTION_INFO.WRONG_PASSWORD.statusCode,
+        EXCEPTION_INFO.WRONG_PASSWORD.message,
+        "password"
+      );
+    }
+
+
+    if (name) groupEntity.name = name;
+    if (description) groupEntity.description = description;
+    if (photoUrl) groupEntity.imageUrl = photoUrl;
+    if (goalRep !== undefined) groupEntity.goalRep = goalRep;
+    if (discordWebhookUrl) groupEntity.discordWebhookUrl = discordWebhookUrl;
+    if (discordInviteUrl) groupEntity.discordInviteUrl = discordInviteUrl;
+    if (tags) groupEntity.tags = tags;
+    groupEntity.updatedAt = new Date();
+
+    const updated = await this.#repos.groupRepo.save(groupEntity);
+    return updated;
   }
 }
