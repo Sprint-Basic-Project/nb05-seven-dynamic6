@@ -1,6 +1,7 @@
 import { BaseController } from "./base.controller.js";
 import { verifyGroupPassword } from "../common/middleware/auth.js";
 import { CreateGroupDTO } from "./req-dto/create-group.req.dto.js";
+import { CreateGroupResDto } from "./res-dto/create-group.res.dto.js";
 export class GroupController extends BaseController {
   #groupService;
   #repo;
