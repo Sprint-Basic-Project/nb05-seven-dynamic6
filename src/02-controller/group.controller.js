@@ -1,14 +1,17 @@
 import { BaseController } from "./base.controller.js";
 import { verifyGroupPassword } from "../common/middleware/auth.js";
 import { CreateGroupDTO } from "./req-dto/create-group.req.dto.js";
+
 export class GroupController extends BaseController {
   #groupService;
   #repo;
+  #userRepo;
 
-  constructor(groupService, groupRepo) {
+  constructor(groupService, groupRepo, userRepo) {
     super("/groups");
     this.#groupService = groupService;
     this.#repo = groupRepo;
+    this.#userRepo = userRepo;
     this.registerRoutes();
   }
 
@@ -20,7 +23,7 @@ export class GroupController extends BaseController {
     this.router.delete("/:groupId/likes", this.unlikeGroup);
     this.router.delete(
       "/:groupId",
-      verifyGroupPassword(this.#repo),
+      verifyGroupPassword(this.#repo, this.#userRepo),
       this.deleteGroup,
     );
   }
@@ -39,14 +42,14 @@ export class GroupController extends BaseController {
 
   likeGroup = async (req, res) => {
     const groupId = req.params.groupId;
-    const result = await this.#groupService.increaseLike({ groupId });
-    return res.status(200).json(result);
+    await this.#groupService.likeGroup({ groupId });
+    return res.sendStatus(200);
   };
 
   unlikeGroup = async (req, res) => {
     const groupId = req.params.groupId;
-    const result = await this.#groupService.decreaseLike({ groupId });
-    return res.status(200).json(result);
+    await this.#groupService.unlikeGroup({ groupId });
+    return res.sendStatus(200);
   };
 
   deleteGroup = async (req, res) => {
@@ -54,6 +57,7 @@ export class GroupController extends BaseController {
     await this.#groupService.deleteGroup({ groupId });
     return res.status(200).json({ message: "그룹 삭제가 완료되었습니다." });
   };
+  
   createGroupMiddleware = async (req, res, next) => {
     const reqDto = new CreateGroupDTO({
       body: req.body,
