@@ -124,7 +124,7 @@ export class GroupService extends BaseService {
     const group = Group.forCreate({
       name,
       description,
-      imageUrl: photoUrl, // Entity는 imageUrl 사용
+      imageUrl: photoUrl, 
       goalRep,
       discordWebhookUrl,
       discordInviteUrl,
@@ -138,7 +138,7 @@ export class GroupService extends BaseService {
     return createdGroup;
   }
 
-  // ✅ update
+
   async updateGroup({
     groupId,
     name,

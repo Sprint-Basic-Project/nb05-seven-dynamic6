@@ -1,5 +1,5 @@
-import { EXCEPTION_INFO } from "../../common/exception-info.js";
-import { BaseReqDTO } from "../base.req.validator.js";
+import { EXCEPTION_INFO } from "../../common/const/exception-info.js";
+import { BaseReqDTO } from "./base.req.dto.js";
 import { Exception } from "../../common/exception/exception.js";
 
 export class UpdateGroupDTO extends BaseReqDTO {
@@ -62,7 +62,6 @@ export class UpdateGroupDTO extends BaseReqDTO {
     }
 
     const urlPattern = /^(https?:\/\/)[\w.-]+\.[a-z]{2,}.*$/i;
-
     if (
       discordWebhookUrl !== undefined &&
       !urlPattern.test(discordWebhookUrl)

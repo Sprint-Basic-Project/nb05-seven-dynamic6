@@ -169,20 +169,59 @@ export class Group {
       owner: userId,
     });
   }
+  update({
+    name,
+    description,
+    photoUrl,
+    goalRep,
+    discordWebhookUrl,
+    discordInviteUrl,
+    tags,
+  }) { if (name !== undefined) {
+      Group.validateNameRule(name, []); 
+      this.#name = name;
+    }
+    if (description !== undefined) {
+      Group.validateDescriptionRule(description);
+      this.#description = description;
+    }
+    if (photoUrl !== undefined) {
+      this.#photoUrl = photoUrl;
+    }
+    if (goalRep !== undefined) {
+      Group.validateGoalRepRule(goalRep);
+      this.#goalRep = goalRep;
+    }
+    if (discordWebhookUrl !== undefined) {
+      this.#discordWebhookUrl = discordWebhookUrl;
+    }
+    if (discordInviteUrl !== undefined) {
+      this.#discordInviteUrl = discordInviteUrl;
+    }
+    if (tags !== undefined) {
+      this.#tags = tags;
+    }
+
+    this.#updatedAt = new Date();
+  }
+  static forUpdate(existingGroup, updates) {
+    existingGroup.update(updates);
+    return existingGroup;
+  }
 
   static validateNameRule(name, existingGroupNames) {
     if (!name || name.length <= 1) {
       throw new Exception(
         EXCEPTION_INFO.NAME_INVALID_LENGTH.statusCode,
         EXCEPTION_INFO.NAME_INVALID_LENGTH.message,
-        "name",
+        "name"
       );
     }
     if (existingGroupNames.includes(name)) {
       throw new Exception(
         EXCEPTION_INFO.NAME_CONFLICT.statusCode,
         EXCEPTION_INFO.NAME_CONFLICT.message,
-        "name",
+        "name"
       );
     }
   }
@@ -191,7 +230,7 @@ export class Group {
       throw new Exception(
         EXCEPTION_INFO.DESCRIPTION_INVALID_LENGTH.statusCode,
         EXCEPTION_INFO.DESCRIPTION_INVALID_LENGTH.message,
-        "description",
+        "description"
       );
     }
   }
@@ -200,7 +239,7 @@ export class Group {
       throw new Exception(
         EXCEPTION_INFO.GOAL_REP_INVALID_RANGE.statusCode,
         EXCEPTION_INFO.GOAL_REP_INVALID_RANGE.message,
-        "goalRep",
+        "goalRep"
       );
     }
   }
