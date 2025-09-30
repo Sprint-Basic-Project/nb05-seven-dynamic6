@@ -11,7 +11,7 @@ export class CreateGroupDTO extends BaseReqDTO {
     if (!this.body) {
       throw new Exception(
         EXCEPTION_INFO.UNKNOWN_SERVER_ERROR.statusCode,
-        EXCEPTION_INFO.UNKNOWN_SERVER_ERROR.message
+        EXCEPTION_INFO.UNKNOWN_SERVER_ERROR.message,
       );
     }
     const {
