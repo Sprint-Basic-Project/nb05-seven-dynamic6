@@ -34,7 +34,7 @@ export class CreateGroupDTO extends BaseReqDTO {
         info: EXCEPTION_INFO.PHOTO_URL_REQUIRE,
       });
     }
-    if (!this.isBoolean(goalRep)) {
+    if (!this.isNumber(goalRep)) {
       throw new Exception({
         info: EXCEPTION_INFO.GOAL_REP_REQUIRE,
       });
@@ -54,11 +54,16 @@ export class CreateGroupDTO extends BaseReqDTO {
     }
 
     const tagPattern = /^#[0-9A-Za-z가-힣]+$/;
-    if (!tagPattern.test(tags)) {
+    if (!Array.isArray(tags) || tags.length === 0) {
       throw new Exception({
         info: EXCEPTION_INFO.TAGS_ITEM_INVALID,
       });
     }
+    tags.forEach((t) => {
+      if (!this.isString(t) || !tagPattern.test(t)) {
+        throw new Exception({ info: EXCEPTION_INFO.TAGS_ITEM_INVALID });
+      }
+    });
 
     if (!this.isString(tags)) {
       throw new Exception({
@@ -76,6 +81,9 @@ export class CreateGroupDTO extends BaseReqDTO {
         info: EXCEPTION_INFO.OWNER_PASSWORD_REQUIRE,
       });
     }
+    if (!this.body) {
+      throw new Exception({ info: EXCEPTION_INFO.BODY_REQUIRE });
+    }
     return {
       name,
       description,
@@ -84,7 +92,7 @@ export class CreateGroupDTO extends BaseReqDTO {
       discordWebhookUrl,
       discordInviteUrl,
       tags,
-      userNickanme: ownerNickname,
+      userNickname: ownerNickname,
       userPassword: ownerPassword,
     };
   }
