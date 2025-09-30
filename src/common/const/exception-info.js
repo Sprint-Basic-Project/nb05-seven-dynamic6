@@ -6,22 +6,18 @@ export const EXCEPTION_INFO = {
 
   GROUP_NOT_FOUND: {
     statusCode: 404,
-    message: "Group not found",
+    message: "그룹이 존재하지 않습니다.",
   },
 
   WRONG_PASSWORD: {
     statusCode: 401,
     path: "password",
-    message: "Wrong password",
+    message: "유효하지 않은 비밀번호입니다.",
   },
   // 공통
-  UNKNOWN_SERVER_ERROR: {
-    statusCode: 500,
-    message: "알 수 없는 서버 에러입니다.",
-  },
   RESOURCE_NOT_FOUND: {
     statusCode: 404,
-    message: "요청리소스가 존재하지 않습니다.",
+    message: "요청 리소스가 존재하지 않습니다.",
   },
   //create-group필드에러 ~
   NAME_REQUIRE: {
@@ -136,5 +132,68 @@ export const EXCEPTION_INFO = {
   SERVICE_UNAVAILABLE: {
     statusCode: 503,
     message: "서비스를 일시적으로 사용할 수 없습니다.",
+  },
+  // record 관련 
+  GROUP_ID_INVALID: {
+    statusCode: 400,
+    path: "groupId",
+    message: 
+      "groupId는 정수여야 합니다.",
+  },
+
+  EXERCISE_TYPE_INVALID: {
+    statusCode: 400,
+    path: "exerciseType",
+    message:
+      "운동 종류가 없거나 형식이 올바르지 않음. 운동은 RUNNING, SWIMMING, CYCLING 중 하나여야 합니다.",
+  },
+
+  DESCRIPTION_INVALID: {
+    statusCode: 400,
+    path: "description",
+    message: 
+      "설명(description)이 없거나 형식이 올바르지 않습니다.",
+  },
+
+  TIME_INVALID: {
+    statusCode: 400,
+    path: "time",
+    message:
+      "시간(time)이 없거나 형식이 올바르지 않음. 시간은 0 이상의 정수여야 합니다.",
+  },
+
+  DISTANCE_INVALID: {
+    statusCode: 400,
+    path: "distance",
+    message:
+      "거리(distance)가 없거나 형식이 올바르지 않음. 거리는 0 이상의 숫자여야 합니다.",
+  },
+
+  PHOTOS_COUNT_EXCEEDED: {
+    statusCode: 400,
+    path: "photos",
+    message: "사진은 최대 3장까지 등록 가능합니다.",
+  },
+
+  AUTHOR_NICKNAME_REQUIRE: {
+    statusCode: 400,
+    path: "authorNickname",
+    message: "닉네임(authorNickname)을 입력하세요.",
+  },
+
+  AUTHOR_PASSWORD_REQUIRE: {
+    statusCode: 400,
+    path: "authorPassword",
+    message: "비밀번호(authorPassword)를 입력하세요.",
+  },
+
+  RECORD_NOT_FOUND: {
+    statusCode: 404,
+    message: "기록이 존재하지 않습니다",
+  },
+
+  RECORD_SAVE_FAILED: {
+    statusCode: 500,
+    message: "운동 기록 저장 중에 오류가 발생했습니다.",
   },
 };
