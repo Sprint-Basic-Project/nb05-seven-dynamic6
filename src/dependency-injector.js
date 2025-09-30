@@ -36,11 +36,7 @@ export class DependencyInjector {
     const imageController = new ImageController();
     const recordController = new RecordController(recordService);
 
-    const controllers = [
-      groupController,
-      imageController,
-      recordController,
-    ];
+    const controllers = [groupController, imageController, recordController];
 
     return new Server(controllers);
   }

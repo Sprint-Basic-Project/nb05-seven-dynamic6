@@ -6,7 +6,7 @@ const EXERCISES = ["RUNNING", "SWIMMING", "CYCLING"];
 
 // USERS
 export const USERS = Array.from({ length: 10 }).map((_, i) => ({
-  userId: uuid(),
+  id: uuid(),
   nickname: `user${i}`,
   passwordHash: `hashed_password_${i}`,
   createdAt: now(),
@@ -16,7 +16,7 @@ export const USERS = Array.from({ length: 10 }).map((_, i) => ({
 
 // GROUPS
 export const GROUPS = Array.from({ length: 10 }).map((_, i) => ({
-  groupId: uuid(),
+  id: uuid(),
   name: `group${i}`,
   description: `Description for group ${i}`,
   imageUrl: `https://example.com/group${i}.jpg`,
@@ -28,21 +28,22 @@ export const GROUPS = Array.from({ length: 10 }).map((_, i) => ({
   recordCount: Math.floor(Math.random() * 50),
   discordWebhookUrl: `https://discord.com/api/webhooks/group${i}`,
   discordInviteUrl: `https://discord.gg/invite${i}`,
-  userUserId: USERS[i % USERS.length].userId,
+  userId: USERS[i % USERS.length].id,
 }));
 
-// USER_JOIN_GROUP
+// USER_JOIN_GROUPS
 export const USER_JOIN_GROUPS = Array.from({ length: 10 }).map((_, i) => ({
-  ugId: uuid(),
+  id: uuid(),
   joinedAt: now(),
   updatedAt: now(),
-  groupGroupId: GROUPS[i % GROUPS.length].groupId,
-  userUserId: USERS[i % USERS.length].userId,
+  deletedAt: null,
+  groupId: GROUPS[i % GROUPS.length].id,
+  userId: USERS[i % USERS.length].id,
 }));
 
 // RECORDS
 export const RECORDS = Array.from({ length: 10 }).map((_, i) => ({
-  recordId: uuid(),
+  id: uuid(),
   exerciseType: EXERCISES[i % EXERCISES.length],
   description: `Record ${i} description`,
   time: Math.floor(Math.random() * 120) + 10,
@@ -50,23 +51,23 @@ export const RECORDS = Array.from({ length: 10 }).map((_, i) => ({
   createdAt: now(),
   updatedAt: now(),
   deletedAt: null,
-  userJoinGroupUgId: USER_JOIN_GROUPS[i % USER_JOIN_GROUPS.length].ugId,
-  groupGroupId: GROUPS[i % GROUPS.length].groupId,
-  userUserId: USERS[i % USERS.length].userId,
+  userJoinGroupId: USER_JOIN_GROUPS[i % USER_JOIN_GROUPS.length].id,
+  groupId: GROUPS[i % GROUPS.length].id,
+  userId: USERS[i % USERS.length].id,
 }));
 
 // RECORD_IMAGES
 export const RECORD_IMAGES = Array.from({ length: 10 }).map((_, i) => ({
-  imageId: uuid(),
+  id: uuid(),
   imageUrl: `https://example.com/record${i}.jpg`,
-  recordRecordId: RECORDS[i % RECORDS.length].recordId,
+  recordId: RECORDS[i % RECORDS.length].id,
 }));
 
 // TAGS
 export const TAGS = Array.from({ length: 10 }).map((_, i) => ({
-  tagId: uuid(),
+  id: uuid(),
   name: `Tag${i}`,
   createdAt: now(),
   updatedAt: now(),
-  groupGroupId: GROUPS[i % GROUPS.length].groupId,
+  groupId: GROUPS[i % GROUPS.length].id,
 }));
