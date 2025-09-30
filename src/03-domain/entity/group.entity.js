@@ -1,3 +1,4 @@
+import { EXCEPTION_INFO } from "../../common/exception-info";
 export class Group {
   #id;
   #name;
@@ -17,7 +18,6 @@ export class Group {
   #deletedAt;
   #badges;
   #ownerPassword;
-
 
   constructor({
     id,
@@ -91,7 +91,6 @@ export class Group {
     return this.#deletedAt;
   }
 
-
   get likeCount() {
     return this.#likeCount;
   }
@@ -135,12 +134,68 @@ export class Group {
   }
 
   evaluateBadges() {
-
     if (this.#memberCount >= 10 && !this.#badges.includes("PARTICIPATION_10"))
       this.#badges.push("PARTICIPATION_10");
     if (this.#recordCount >= 100 && !this.#badges.includes("RECORD_100"))
       this.#badges.push("RECORD_100");
     if (this.#likeCount >= 100 && !this.#badges.includes("LIKE_100"))
       this.#badges.push("LIKE_100");
+  }
+
+  //create
+
+  static forCreate({
+    name,
+    description,
+    photoUrl,
+    goalRep,
+    discordWebhookUrl,
+    discordInviteUrl,
+    tags,
+  }) {
+    this.validateNameRule(name);
+    this.validateDescriptionRulle(description);
+    this.validatePhotoUrlRule(photoUrl);
+    this.validateGoalRepRule(goalRep);
+    this.validateDiscordWebhookUrlRule(discordWebhookUrl);
+    this.validateDiscordInviteUrlRule(discordInviteUrl);
+    this.validateTagsRule(tags);
+
+    return new Group({
+      name,
+      description,
+      photoUrl,
+      goalRep,
+      discordWebhookUrl,
+      discordInviteUrl,
+      tags,
+    });
+  }
+
+  static forGetGroup({ name, tag, createdAt, participant, likeCount }) {
+    this.validateTitleRule();
+    return new GetGroup({ name, tag, createdAt, participant, likeCount });
+  }
+
+  static validateNameRule(name) {
+    if (name.lenth <= 1) {
+      throw Exception({
+        info: EXCEPTION_INFO.NAME_INVALID_LENGTH,
+      });
+    }
+  }
+  static validateDescriptionRulle(description) {
+    if (description.lenth <= 1) {
+      throw Exception({
+        info: EXCEPTION_INFO.DESCRIPTION_INVALID_LENGTH,
+      });
+    }
+  }
+  static validateGoalRepRule(goalRep) {
+    if (goalRep.lenth > 100) {
+      throw Exception({
+        info: EXCEPTION_INFO.GOAL_REP_INVALID_RANGE,
+      });
+    }
   }
 }

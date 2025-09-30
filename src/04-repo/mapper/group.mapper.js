@@ -23,4 +23,16 @@ export class GroupMapper {
       ownerPassword: record.ownerPassword, //ownerPassword 추가
     });
   }
+  //create
+  static toPersistent(entity) {
+    return {
+      id: entity.id,
+      name: entity.name,
+      description: entity.description,
+      photoUrl: entity.photoUrl,
+      goalRep: entity.goalRep,
+      discordWebhookUrl: entity.discordWebhookUrl,
+      discordInviteUrl: entity.discordInviteUrl,
+    };
+  }
 }

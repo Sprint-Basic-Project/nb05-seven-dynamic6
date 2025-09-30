@@ -90,11 +90,11 @@ export class GroupRepo {
     // 그룹명에 search가 포함되는지 검색
     const where = search
       ? {
-        name: {
-          contains: search,
-          mode: "insensitive", // 대소문자 무시
-        },
-      }
+          name: {
+            contains: search,
+            mode: "insensitive", // 대소문자 무시
+          },
+        }
       : {};
 
     const result = await this.#prisma.group.findMany({
@@ -108,20 +108,19 @@ export class GroupRepo {
         userJoinGroup: {
           include: {
             user: true, // 그룹에 참여한 유저 (participant)
-
           },
         },
         _count: {
           select: {
-            userJoinGroup: true,  // 참여자 수 카운트를 포함
-            record: true,         // 필요 시 추가
-          }
-        }
+            userJoinGroup: true, // 참여자 수 카운트를 포함
+            record: true, // 필요 시 추가
+          },
+        },
       },
     });
 
     console.log(result);
-    
+
     // 참여한 유저순으로 정렬
     if (orderByField === "participantCount") {
       result.sort((a, b) => {
@@ -133,5 +132,16 @@ export class GroupRepo {
 
     const entities = result.map((record) => GroupMapper.toEntity(record));
     return entities;
+  }
+
+  //create
+  async create({ entity, ownerId }) {
+    const createdGroup = await this.prisma.post.create({
+      data: {
+        ...GroupMapper.toPersistent(entity),
+        user: { connect: { userUserId: ownerId } },
+      },
+    });
+    return GroupMapper.toEntity(createdGroup);
   }
 }

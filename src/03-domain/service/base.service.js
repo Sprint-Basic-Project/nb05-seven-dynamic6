@@ -3,8 +3,8 @@ export class BaseService {
   constructor(repos) {
     this.#repos = repos;
   }
-  
+
   get repos() {
-    return this.#repos
+    return this.#repos;
   }
 }
