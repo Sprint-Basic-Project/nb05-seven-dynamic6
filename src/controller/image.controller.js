@@ -33,7 +33,6 @@ export class ImageController extends BaseController {
     );
   }
 
-
   imageUpload = async (req, res) => {
     const files = req.files;
     const urls = [];

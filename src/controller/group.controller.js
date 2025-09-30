@@ -42,13 +42,13 @@ export class GroupController extends BaseController {
 
   likeGroup = async (req, res) => {
     const groupId = req.params.groupId;
-    const result = await this.#groupService.increaseLike({ groupId });
+    const result = await this.#groupService.likeGroup({ groupId });
     return res.status(200).json(result);
   };
 
   unlikeGroup = async (req, res) => {
     const groupId = req.params.groupId;
-    const result = await this.#groupService.decreaseLike({ groupId });
+    const result = await this.#groupService.unlikeGroup({ groupId });
     return res.status(200).json(result);
   };
 

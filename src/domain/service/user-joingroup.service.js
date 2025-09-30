@@ -1,7 +1,7 @@
 import { BaseService } from "./base.service.js";
-import { UserJoinGroupResDto } from "../../02-controller/res-dto/user-joingroup.res.dto.js";
-import { Exception } from "../common/exception/exception.js";
-import { EXCEPTION_INFO } from "../common/exception/exception.js";
+import { UserJoinGroupResDto } from "../../controller/res-dto/user-joingroup.res.dto.js";
+import { Exception } from "../../common/exception/exception.js";
+import { EXCEPTION_INFO } from "../../common/const/exception-info.js";
 
 export class UserJoinGroupService extends BaseService {
   constructor({ repos, authService }) {
