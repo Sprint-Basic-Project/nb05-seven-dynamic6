@@ -147,15 +147,16 @@ export class Group {
   static forCreate({
     name,
     description,
-    photoUrl,
+    imageUrl,
     goalRep,
     discordWebhookUrl,
     discordInviteUrl,
     tags,
+    userId,
   }) {
     this.validateNameRule(name);
     this.validateDescriptionRulle(description);
-    this.validatePhotoUrlRule(photoUrl);
+    this.validatePhotoUrlRule(imageUrl);
     this.validateGoalRepRule(goalRep);
     this.validateDiscordWebhookUrlRule(discordWebhookUrl);
     this.validateDiscordInviteUrlRule(discordInviteUrl);
@@ -164,11 +165,12 @@ export class Group {
     return new Group({
       name,
       description,
-      photoUrl,
+      imageUrl,
       goalRep,
       discordWebhookUrl,
       discordInviteUrl,
       tags,
+      owner: userId,
     });
   }
 
@@ -178,21 +180,21 @@ export class Group {
   }
 
   static validateNameRule(name) {
-    if (name.lenth <= 1) {
-      throw Exception({
+    if (!name || name.length <= 1) {
+      throw new Exception({
         info: EXCEPTION_INFO.NAME_INVALID_LENGTH,
       });
     }
   }
-  static validateDescriptionRulle(description) {
-    if (description.lenth <= 1) {
+  static validateDescriptionRule(description) {
+    if (!description || description.length <= 1) {
       throw Exception({
         info: EXCEPTION_INFO.DESCRIPTION_INVALID_LENGTH,
       });
     }
   }
   static validateGoalRepRule(goalRep) {
-    if (goalRep.lenth > 100) {
+    if (typeof goalRep !== "number" || goalRep < 1 || goalRep > 100) {
       throw Exception({
         info: EXCEPTION_INFO.GOAL_REP_INVALID_RANGE,
       });

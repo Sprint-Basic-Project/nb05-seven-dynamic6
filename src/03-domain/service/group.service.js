@@ -78,13 +78,13 @@ export class GroupService extends BaseService {
     if (!owner) {
       throw new Exception(
         EXCEPTION_INFO.OWNER_AUTH_FAILED.statusCode,
-        EXCEPTION_INFO.OWNER_AUTH_FAILED.message
+        EXCEPTION_INFO.OWNER_AUTH_FAILED.message,
       );
     }
     if (owner.password !== userPassword) {
       throw new Exception(
         EXCEPTION_INFO.WRONG_PASSWORD.statusCode,
-        EXCEPTION_INFO.WRONG_PASSWORD.message
+        EXCEPTION_INFO.WRONG_PASSWORD.message,
       );
     }
     const group = Group.forCreate({
@@ -98,7 +98,7 @@ export class GroupService extends BaseService {
     });
     const createdGroup = await this.#repos.groupRepo.create({
       entity: group,
-      userId: owner.id, 
+      userId: owner.id,
     });
     return createdGroup;
   }
