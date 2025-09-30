@@ -94,27 +94,43 @@ export class Record {
     const allowedExercise = ["RUNNING", "SWIMMING", "CYCLING"];
     if (!allowedExercise.includes(exerciseType)) {
       throw new Exception(
-        400,
-        "운동 종류는 RUNNING, SWIMMING, CYCLING 중 하나여야 한다.",
+        EXCEPTION_INFO.EXERCISE_TYPE_INVALID.statusCode,
+        EXCEPTION_INFO.EXERCISE_TYPE_INVALID.message,
+        EXCEPTION_INFO.EXERCISE_TYPE_INVALID.path,
       );
     }
     const desc = description ? String(description).trim() : "";
     if (!desc) {
-      throw new Exception(400, "설명은 필수");
+      throw new Exception(
+        EXCEPTION_INFO.DESCRIPTION_INVALID.statusCode,
+        EXCEPTION_INFO.DESCRIPTION_INVALID.message,
+        EXCEPTION_INFO.DESCRIPTION_INVALID.path,
+      );
     }
     if (!Number.isInteger(time) || time < 0) {
-      throw new Exception(400, "시간은 0이상의 정수여야 한다");
+      throw new Exception(
+        EXCEPTION_INFO.TIME_INVALID.statusCode,
+        EXCEPTION_INFO.TIME_INVALID.message,
+        EXCEPTION_INFO.TIME_INVALID.path,
+      );
     }
     if (
       typeof distance !== "number" ||
       Number.isNaN(distance) ||
       distance < 0
     ) {
-      throw new Exception(400, "거리는 0이상의 실수여야 한다.");
+      throw new Exception(
+        EXCEPTION_INFO.DISTANCE_INVALID.statusCode,
+        EXCEPTION_INFO.DISTANCE_INVALID.message,
+        EXCEPTION_INFO.DISTANCE_INVALID.path,
+      );
     }
-    // 숫자가 DB에 들어가게 변환해야될걸..? 아마도..(거리, 시간)
     if (images && images.length > 3) {
-      throw new Exception(400, "사진은 최대 3장까지만 등록 가능");
+      throw new Exception(
+        EXCEPTION_INFO.PHOTOS_COUNT_EXCEEDED.statusCode,
+        EXCEPTION_INFO.PHOTOS_COUNT_EXCEEDED.message,
+        EXCEPTION_INFO.PHOTOS_COUNT_EXCEEDED.path,
+      );
     }
 
     return new Record({
