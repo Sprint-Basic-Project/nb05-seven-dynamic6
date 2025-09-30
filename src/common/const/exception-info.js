@@ -144,7 +144,7 @@ export const EXCEPTION_INFO = {
   },
   NICKNAME_ALREADY_EXISTS: {
     statusCode: 409,
-    path:"nickname",
+    path: "nickname",
     message: "이미 존재하는 nickname입니다.",
   },
   ALREADY_JOINED_GROUP: {
