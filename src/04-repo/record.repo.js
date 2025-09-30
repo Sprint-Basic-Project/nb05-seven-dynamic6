@@ -1,4 +1,5 @@
 // DB저장, 조회
+import { EXCEPTION_INFO } from "../common/const/exception-info.js";
 import { Exception } from "../common/exception/exception.js";
 import { RecordMapper } from "./mapper/record.mapper.js";
 
@@ -24,7 +25,10 @@ export class RecordRepo {
       });
       return RecordMapper.toEntity(saved);
     } catch (e) {
-      throw new Exception(500, "운동 기록 저장 중에 오류 발생");
+      throw new Exception(
+        EXCEPTION_INFO.RECORD_SAVE_FAILED.statusCode,
+        EXCEPTION_INFO.RECORD_SAVE_FAILED.message
+      );
     }
   }
 

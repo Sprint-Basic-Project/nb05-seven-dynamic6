@@ -1,5 +1,6 @@
 import { Record } from "../entity/record.js";
 import { Exception } from "../../common/exception/exception.js";
+import { EXCEPTION_INFO } from "../../common/const/exception-info.js";
 import { DiscordAdapter } from "../../common/adapter/discord.adapter.js";
 
 export class RecordService {
@@ -12,7 +13,10 @@ export class RecordService {
   async createRecord(dto) {
     const group = await this.#repos.groupRepo.findById(dto.groupId);
     if (!group) {
-      throw new Exception(404, "존재하지 않는 그룹");
+      throw new Exception(
+          EXCEPTION_INFO.GROUP_NOT_FOUND.statusCode,
+          EXCEPTION_INFO.GROUP_NOT_FOUND.message,
+      );
     }
     const entity = Record.forCreate(dto);
     const saved = await this.#repos.recordRepo.save(entity);
