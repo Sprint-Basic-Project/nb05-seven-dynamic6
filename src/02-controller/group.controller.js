@@ -1,6 +1,8 @@
 import { BaseController } from "./base.controller.js";
 import { verifyGroupPassword } from "../common/middleware/auth.js";
 import { CreateGroupDTO } from "./req-dto/create-group.req.dto.js";
+import { CreateGroupResDto } from "./res-dto/create-group.res.dto.js";
+import { Exception } from "../common/exception/exception.js";
 
 export class GroupController extends BaseController {
   #groupService;
@@ -57,13 +59,16 @@ export class GroupController extends BaseController {
     await this.#groupService.deleteGroup({ groupId });
     return res.status(200).json({ message: "그룹 삭제가 완료되었습니다." });
   };
-  
+
   createGroupMiddleware = async (req, res, next) => {
     const reqDto = new CreateGroupDTO({
       body: req.body,
     }).validate();
     const group = await this.#groupService.createGroup(reqDto);
+    if (!group) {
+      throw new Exception(400, "그룹 생성에 실패했습니다.");
+    }
     const resDto = new CreateGroupResDto(group);
-    return res.json(resDto);
+    return res.status(201).json(resDto);
   };
 }

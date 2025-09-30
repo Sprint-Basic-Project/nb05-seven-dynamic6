@@ -1,9 +1,11 @@
-import { EXCEPTION_INFO } from "../../common/exception-info";
+import { EXCEPTION_INFO } from "../../common/const/exception-info.js";
+import { Exception } from "../../common/exception/exception.js";
+
 export class Group {
   #id;
   #name;
   #description;
-  #imageUrl;
+  #photoUrl;
   #goalRep;
   #discordWebhookUrl;
   #discordInviteUrl;
@@ -22,7 +24,7 @@ export class Group {
     id,
     name,
     description,
-    imageUrl,
+    photoUrl,
     goalRep,
     discordWebhookUrl,
     discordInviteUrl,
@@ -38,7 +40,7 @@ export class Group {
   }) {
     this.#id = id;
     this.#description = description;
-    this.#imageUrl = imageUrl;
+    this.#photoUrl = photoUrl;
     this.#goalRep = goalRep;
     this.#discordWebhookUrl = discordWebhookUrl;
     this.#discordInviteUrl = discordInviteUrl;
@@ -68,8 +70,8 @@ export class Group {
     return this.#description;
   }
 
-  get imageUrl() {
-    return this.#imageUrl;
+  get photoUrl() {
+    return this.#photoUrl;
   }
 
   get goalRep() {
@@ -149,14 +151,12 @@ export class Group {
     discordWebhookUrl,
     discordInviteUrl,
     tags,
+    userId,
+    existingGroupNames = [],
   }) {
-    this.validateNameRule(name);
-    this.validateDescriptionRulle(description);
-    this.validatePhotoUrlRule(photoUrl);
+    this.validateNameRule(name, existingGroupNames);
+    this.validateDescriptionRule(description);
     this.validateGoalRepRule(goalRep);
-    this.validateDiscordWebhookUrlRule(discordWebhookUrl);
-    this.validateDiscordInviteUrlRule(discordInviteUrl);
-    this.validateTagsRule(tags);
 
     return new Group({
       name,
@@ -166,33 +166,42 @@ export class Group {
       discordWebhookUrl,
       discordInviteUrl,
       tags,
+      owner: userId,
     });
   }
 
-  static forGetGroup({ name, tag, createdAt, participant, likeCount }) {
-    this.validateTitleRule();
-    return new GetGroup({ name, tag, createdAt, participant, likeCount });
-  }
-
-  static validateNameRule(name) {
-    if (name.lenth <= 1) {
-      throw Exception({
-        info: EXCEPTION_INFO.NAME_INVALID_LENGTH,
-      });
+  static validateNameRule(name, existingGroupNames) {
+    if (!name || name.length <= 1) {
+      throw new Exception(
+        EXCEPTION_INFO.NAME_INVALID_LENGTH.statusCode,
+        EXCEPTION_INFO.NAME_INVALID_LENGTH.message,
+        "name",
+      );
+    }
+    if (existingGroupNames.includes(name)) {
+      throw new Exception(
+        EXCEPTION_INFO.NAME_CONFLICT.statusCode,
+        EXCEPTION_INFO.NAME_CONFLICT.message,
+        "name",
+      );
     }
   }
-  static validateDescriptionRulle(description) {
-    if (description.lenth <= 1) {
-      throw Exception({
-        info: EXCEPTION_INFO.DESCRIPTION_INVALID_LENGTH,
-      });
+  static validateDescriptionRule(description) {
+    if (!description || description.length <= 5) {
+      throw new Exception(
+        EXCEPTION_INFO.DESCRIPTION_INVALID_LENGTH.statusCode,
+        EXCEPTION_INFO.DESCRIPTION_INVALID_LENGTH.message,
+        "description",
+      );
     }
   }
   static validateGoalRepRule(goalRep) {
-    if (goalRep.lenth > 100) {
-      throw Exception({
-        info: EXCEPTION_INFO.GOAL_REP_INVALID_RANGE,
-      });
+    if (typeof goalRep !== "number" || goalRep < 1 || goalRep > 100) {
+      throw new Exception(
+        EXCEPTION_INFO.GOAL_REP_INVALID_RANGE.statusCode,
+        EXCEPTION_INFO.GOAL_REP_INVALID_RANGE.message,
+        "goalRep",
+      );
     }
   }
 }
