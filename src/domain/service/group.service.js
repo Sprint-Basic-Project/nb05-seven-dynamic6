@@ -4,6 +4,7 @@ import { Exception } from "../../common/exception/exception.js";
 import { EXCEPTION_INFO } from "../../common/const/exception-info.js";
 import { Group } from "../entity/group.entity.js";
 import { BaseService } from "./base.service.js";
+import bcrypt from "bcrypt";
 
 export class GroupService extends BaseService {
   #repos;
@@ -126,22 +127,31 @@ export class GroupService extends BaseService {
         "ownerNickname",
       );
     }
-    if (owner.password !== ownerPassword) {
+    //아래 배포용(hash)
+    // if (!bcrypt.compareSync(ownerPassword, owner.passwordHash)) {
+    //   throw new Exception(
+    //     EXCEPTION_INFO.WRONG_PASSWORD.statusCode,
+    //     EXCEPTION_INFO.WRONG_PASSWORD.message,
+    //     "password"
+    //   );
+    // }
+    //아래 test용
+    if (owner.passwordHash !== ownerPassword) {
       throw new Exception(
         EXCEPTION_INFO.WRONG_PASSWORD.statusCode,
         EXCEPTION_INFO.WRONG_PASSWORD.message,
         "password",
       );
     }
-
-    if (name) groupEntity.name = name;
-    if (description) groupEntity.description = description;
-    if (photoUrl) groupEntity.imageUrl = photoUrl;
-    if (goalRep !== undefined) groupEntity.goalRep = goalRep;
-    if (discordWebhookUrl) groupEntity.discordWebhookUrl = discordWebhookUrl;
-    if (discordInviteUrl) groupEntity.discordInviteUrl = discordInviteUrl;
-    if (tags) groupEntity.tags = tags;
-    groupEntity.updatedAt = new Date();
+    groupEntity.update({
+      name,
+      description,
+      photoUrl,
+      goalRep,
+      discordWebhookUrl,
+      discordInviteUrl,
+      tags,
+    });
 
     const updated = await this.#repos.groupRepo.save(groupEntity);
     return updated;
