@@ -2,6 +2,8 @@ import { Group } from "../../domain/entity/group.entity.js";
 
 export class GroupMapper {
   static toEntity(record) {
+    if (!record) return null;
+
     return new Group({
       id: record.id,
       name: record.name,
@@ -11,17 +13,19 @@ export class GroupMapper {
       createdAt: record.createdAt,
       updatedAt: record.updatedAt,
       deletedAt: record.deletedAt,
-      likeCount: record.likeCount,
+      likeCount: record.likeCount ?? 0,
       discordWebhookUrl: record.discordWebhookUrl,
       discordInviteUrl: record.discordInviteUrl,
-      recordCount: record.recordCount ?? record._count?.record ?? 0,
-      memberCount: record._count?.userJoinGroup ?? 0,
-      owner: record.user,
+      recordCount: record.recordCount ?? record._count?.records ?? 0,
+      memberCount: record._count?.userJoinGroups ?? 0,
+      owner: record.user ?? { id: record.userId },
       tags: (record.tags ?? []).map((tag) => tag.name),
-      participants: (record.userJoinGroups ?? []).map((group) => group.user),
+      participants: (record.userJoinGroups ?? []).map((group) =>
+      group.user ? { id: group.user.id, nickname: group.user.nickname } : null,
+      ),
     });
   }
-  //create
+
   static toPersistent(entity) {
     return {
       id: entity.id,
