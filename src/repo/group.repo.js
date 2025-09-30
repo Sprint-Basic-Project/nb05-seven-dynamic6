@@ -128,7 +128,6 @@ export class GroupRepo {
       },
     });
 
-
     // 참여한 유저순으로 정렬
     if (orderByField === "participantCount") {
       result.sort((a, b) => {
