@@ -46,7 +46,7 @@ export class DependencyInjector {
       repos,
       authService,
     });
-    const recordService = new RecordService(repos);
+    const recordService = new RecordService({repos, authService});
 
     // Controllers (넵)
     const groupController = new GroupController(groupService, userRepo);

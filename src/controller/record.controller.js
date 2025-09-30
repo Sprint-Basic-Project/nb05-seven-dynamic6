@@ -45,7 +45,7 @@ export class RecordController extends BaseController {
     const { groupId } = req.params;
     const { orderBy = "latest", nickname, page = 1, pageSize = 10 } = req.query;
 
-    const records = await this.#service.getRecords({
+    const records = await this.#service.getRecord({
       groupId,
       orderBy,
       nickname,

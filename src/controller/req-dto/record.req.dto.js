@@ -4,18 +4,37 @@ import { BaseReqDTO } from "./base.req.dto.js";
 import { EXCEPTION_INFO } from "../../common/const/exception-info.js";
 import { Exception } from "../../common/exception/exception.js";
 
+const normalizeExerciseType = (rawType) => {
+  if(!rawType) return rawType;
+  const map = {
+    run: "RUNNING",
+    running: "RUNNING",
+    swim: "SWIMMING",
+    swimming: "SWIMMING",
+    cycle: "CYCLING",
+    cycling: "CYCLING"
+  };
+  const key = String(rawType).trim().toLowerCase();
+  return map[key] ?? String(rawType).trim().toUpperCase();
+};
+
 export class RecordReqDTO extends BaseReqDTO {
   validate() {
-    const {
-      exerciseType,
-      description,
-      time,
-      distance,
-      images = [],
-      nickname,
-      password,
-    } = this.body || {};
-    const { groupId } = this.params || {};
+    const reqBody = this.body ?? {};
+    const reqParams = this.params ?? {};
+    const { groupId } = reqParams;
+    
+    const exerciseType = normalizeExerciseType(reqBody.exerciseType);
+    const description = String(reqBody.description ?? "").trim();
+    const time = Number(reqBody.time);
+    const distance = Number(reqBody.distance);
+    const images = Array.isArray(reqBody.images)
+      ? reqBody.images
+      : Array.isArray(reqBody.photos)
+      ? reqBody.photos
+      : [];
+    const nickname = (reqBody.nickname ?? reqBody.authorNickname)?.toString().trim();
+    const password = (reqBody.password ?? reqBody.authorPassword)?.toString().trim();
 
     if (!groupId) {
       throw new Exception(
@@ -32,23 +51,22 @@ export class RecordReqDTO extends BaseReqDTO {
       );
     }
 
-    const desc = description ? String(description).trim() : "";
-    if (!desc) {
+    if (!description) {
       throw new Exception(
-        XCEPTION_INFO.DESCRIPTION_INVALID.statusCode,
-        XCEPTION_INFO.DESCRIPTION_INVALID.message,
-        XCEPTION_INFO.DESCRIPTION_INVALID.path,
+        EXCEPTION_INFO.DESCRIPTION_INVALID.statusCode,
+        EXCEPTION_INFO.DESCRIPTION_INVALID.message,
+        EXCEPTION_INFO.DESCRIPTION_INVALID.path,
       );
     }
 
-    if (time === undefined || !Number.isFinite(Number(time))) {
+    if (time === undefined || !Number.isFinite(time)) {
       throw new Exception(
         EXCEPTION_INFO.TIME_INVALID.statusCode,
         EXCEPTION_INFO.TIME_INVALID.message,
         EXCEPTION_INFO.TIME_INVALID.path,
       );
     }
-    if (distance === undefined || !Number.isFinite(Number(distance))) {
+    if (distance === undefined || !Number.isFinite(distance)) {
       throw new Exception(
         EXCEPTION_INFO.DISTANCE_INVALID.statusCode,
         EXCEPTION_INFO.DISTANCE_INVALID.message,
@@ -80,12 +98,12 @@ export class RecordReqDTO extends BaseReqDTO {
     return {
       groupId,
       exerciseType,
-      description: desc,
-      time: Number(time),
-      distance: Number(distance),
+      description,
+      time,
+      distance,
       images,
-      nickname: String(nickname).trim(),
-      password: String(password).trim(),
+      nickname,
+      password,
     };
   }
 }
