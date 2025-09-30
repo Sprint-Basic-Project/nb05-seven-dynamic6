@@ -70,7 +70,7 @@ export class UserJoinGroupService extends BaseService {
 
   async leaveGroup({ groupId, nickname, password }) {
     //group 체크
-    const groupEntity = await this.repos.groupRepo.findById({ groupId });
+    const groupEntity = await this.repos.groupRepo.findById(groupId);
     if (!groupEntity) {
       throw new Exception(
         EXCEPTION_INFO.GROUP_NOT_FOUND.statusCode,
