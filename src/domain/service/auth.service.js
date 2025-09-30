@@ -1,5 +1,5 @@
 import { BaseService } from "./base.service.js";
-import { UserResDto } from "../../02-controller/res-dto/user.res.dto.js";
+import { User } from "../entity/user.js"
 import { Exception } from "../../common/exception/exception.js";
 import { EXCEPTION_INFO } from "../../common/const/exception-info.js";
 import bcrypt from "bcrypt";
@@ -21,8 +21,8 @@ export class AuthService extends BaseService {
     const isPasswordValid = await bcrypt.compare(password, user.passwordHash);
     if (!isPasswordValid) {
       throw new Exception(
-        EXCEPTION_INFO.INVALID_PASSWORD.statusCode,
-        EXCEPTION_INFO.INVALID_PASSWORD.message,
+        EXCEPTION_INFO.WRONG_PASSWORD.statusCode,
+        EXCEPTION_INFO.WRONG_PASSWORD.message,
       );
     }
 
@@ -30,13 +30,13 @@ export class AuthService extends BaseService {
   }
 
   async createUser({ nickname, password }) {
-    const existingUser = await this.repos.userRepo.findByNickname({nickname})
+    const existingUser = await this.repos.userRepo.findByNickname({ nickname });
 
-    if(existingUser) {
+    if (existingUser) {
       throw new Exception(
         EXCEPTION_INFO.NICKNAME_ALREADY_EXISTS.statusCode,
         EXCEPTION_INFO.NICKNAME_ALREADY_EXISTS.message,
-      )
+      );
     }
     const passwordHash = await bcrypt.hash(password, 10);
 
