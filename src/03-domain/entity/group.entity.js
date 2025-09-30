@@ -1,5 +1,5 @@
-import { EXCEPTION_INFO } from "../../common/exception-info";
-import { Exception } from "../../common/exception/exception";
+import { EXCEPTION_INFO } from "../../common/const/exception-info.js";
+import { Exception } from "../../common/exception/exception.js";
 
 export class Group {
   #id;
@@ -178,14 +178,14 @@ export class Group {
       throw new Exception(
         EXCEPTION_INFO.NAME_INVALID_LENGTH.statusCode,
         EXCEPTION_INFO.NAME_INVALID_LENGTH.message,
-        "name"
+        "name",
       );
     }
     if (existingGroupNames.includes(name)) {
       throw new Exception(
         EXCEPTION_INFO.NAME_CONFLICT.statusCode,
         EXCEPTION_INFO.NAME_CONFLICT.message,
-        "name"
+        "name",
       );
     }
   }
@@ -194,7 +194,7 @@ export class Group {
       throw new Exception(
         EXCEPTION_INFO.DESCRIPTION_INVALID_LENGTH.statusCode,
         EXCEPTION_INFO.DESCRIPTION_INVALID_LENGTH.message,
-        "description"
+        "description",
       );
     }
   }
@@ -203,7 +203,7 @@ export class Group {
       throw new Exception(
         EXCEPTION_INFO.GOAL_REP_INVALID_RANGE.statusCode,
         EXCEPTION_INFO.GOAL_REP_INVALID_RANGE.message,
-        "goalRep"
+        "goalRep",
       );
     }
   }

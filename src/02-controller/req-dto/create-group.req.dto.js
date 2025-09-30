@@ -1,5 +1,6 @@
-import { EXCEPTION_INFO } from "../common/exception-info";
-import { BaseReqDTO } from "../controller/base.req.validator";
+import { EXCEPTION_INFO } from "../../common/const/exception-info.js";
+import { Exception } from "../../common/exception/exception.js";
+import { BaseReqDTO } from "./base.req.dto.js";
 
 export class CreateGroupDTO extends BaseReqDTO {
   constructor(reqData) {
@@ -10,7 +11,7 @@ export class CreateGroupDTO extends BaseReqDTO {
     if (!this.body) {
       throw new Exception(
         EXCEPTION_INFO.UNKNOWN_SERVER_ERROR.statusCode,
-        EXCEPTION_INFO.UNKNOWN_SERVER_ERROR.message,
+        EXCEPTION_INFO.UNKNOWN_SERVER_ERROR.message
       );
     }
     const {
@@ -71,33 +72,23 @@ export class CreateGroupDTO extends BaseReqDTO {
       }
     });
 
-    if (!this.isString(tags)) {
-      throw new Exception({
-        info: EXCEPTION_INFO.TAGS_REQUIRE,
-      });
-    }
     if (!this.isString(ownerNickname)) {
-      //nickname
-      throw new Exception({
-        info: EXCEPTION_INFO.OWNER_NICKNAME_REQUIRE,
-      });
+      throw new Exception({ info: EXCEPTION_INFO.OWNER_NICKNAME_REQUIRE });
     }
     if (!this.isString(ownerPassword)) {
-      throw new Exception({
-        info: EXCEPTION_INFO.OWNER_PASSWORD_REQUIRE,
-      });
-
-      return {
-        name,
-        description,
-        photoUrl,
-        goalRep,
-        discordWebhookUrl,
-        discordInviteUrl,
-        tags,
-        userNickname: ownerNickname,
-        userPassword: ownerPassword,
-      };
+      throw new Exception({ info: EXCEPTION_INFO.OWNER_PASSWORD_REQUIRE });
     }
+
+    return {
+      name,
+      description,
+      photoUrl,
+      goalRep,
+      discordWebhookUrl,
+      discordInviteUrl,
+      tags,
+      userNickname: ownerNickname,
+      userPassword: ownerPassword,
+    };
   }
 }

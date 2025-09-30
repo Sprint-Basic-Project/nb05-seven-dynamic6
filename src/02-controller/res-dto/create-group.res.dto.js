@@ -1,3 +1,4 @@
+
 export class CreateGroupResDto {
   id;
   name;

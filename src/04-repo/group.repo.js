@@ -74,7 +74,7 @@ export class GroupRepo {
     if (!validOrderByFields.includes(orderBy)) {
       throw new Exception(
         400,
-        "The orderBy parameter must be one of the following values: [‘likeCount’, ‘participantCount’, ‘createdAt’]."
+        "The orderBy parameter must be one of the following values: [‘likeCount’, ‘participantCount’, ‘createdAt’].",
       );
     }
     const orderByField = orderBy;
