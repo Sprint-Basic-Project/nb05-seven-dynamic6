@@ -7,6 +7,12 @@ export class CreateGroupDTO extends BaseReqDTO {
   }
 
   validate() {
+    if (!this.body) {
+          throw new Exception(
+        EXCEPTION_INFO.UNKNOWN_SERVER_ERROR.statusCode,
+        EXCEPTION_INFO.UNKNOWN_SERVER_ERROR.message
+      );
+    }
     const {
       name,
       description,
@@ -80,10 +86,7 @@ export class CreateGroupDTO extends BaseReqDTO {
       throw new Exception({
         info: EXCEPTION_INFO.OWNER_PASSWORD_REQUIRE,
       });
-    }
-    if (!this.body) {
-      throw new Exception({ info: EXCEPTION_INFO.BODY_REQUIRE });
-    }
+
     return {
       name,
       description,
@@ -96,4 +99,5 @@ export class CreateGroupDTO extends BaseReqDTO {
       userPassword: ownerPassword,
     };
   }
+}
 }
