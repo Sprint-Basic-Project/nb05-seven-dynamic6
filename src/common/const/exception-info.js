@@ -108,7 +108,10 @@ export const EXCEPTION_INFO = {
     statusCode: 400,
     message: "소유자 닉네임(ownerNickname)의 길이가 올바르지 않습니다.",
   },
-
+  OWNER_NICKNAME_REQUIRE: {
+    statusCode: 400,
+    message: "소유자 닉네임(ownerNickname)이 옳바르지 않습니다. .",
+  },
   OWNER_PASSWORD_REQUIRE: {
     statusCode: 400,
     message: "소유자 비밀번호(ownerPassword)를 입력해주세요.",
