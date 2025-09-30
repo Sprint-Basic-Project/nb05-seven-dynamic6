@@ -26,7 +26,7 @@ export class UpdateGroupDTO extends BaseReqDTO {
       throw new Exception(
         EXCEPTION_INFO.RESOURCE_NOT_FOUND.statusCode,
         "groupId가 필요합니다.",
-        "groupId"
+        "groupId",
       );
     }
     //optional하게 검증하도록
@@ -34,14 +34,14 @@ export class UpdateGroupDTO extends BaseReqDTO {
       throw new Exception(
         EXCEPTION_INFO.NAME_REQUIRE.statusCode,
         EXCEPTION_INFO.NAME_REQUIRE.message,
-        "name"
+        "name",
       );
     }
     if (description !== undefined && !this.isString(description)) {
       throw new Exception(
         EXCEPTION_INFO.DESCRIPTION_REQUIRE.statusCode,
         EXCEPTION_INFO.DESCRIPTION_REQUIRE.message,
-        "description"
+        "description",
       );
     }
 
@@ -49,7 +49,7 @@ export class UpdateGroupDTO extends BaseReqDTO {
       throw new Exception(
         EXCEPTION_INFO.PHOTO_URL_REQUIRE.statusCode,
         EXCEPTION_INFO.PHOTO_URL_REQUIRE.message,
-        "photoUrl"
+        "photoUrl",
       );
     }
 
@@ -57,7 +57,7 @@ export class UpdateGroupDTO extends BaseReqDTO {
       throw new Exception(
         EXCEPTION_INFO.GOAL_REP_REQUIRE.statusCode,
         EXCEPTION_INFO.GOAL_REP_REQUIRE.message,
-        "goalRep"
+        "goalRep",
       );
     }
 
@@ -69,7 +69,7 @@ export class UpdateGroupDTO extends BaseReqDTO {
       throw new Exception(
         EXCEPTION_INFO.DISCORD_WEBHOOK_URL_INVALID.statusCode,
         EXCEPTION_INFO.DISCORD_WEBHOOK_URL_INVALID.message,
-        "discordWebhookUrl"
+        "discordWebhookUrl",
       );
     }
 
@@ -77,7 +77,7 @@ export class UpdateGroupDTO extends BaseReqDTO {
       throw new Exception(
         EXCEPTION_INFO.DISCORD_INVITE_URL_INVALID.statusCode,
         EXCEPTION_INFO.DISCORD_INVITE_URL_INVALID.message,
-        "discordInviteUrl"
+        "discordInviteUrl",
       );
     }
 
@@ -86,7 +86,7 @@ export class UpdateGroupDTO extends BaseReqDTO {
         throw new Exception(
           EXCEPTION_INFO.TAGS_REQUIRE_ARRAY.statusCode,
           EXCEPTION_INFO.TAGS_REQUIRE_ARRAY.message,
-          "tags"
+          "tags",
         );
       }
       const tagPattern = /^#[0-9A-Za-z가-힣]+$/;
@@ -95,7 +95,7 @@ export class UpdateGroupDTO extends BaseReqDTO {
           throw new Exception(
             EXCEPTION_INFO.TAGS_ITEM_INVALID.statusCode,
             EXCEPTION_INFO.TAGS_ITEM_INVALID.message,
-            "tags"
+            "tags",
           );
         }
       });
@@ -104,7 +104,7 @@ export class UpdateGroupDTO extends BaseReqDTO {
       throw new Exception(
         EXCEPTION_INFO.OWNER_NICKNAME_REQUIRE.statusCode,
         EXCEPTION_INFO.OWNER_NICKNAME_REQUIRE.message,
-        "ownerNickname"
+        "ownerNickname",
       );
     }
 
@@ -112,7 +112,7 @@ export class UpdateGroupDTO extends BaseReqDTO {
       throw new Exception(
         EXCEPTION_INFO.OWNER_PASSWORD_REQUIRE.statusCode,
         EXCEPTION_INFO.OWNER_PASSWORD_REQUIRE.message,
-        "ownerPassword"
+        "ownerPassword",
       );
     }
 

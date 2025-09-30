@@ -48,7 +48,7 @@ export class GroupService extends BaseService {
     if (!deleted) {
       throw new Exception(
         EXCEPTION_INFO.GROUP_NOT_FOUND.statusCode,
-        EXCEPTION_INFO.GROUP_NOT_FOUND.message
+        EXCEPTION_INFO.GROUP_NOT_FOUND.message,
       );
     }
     return { message: "그룹 삭제가 완료되었습니다." };
@@ -72,7 +72,7 @@ export class GroupService extends BaseService {
       throw new Exception(
         EXCEPTION_INFO.OWNER_NICKNAME_CONFLICT.statusCode,
         EXCEPTION_INFO.OWNER_NICKNAME_CONFLICT.message,
-        "ownerNickname"
+        "ownerNickname",
       );
     }
     const newUser = await this.#repos.userRepo.create({
@@ -114,7 +114,7 @@ export class GroupService extends BaseService {
       throw new Exception(
         EXCEPTION_INFO.GROUP_NOT_FOUND.statusCode,
         EXCEPTION_INFO.GROUP_NOT_FOUND.message,
-        "groupId"
+        "groupId",
       );
     }
 
@@ -123,14 +123,14 @@ export class GroupService extends BaseService {
       throw new Exception(
         EXCEPTION_INFO.OWNER_AUTH_FAILED.statusCode,
         EXCEPTION_INFO.OWNER_AUTH_FAILED.message,
-        "ownerNickname"
+        "ownerNickname",
       );
     }
     if (owner.password !== ownerPassword) {
       throw new Exception(
         EXCEPTION_INFO.WRONG_PASSWORD.statusCode,
         EXCEPTION_INFO.WRONG_PASSWORD.message,
-        "password"
+        "password",
       );
     }
 
