@@ -1,4 +1,6 @@
 import { EXCEPTION_INFO } from "../../common/exception-info";
+import { Exception } from "../../common/exception/exception";
+
 export class Group {
   #id;
   #name;
@@ -153,14 +155,11 @@ export class Group {
     discordInviteUrl,
     tags,
     userId,
+    existingGroupNames = [],
   }) {
-    this.validateNameRule(name);
-    this.validateDescriptionRulle(description);
-    this.validatePhotoUrlRule(imageUrl);
+    this.validateNameRule(name, existingGroupNames);
+    this.validateDescriptionRule(description);
     this.validateGoalRepRule(goalRep);
-    this.validateDiscordWebhookUrlRule(discordWebhookUrl);
-    this.validateDiscordInviteUrlRule(discordInviteUrl);
-    this.validateTagsRule(tags);
 
     return new Group({
       name,
@@ -174,30 +173,38 @@ export class Group {
     });
   }
 
-  static forGetGroup({ name, tag, createdAt, participant, likeCount }) {
-    this.validateTitleRule();
-    return new GetGroup({ name, tag, createdAt, participant, likeCount });
-  }
-
-  static validateNameRule(name) {
+  static validateNameRule(name, existingGroupNames) {
     if (!name || name.length <= 1) {
-      throw new Exception({
-        info: EXCEPTION_INFO.NAME_INVALID_LENGTH,
-      });
+      throw new Exception(
+        EXCEPTION_INFO.NAME_INVALID_LENGTH.statusCode,
+        EXCEPTION_INFO.NAME_INVALID_LENGTH.message,
+        "name"
+      );
+    }
+    if (existingGroupNames.includes(name)) {
+      throw new Exception(
+        EXCEPTION_INFO.NAME_CONFLICT.statusCode,
+        EXCEPTION_INFO.NAME_CONFLICT.message,
+        "name"
+      );
     }
   }
   static validateDescriptionRule(description) {
-    if (!description || description.length <= 1) {
-      throw Exception({
-        info: EXCEPTION_INFO.DESCRIPTION_INVALID_LENGTH,
-      });
+    if (!description || description.length <= 5) {
+      throw new Exception(
+        EXCEPTION_INFO.DESCRIPTION_INVALID_LENGTH.statusCode,
+        EXCEPTION_INFO.DESCRIPTION_INVALID_LENGTH.message,
+        "description"
+      );
     }
   }
   static validateGoalRepRule(goalRep) {
     if (typeof goalRep !== "number" || goalRep < 1 || goalRep > 100) {
-      throw Exception({
-        info: EXCEPTION_INFO.GOAL_REP_INVALID_RANGE,
-      });
+      throw new Exception(
+        EXCEPTION_INFO.GOAL_REP_INVALID_RANGE.statusCode,
+        EXCEPTION_INFO.GOAL_REP_INVALID_RANGE.message,
+        "goalRep"
+      );
     }
   }
 }
