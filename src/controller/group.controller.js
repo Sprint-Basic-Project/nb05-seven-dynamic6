@@ -59,7 +59,7 @@ export class GroupController extends BaseController {
     await this.#groupService.deleteGroup({ groupId });
     return res.status(200).json({ message: "그룹 삭제가 완료되었습니다." });
   };
-  
+
   createGroupMiddleware = async (req, res, next) => {
     const reqDto = new CreateGroupDTO({
       body: req.body,

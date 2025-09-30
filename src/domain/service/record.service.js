@@ -7,7 +7,7 @@ export class RecordService {
   #repos;
   #auth;
 
-  constructor({repos, authService}) {
+  constructor({ repos, authService }) {
     this.#repos = repos;
     this.#auth = authService;
   }
@@ -20,28 +20,30 @@ export class RecordService {
         EXCEPTION_INFO.GROUP_NOT_FOUND.message,
       );
     }
-    
+
     let userId = dto.userId;
-    if(!userId) {
-      if(!this.#auth) {
+    if (!userId) {
+      if (!this.#auth) {
         throw new Exception(
           EXCEPTION_INFO.UNKNOWN_SERVER_ERROR.statusCode,
-          "AuthService 미구성"
+          "AuthService 미구성",
         );
       }
       const user = await this.#auth.authenticateUser({
         nickname: dto.nickname,
-        password: dto.password
+        password: dto.password,
       });
       userId = user.id;
     }
 
     let userJoinGroupId = dto.userJoinGroupId;
     if (!userJoinGroupId) {
-      const membership = await this.#repos.userJoinGroupRepo.findByUserAndGroup({
-        userId,
-        groupId: dto.groupId,
-      });
+      const membership = await this.#repos.userJoinGroupRepo.findByUserAndGroup(
+        {
+          userId,
+          groupId: dto.groupId,
+        },
+      );
       if (!membership || membership.deletedAt) {
         throw new Exception(
           EXCEPTION_INFO.PARTICIPANT_NOT_FOUND.statusCode,

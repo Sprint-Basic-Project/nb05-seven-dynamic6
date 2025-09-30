@@ -5,14 +5,14 @@ import { EXCEPTION_INFO } from "../../common/const/exception-info.js";
 import { Exception } from "../../common/exception/exception.js";
 
 const normalizeExerciseType = (rawType) => {
-  if(!rawType) return rawType;
+  if (!rawType) return rawType;
   const map = {
     run: "RUNNING",
     running: "RUNNING",
     swim: "SWIMMING",
     swimming: "SWIMMING",
     cycle: "CYCLING",
-    cycling: "CYCLING"
+    cycling: "CYCLING",
   };
   const key = String(rawType).trim().toLowerCase();
   return map[key] ?? String(rawType).trim().toUpperCase();
@@ -23,7 +23,7 @@ export class RecordReqDTO extends BaseReqDTO {
     const reqBody = this.body ?? {};
     const reqParams = this.params ?? {};
     const { groupId } = reqParams;
-    
+
     const exerciseType = normalizeExerciseType(reqBody.exerciseType);
     const description = String(reqBody.description ?? "").trim();
     const time = Number(reqBody.time);
@@ -31,10 +31,14 @@ export class RecordReqDTO extends BaseReqDTO {
     const images = Array.isArray(reqBody.images)
       ? reqBody.images
       : Array.isArray(reqBody.photos)
-      ? reqBody.photos
-      : [];
-    const nickname = (reqBody.nickname ?? reqBody.authorNickname)?.toString().trim();
-    const password = (reqBody.password ?? reqBody.authorPassword)?.toString().trim();
+        ? reqBody.photos
+        : [];
+    const nickname = (reqBody.nickname ?? reqBody.authorNickname)
+      ?.toString()
+      .trim();
+    const password = (reqBody.password ?? reqBody.authorPassword)
+      ?.toString()
+      .trim();
 
     if (!groupId) {
       throw new Exception(
