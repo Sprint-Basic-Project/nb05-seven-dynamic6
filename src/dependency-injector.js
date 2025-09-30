@@ -1,22 +1,20 @@
 import { Server } from "./app/server.js";
 import { PrismaClient } from "@prisma/client";
 
-import { AuthService } from "./03-domain/service/auth.service.js";
-import { GroupService } from "./03-domain/service/group.service.js";
-import { UserJoinGroupService } from "./03-domain/service/user-joingroup.service.js";
-import { RecordService } from "./03-domain/service/record.service.js";
-import { ImageService } from "./03-domain/service/image.service.js";
+import { AuthService } from "./domain/service/auth.service.js";
+import { GroupService } from "./domain/service/group.service.js";
+import { UserJoinGroupService } from "./domain/service/user-joingroup.service.js";
+import { RecordService } from "./domain/service/record.service.js";
 
-import { GroupController } from "./02-controller/group.controller.js";
-import { UserJoinGroupController } from "./02-controller/user-joingroup.controller.js";
-import { RecordController } from "./02-controller/record.controller.js";
-import { ImageController } from "./02-controller/image.controller.js";
+import { GroupController } from "./controller/group.controller.js";
+import { UserJoinGroupController } from "./controller/user-joingroup.controller.js";
+import { RecordController } from "./controller/record.controller.js";
+import { ImageController } from "./controller/image.controller.js";
 
-import { GroupRepo } from "./04-repo/group.repo.js";
-import { UserRepo } from "./04-repo/user.repo.js";
-import { UserJoinGroupRepo } from "./04-repo/user-joingroup.repo.js";
-import { RecordRepo } from "./04-repo/record.repo.js";
-import { ImageRepository } from "./04-repo/image.repo.js";
+import { GroupRepo } from "./repo/group.repo.js";
+import { UserRepo } from "./repo/user.repo.js";
+import { UserJoinGroupRepo } from "./repo/user-joingroup.repo.js";
+import { RecordRepo } from "./repo/record.repo.js";
 
 export class DependencyInjector {
   #server;
@@ -33,14 +31,12 @@ export class DependencyInjector {
     const userRepo = new UserRepo(prisma);
     const userJoinGroupRepo = new UserJoinGroupRepo(prisma);
     const recordRepo = new RecordRepo(prisma);
-    const imageRepo = new ImageRepository(prisma);
 
     const repos = {
       groupRepo,
       userRepo,
       userJoinGroupRepo,
       recordRepo,
-      imageRepo,
     };
 
     // Services
@@ -51,7 +47,6 @@ export class DependencyInjector {
       authService,
     });
     const recordService = new RecordService(repos);
-    const imageService = new ImageService(repos);
 
     // Controllers (넵)
     const groupController = new GroupController(groupService);
@@ -59,7 +54,7 @@ export class DependencyInjector {
       userJoinGroupService,
     );
     const recordController = new RecordController(recordService);
-    const imageController = new ImageController(imageService);
+    const imageController = new ImageController();
 
     const controllers = [
       groupController,

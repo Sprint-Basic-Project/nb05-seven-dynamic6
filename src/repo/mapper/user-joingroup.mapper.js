@@ -1,4 +1,4 @@
-import { UserJoinGroup } from "../../03-domain/entity/user-joingroup.js";
+import { UserJoinGroup } from "../../domain/entity/user-joingroup.js";
 
 export class UserJoinGroupMapper {
   static toEntity(record) {
