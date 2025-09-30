@@ -48,14 +48,14 @@ export class CreateGroupDTO extends BaseReqDTO {
     }
 
     if (!urlPattern.test(discordInviteUrl)) {
-      throw Exception({
+      throw new Exception({
         info: EXCEPTION_INFO.DESCRIPTION_INVALID_LENGTH,
       });
     }
 
     const tagPattern = /^#[0-9A-Za-z가-힣]+$/;
-    if (!tagPattern.test(tag)) {
-      throw Exception({
+    if (!tagPattern.test(tags)) {
+      throw new Exception({
         info: EXCEPTION_INFO.TAGS_ITEM_INVALID,
       });
     }
