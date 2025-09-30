@@ -1,3 +1,4 @@
+import { EXCEPTION_INFO } from "../common/const/exception-info.js";
 import { Exception } from "../common/exception/exception.js";
 import { GroupMapper } from "./mapper/group.mapper.js";
 
@@ -19,10 +20,22 @@ export class GroupRepo {
             user: true, // 그룹에 참여한 유저 (participant)
           },
         },
+        _count: {
+          select: {
+            userJoinGroups: true,
+            records: true,
+          },
+        },
       },
     });
 
-    if (!record) throw new Error("그룹을 찾을 수 없습니다.");
+    if (!record) {
+      throw new Exception(
+        EXCEPTION_INFO.GROUP_NOT_FOUND.statusCode,
+        EXCEPTION_INFO.GROUP_NOT_FOUND.message,
+      );
+    }
+
     return GroupMapper.toEntity(record);
   }
 
@@ -33,6 +46,13 @@ export class GroupRepo {
         likeCount: groupEntity.likeCount,
       },
       include: {
+        tags: true,
+        user: true,
+        userJoinGroups: {
+          include: {
+            user: true,
+          },
+        },
         _count: {
           select: {
             userJoinGroups: true,
@@ -41,13 +61,21 @@ export class GroupRepo {
         },
       },
     });
+
     return GroupMapper.toEntity(updated);
   }
 
-  async delete(groupId) {
+  async delete(id) {
     const deleted = await this.#prisma.group.delete({
-      where: { groupId },
+      where: { id },
       include: {
+        tags: true,
+        user: true,
+        userJoinGroups: {
+          include: {
+            user: true,
+          },
+        },
         _count: {
           select: {
             userJoinGroups: true,
