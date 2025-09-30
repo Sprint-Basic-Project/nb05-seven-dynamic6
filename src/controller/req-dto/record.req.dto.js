@@ -23,6 +23,7 @@ export class RecordReqDTO extends BaseReqDTO {
     const reqBody = this.body ?? {};
     const reqParams = this.params ?? {};
     const { groupId } = reqParams;
+    const isUuid = /^[0-9a-fA-F-]{36}$/.test(groupId);
 
     const exerciseType = normalizeExerciseType(reqBody.exerciseType);
     const description = String(reqBody.description ?? "").trim();
@@ -40,11 +41,11 @@ export class RecordReqDTO extends BaseReqDTO {
       ?.toString()
       .trim();
 
-    if (!groupId) {
+    if (!isUuid) {
       throw new Exception(
         EXCEPTION_INFO.GROUP_ID_INVALID.statusCode,
         EXCEPTION_INFO.GROUP_ID_INVALID.message,
-        EXCEPTION_INFO.GROUP_ID_INVALID.path,
+        "groupId",
       );
     }
     if (!exerciseType) {

@@ -1,4 +1,5 @@
 // 라우팅, DTO 실행 → Service 호출
+import { Router } from "express";
 import { Exception } from "../common/exception/exception.js";
 import { EXCEPTION_INFO } from "../common/const/exception-info.js";
 import { RecordReqDTO } from "./req-dto/record.req.dto.js";
@@ -10,6 +11,7 @@ export class RecordController extends BaseController {
   constructor(service) {
     super("/groups/:groupId/records");
     this.#service = service;
+    this.router = Router({ mergeParams: true });
     this.registerRoutes();
   }
 

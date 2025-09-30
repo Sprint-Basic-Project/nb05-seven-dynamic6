@@ -12,7 +12,7 @@ export class DiscordAdapter {
       await axios.post(url, {
         content:
           `대단하다!\n` +
-          `닉네임: ${record.user.nickname}\n` +
+          `닉네임: ${authorNickname}\n` +
           `운동: ${record.exerciseType}\n` +
           `시간: ${record.time}\n` +
           `거리: ${record.distance}km `,
