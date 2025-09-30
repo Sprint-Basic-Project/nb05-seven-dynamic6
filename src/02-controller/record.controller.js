@@ -1,5 +1,6 @@
 // 라우팅, DTO 실행 → Service 호출
 import { Exception } from "../common/exception/exception.js";
+import { EXCEPTION_INFO } from "../common/const/exception-info.js";
 import { RecordReqDTO } from "./req-dto/record.req.dto.js";
 import { BaseController } from "./base.controller.js";
 
@@ -64,7 +65,10 @@ export class RecordController extends BaseController {
       recordId,
     });
     if (!record) {
-      throw new Exception(404, "기록이 없음");
+      throw new Exception(
+        EXCEPTION_INFO.RECORD_NOT_FOUND.statusCode,
+        EXCEPTION_INFO.RECORD_NOT_FOUND.message
+      );
     }
 
     return res.json(record);
