@@ -11,7 +11,7 @@ export class UserJoinGroupService extends BaseService {
 
   async joinGroup({ groupId, nickname, password }) {
     // 그룹 체크
-    const groupEntity = await this.repos.groupRepo.findById({ groupId });
+    const groupEntity = await this.repos.groupRepo.findById(groupId);
     if (!groupEntity) {
       throw new Exception(
         EXCEPTION_INFO.GROUP_NOT_FOUND.statusCode,
@@ -29,11 +29,16 @@ export class UserJoinGroupService extends BaseService {
         nickname,
         password,
       });
-
+    }
+    console.log('userEntity:', userEntity);
+  console.log('userEntity.id:', userEntity.id);
+  console.log('Is undefined?:', userEntity.id === undefined);
+  console.log('Is null?:', userEntity.id === null);
+  
       //중복 가입 체크
       const existingUserJoinGroup =
         await this.repos.userJoinGroupRepo.findByUserAndGroup({
-          userId: user.userId,
+          userId: userEntity.id,
           groupId,
         });
 
@@ -61,7 +66,6 @@ export class UserJoinGroupService extends BaseService {
       });
 
       return new UserJoinGroupResDto(userJoinGroupEntity);
-    }
   }
 
   async leaveGroup({ groupId, nickname, password }) {

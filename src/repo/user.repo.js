@@ -7,12 +7,13 @@ export class UserRepo {
     this.#prisma = prisma;
   }
 
-  async findByNickname({ nickname }) {
+  async findByNickname(nickname) {
     const record = await this.#prisma.user.findUnique({
       where: {
         nickname,
       },
     });
+    if (!record) return null;
     return UserMapper.toEntity(record);
   }
 

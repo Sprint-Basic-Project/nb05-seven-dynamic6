@@ -2,7 +2,8 @@ import { User } from "../../domain/entity/user.js";
 
 export class UserMapper {
   static toEntity(record) {
-    return new User({
+      if (!record) {return null;}
+      return new User({
       id: record.id,
       nickname: record.nickname,
       passwordHash: record.passwordHash,
