@@ -19,7 +19,6 @@ export class Group {
   #updatedAt;
   #deletedAt;
   #badges;
-  #ownerPassword;
 
   constructor({
     id,
@@ -38,7 +37,6 @@ export class Group {
     createdAt,
     updatedAt,
     deletedAt,
-    ownerPassword,
   }) {
     this.#id = id;
     this.#description = description;
@@ -57,7 +55,6 @@ export class Group {
     this.#owner = owner;
     this.#participants = participants;
     this.#badges = [];
-    this.#ownerPassword = ownerPassword;
     this.evaluateBadges();
   }
 
