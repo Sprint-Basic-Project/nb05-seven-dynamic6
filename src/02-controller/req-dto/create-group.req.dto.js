@@ -8,9 +8,9 @@ export class CreateGroupDTO extends BaseReqDTO {
 
   validate() {
     if (!this.body) {
-          throw new Exception(
+      throw new Exception(
         EXCEPTION_INFO.UNKNOWN_SERVER_ERROR.statusCode,
-        EXCEPTION_INFO.UNKNOWN_SERVER_ERROR.message
+        EXCEPTION_INFO.UNKNOWN_SERVER_ERROR.message,
       );
     }
     const {
@@ -87,17 +87,17 @@ export class CreateGroupDTO extends BaseReqDTO {
         info: EXCEPTION_INFO.OWNER_PASSWORD_REQUIRE,
       });
 
-    return {
-      name,
-      description,
-      photoUrl,
-      goalRep,
-      discordWebhookUrl,
-      discordInviteUrl,
-      tags,
-      userNickname: ownerNickname,
-      userPassword: ownerPassword,
-    };
+      return {
+        name,
+        description,
+        photoUrl,
+        goalRep,
+        discordWebhookUrl,
+        discordInviteUrl,
+        tags,
+        userNickname: ownerNickname,
+        userPassword: ownerPassword,
+      };
+    }
   }
-}
 }

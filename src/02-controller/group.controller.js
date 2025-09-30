@@ -24,7 +24,7 @@ export class GroupController extends BaseController {
     this.router.delete(
       "/:groupId",
       verifyGroupPassword(this.#repo),
-      this.deleteGroup
+      this.deleteGroup,
     );
   }
 
@@ -57,7 +57,6 @@ export class GroupController extends BaseController {
     await this.#groupService.deleteGroup({ groupId });
     return res.status(200).json({ message: "그룹 삭제가 완료되었습니다." });
   };
-
 
   createGroupMiddleware = async (req, res, next) => {
     const reqDto = new CreateGroupDTO({

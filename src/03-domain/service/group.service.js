@@ -72,11 +72,21 @@ export class GroupService extends BaseService {
     discordInviteUrl,
     tags,
     userNickname,
-    userPasswrod,
+    userPassword,
   }) {
-    // const user = await this.repos.user.findUserByNickname(useNickname);
-    // if (!user) {
-    // }
+    const owner = await this.#repos.userRepo.findByNickname(userNickname);
+    if (!owner) {
+      throw new Exception(
+        EXCEPTION_INFO.OWNER_AUTH_FAILED.statusCode,
+        EXCEPTION_INFO.OWNER_AUTH_FAILED.message
+      );
+    }
+    if (owner.password !== userPassword) {
+      throw new Exception(
+        EXCEPTION_INFO.WRONG_PASSWORD.statusCode,
+        EXCEPTION_INFO.WRONG_PASSWORD.message
+      );
+    }
     const group = Group.forCreate({
       name,
       description,
@@ -86,9 +96,9 @@ export class GroupService extends BaseService {
       discordInviteUrl,
       tags,
     });
-    const createdGroup = await this.repos.group.create({
+    const createdGroup = await this.#repos.groupRepo.create({
       entity: group,
-      userNickname,
+      userId: owner.id, 
     });
     return createdGroup;
   }
