@@ -14,7 +14,7 @@ export class UserMapper {
   }
   static fromOwnerDto(dto) {
     return new User({
-      nickname: dto.ownerNickname, 
+      nickname: dto.ownerNickname,
       passwordHash: bcrypt.hashSync(dto.ownerPassword, 10),
     });
   }
