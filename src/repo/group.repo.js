@@ -28,15 +28,15 @@ export class GroupRepo {
 
   async save(groupEntity) {
     const updated = await this.#prisma.group.update({
-      where: { groupId: groupEntity.id },
+      where: { id: groupEntity.id },
       data: {
         likeCount: groupEntity.likeCount,
       },
       include: {
         _count: {
           select: {
-            userJoinGroup: true,
-            record: true,
+            userJoinGroups: true,
+            records: true,
           },
         },
       },
@@ -50,8 +50,8 @@ export class GroupRepo {
       include: {
         _count: {
           select: {
-            userJoinGroup: true,
-            record: true,
+            userJoinGroups: true,
+            records: true,
           },
         },
       },
@@ -103,9 +103,6 @@ export class GroupRepo {
           },
         }
       : {};
-
-    console.log(where); //
-    console.log(prismaOrderBy);
     //
 
     const result = await this.#prisma.group.findMany({
@@ -131,7 +128,6 @@ export class GroupRepo {
       },
     });
 
-    console.log(result);
 
     // 참여한 유저순으로 정렬
     if (orderByField === "participantCount") {
