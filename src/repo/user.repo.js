@@ -30,6 +30,6 @@ export class UserRepo {
     const record = await this.#prisma.user.findUnique({
       where: { id },
     });
-    return UserMapper.toEntity(record);
+    return record ? UserMapper.toEntity(record) : null;
   }
 }
