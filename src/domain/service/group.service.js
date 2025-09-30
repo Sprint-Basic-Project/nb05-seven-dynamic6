@@ -31,24 +31,16 @@ export class GroupService extends BaseService {
 
   async likeGroup({ groupId }) {
     const groupEntity = await this.#repos.groupRepo.findById(groupId);
-    if (!groupEntity) {
-      return;
-    }
+    if (!groupEntity) return;
     groupEntity.increaseLike();
-    const saved = await this.#repos.groupRepo.save(groupEntity);
-    const groupDto = new GroupResDto(saved);
-    return groupDto;
+    await this.#repos.groupRepo.save(groupEntity);
   }
 
   async unlikeGroup({ groupId }) {
     const groupEntity = await this.#repos.groupRepo.findById(groupId);
-    if (!groupEntity) {
-      return;
-    }
+    if (!groupEntity) return;
     groupEntity.decreaseLike();
-    const saved = await this.#repos.groupRepo.save(groupEntity);
-    const groupDto = new GroupResDto(saved);
-    return groupDto;
+    await this.#repos.groupRepo.save(groupEntity);
   }
 
   async deleteGroup({ groupId }) {
@@ -59,7 +51,6 @@ export class GroupService extends BaseService {
         EXCEPTION_INFO.GROUP_NOT_FOUND.message,
       );
     }
-    // 비밀번호 반환 대신 삭제 메시지 반환
     return { message: "그룹 삭제가 완료되었습니다." };
   }
 
