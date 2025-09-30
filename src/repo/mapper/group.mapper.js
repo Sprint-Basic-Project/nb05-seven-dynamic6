@@ -1,4 +1,4 @@
-import { Group } from "../../03-domain/entity/group.entity.js";
+import { Group } from "../../domain/entity/group.entity.js";
 
 export class GroupMapper {
   static toEntity(record) {

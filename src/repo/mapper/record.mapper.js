@@ -1,6 +1,6 @@
 // Entity <-> DB 모델 변환
 
-import { Record } from "../../03-domain/entity/record.js";
+import { Record } from "../../domain/entity/record.js";
 
 export class RecordMapper {
   static toPersistence(entity) {

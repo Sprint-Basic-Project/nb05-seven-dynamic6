@@ -24,8 +24,8 @@ model User {
   groups         Group[]
   userJoinGroups UserJoinGroup[]
   records        Record[]
-}
-
+}// 제가 다  없었습니다 =
+// 잠시만요
 model Group {
   id          String    @id @default(uuid())
   name        String    @unique

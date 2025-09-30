@@ -2,7 +2,7 @@
   "name": "project-test",
   "version": "1.0.0",
   "description": "MergeTest",
-  "main": "test.js",
+  "main": "app.js",
   "type": "module",
   "prisma": {
     "seed": "node src/04-repo/data/seed.js"
@@ -11,7 +11,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "format": "prettier --write .",
     "prepare": "husky",
-    "dev": "nodemon ./src/index.js"
+    "dev": "nodemon ./src/app.js"
   },
   "repository": {
     "type": "git",
@@ -33,10 +33,10 @@
     "multer": "^2.0.2",
     "nodemon": "^3.1.10",
     "prettier": "^3.6.2",
+    "prisma": "^6.16.2",
     "uuid": "^13.0.0"
   },
   "devDependencies": {
-    "husky": "^9.1.7",
-    "prisma": "^6.16.2"
+    "husky": "^9.1.7"
   }
 }
