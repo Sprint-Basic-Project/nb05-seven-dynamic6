@@ -19,7 +19,7 @@ export const EXCEPTION_INFO = {
     statusCode: 404,
     message: "User not found",
   },
-  
+
   // 공통
   UNKNOWN_SERVER_ERROR: {
     statusCode: 500,
