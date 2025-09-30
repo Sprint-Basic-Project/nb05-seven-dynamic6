@@ -176,10 +176,9 @@ export class GroupRepo {
         ...GroupMapper.toPersistent(entity),
         user: { connect: { id: userId } },
         tags: {
-          connectOrCreate:
+          create:
             entity.tags?.map((tag) => ({
-              where: { name: tag },
-              create: { name: tag },
+              name: tag,
             })) || [],
         },
       },
@@ -187,7 +186,7 @@ export class GroupRepo {
         user: true,
         tags: true,
         userJoinGroups: { include: { user: true } },
-        _count: { select: { record: true, userJoinGroup: true } },
+        _count: { select: { records: true, userJoinGroups: true } },
       },
     });
     return GroupMapper.toEntity(createdGroup);
@@ -211,7 +210,7 @@ export class GroupRepo {
         user: true,
         tags: true,
         userJoinGroups: { include: { user: true } },
-        _count: { select: { record: true, userJoinGroup: true } },
+        _count: { select: { records: true, userJoinGroup: true } },
       },
     });
 

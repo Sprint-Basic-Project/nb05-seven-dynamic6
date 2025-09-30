@@ -87,8 +87,8 @@ export class CreateGroupDTO extends BaseReqDTO {
       discordWebhookUrl,
       discordInviteUrl,
       tags,
-      userNickname: ownerNickname,
-      userPassword: ownerPassword,
+      ownerNickname,
+      ownerPassword,
     };
   }
 }

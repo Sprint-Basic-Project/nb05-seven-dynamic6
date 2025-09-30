@@ -104,10 +104,6 @@ export const EXCEPTION_INFO = {
     message: "태그(tags) 항목에 유효하지 않은 값이 포함되어 있습니다.",
   },
 
-  OWNER_NICKNAME_REQUIRE: {
-    statusCode: 400,
-    message: "소유자 닉네임(이메일)을 입력해주세요.",
-  },
   OWNER_NICKNAME_INVALID_LENGTH: {
     statusCode: 400,
     message: "소유자 닉네임(ownerNickname)의 길이가 올바르지 않습니다.",
@@ -120,6 +116,10 @@ export const EXCEPTION_INFO = {
   OWNER_PASSWORD_WEAK: {
     statusCode: 400,
     message: "소유자 비밀번호(ownerPassword)가 보안 기준에 미달합니다.",
+  },
+  OWNER_NICKNAME_CONFLICT: {
+    statusCode: 400,
+    message: "소유자 닉네임(owneNickname) 중복입니다.",
   },
   OWNER_AUTH_FAILED: {
     statusCode: 401,
