@@ -23,7 +23,10 @@ export class GroupController extends BaseController {
     this.router.get("/", this.getAllGroups);
     this.router.get("/:groupId", this.getGroup);
     this.router.post("/", this.catchException(this.createGroupMiddleware));
-    this.router.patch("/:groupId", this.catchException(this.updateGroupMiddleware));
+    this.router.patch(
+      "/:groupId",
+      this.catchException(this.updateGroupMiddleware),
+    );
     this.router.post("/:groupId/likes", this.likeGroup);
     this.router.delete("/:groupId/likes", this.unlikeGroup);
     this.router.delete(
@@ -87,5 +90,5 @@ export class GroupController extends BaseController {
     }
     const resDto = new UpdateGroupResDto(updatedGroup);
     return res.status(200).json(resDto);
-  }
+  };
 }
