@@ -135,14 +135,13 @@ export class GroupRepo {
   }
 
   //create
-  async create({ entity, ownerId }) {
-    const createdGroup = await this.prisma.post.create({
+  async create({ entity, userId }) {
+    const createdGroup = await this.#prisma.group.create({
       data: {
         ...GroupMapper.toPersistent(entity),
-        user: { connect: { userUserId: ownerId } },
+        user: { connect: { id: userId } },
       },
     });
     return GroupMapper.toEntity(createdGroup);
   }
 }
-

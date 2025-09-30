@@ -5,7 +5,7 @@ export class Group {
   #id;
   #name;
   #description;
-  #imageUrl;
+  #photoUrl;
   #goalRep;
   #discordWebhookUrl;
   #discordInviteUrl;
@@ -25,7 +25,7 @@ export class Group {
     id,
     name,
     description,
-    imageUrl,
+    photoUrl,
     goalRep,
     discordWebhookUrl,
     discordInviteUrl,
@@ -42,7 +42,7 @@ export class Group {
   }) {
     this.#id = id;
     this.#description = description;
-    this.#imageUrl = imageUrl;
+    this.#photoUrl = photoUrl;
     this.#goalRep = goalRep;
     this.#discordWebhookUrl = discordWebhookUrl;
     this.#discordInviteUrl = discordInviteUrl;
@@ -73,8 +73,8 @@ export class Group {
     return this.#description;
   }
 
-  get imageUrl() {
-    return this.#imageUrl;
+  get photoUrl() {
+    return this.#photoUrl;
   }
 
   get goalRep() {
@@ -149,7 +149,7 @@ export class Group {
   static forCreate({
     name,
     description,
-    imageUrl,
+    photoUrl,
     goalRep,
     discordWebhookUrl,
     discordInviteUrl,
@@ -164,7 +164,7 @@ export class Group {
     return new Group({
       name,
       description,
-      imageUrl,
+      photoUrl,
       goalRep,
       discordWebhookUrl,
       discordInviteUrl,
