@@ -48,7 +48,7 @@ export class GroupService extends BaseService {
     if (!deleted) {
       throw new Exception(
         EXCEPTION_INFO.GROUP_NOT_FOUND.statusCode,
-        EXCEPTION_INFO.GROUP_NOT_FOUND.message,
+        EXCEPTION_INFO.GROUP_NOT_FOUND.message
       );
     }
     return { message: "그룹 삭제가 완료되었습니다." };
@@ -66,78 +66,37 @@ export class GroupService extends BaseService {
     userNickname,
     userPassword,
   }) {
-    const owner = await this.#repos.userRepo.findByNickname(userNickname);
-    if (!owner) {
+    const existingUser =
+      await this.#repos.userRepo.findByNickname(userNickname);
+    if (existingUser) {
       throw new Exception(
-        EXCEPTION_INFO.OWNER_AUTH_FAILED.statusCode,
-        EXCEPTION_INFO.OWNER_AUTH_FAILED.message,
+        EXCEPTION_INFO.OWNER_NICKNAME_CONFLICT.statusCode,
+        EXCEPTION_INFO.OWNER_NICKNAME_CONFLICT.message,
+        "ownerNickname"
       );
     }
-    if (owner.password !== userPassword) {
-      throw new Exception(
-        EXCEPTION_INFO.WRONG_PASSWORD.statusCode,
-        EXCEPTION_INFO.WRONG_PASSWORD.message,
-      );
-    }
-    const group = Group.forCreate({
-      name,
-      description,
-      imageUrl: photoUrl,
-      goalRep,
-      discordWebhookUrl,
-      discordInviteUrl,
-      tags,
+    const newUser = await this.#repos.userRepo.create({
+      nickname: userNickname,
+      password: userPassword,
     });
-    const createdGroup = await this.#repos.groupRepo.create({
-      entity: group,
-      userId: owner.id,
-    });
-    return createdGroup;
-  }
-  async updateGroup({
-    groupId,
-    name,
-    description,
-    photoUrl,
-    goalRep,
-    discordWebhookUrl,
-    discordInviteUrl,
-    tags,
-    ownerNickname,
-    ownerPassword,
-  }) {
-    const owner = await this.#repos.userRepo.findByNickname(userNickname);
-    if (!owner) {
-      throw new Exception(
-        EXCEPTION_INFO.OWNER_AUTH_FAILED.statusCode,
-        EXCEPTION_INFO.OWNER_AUTH_FAILED.message,
-        "ownerNickname",
-      );
-    }
-    if (owner.password !== userPassword) {
-      throw new Exception(
-        EXCEPTION_INFO.WRONG_PASSWORD.statusCode,
-        EXCEPTION_INFO.WRONG_PASSWORD.message,
-        "password",
-      );
-    }
-    const group = Group.forCreate({
-      name,
-      description,
-      imageUrl: photoUrl,
-      goalRep,
-      discordWebhookUrl,
-      discordInviteUrl,
-      tags,
-      userId: owner.id,
-    });
-    const createdGroup = await this.#repos.groupRepo.create({
-      entity: group,
-      userId: owner.id,
-    });
-    return createdGroup;
-  }
 
+    const group = Group.forCreate({
+      name,
+      description,
+      imageUrl: photoUrl,
+      goalRep,
+      discordWebhookUrl,
+      discordInviteUrl,
+      tags,
+      userId: newUser.id,
+    });
+    const createdGroup = await this.#repos.groupRepo.create({
+      entity: group,
+      userId: newUser.id,
+    });
+    return createdGroup;
+  }
+  //update
   async updateGroup({
     groupId,
     name,
@@ -155,7 +114,7 @@ export class GroupService extends BaseService {
       throw new Exception(
         EXCEPTION_INFO.GROUP_NOT_FOUND.statusCode,
         EXCEPTION_INFO.GROUP_NOT_FOUND.message,
-        "groupId",
+        "groupId"
       );
     }
 
@@ -164,14 +123,14 @@ export class GroupService extends BaseService {
       throw new Exception(
         EXCEPTION_INFO.OWNER_AUTH_FAILED.statusCode,
         EXCEPTION_INFO.OWNER_AUTH_FAILED.message,
-        "ownerNickname",
+        "ownerNickname"
       );
     }
     if (owner.password !== ownerPassword) {
       throw new Exception(
         EXCEPTION_INFO.WRONG_PASSWORD.statusCode,
         EXCEPTION_INFO.WRONG_PASSWORD.message,
-        "password",
+        "password"
       );
     }
 

@@ -41,4 +41,5 @@ export class Server {
     this.registerExceptions();
     this.listen();
   }
-}
+
+ }
