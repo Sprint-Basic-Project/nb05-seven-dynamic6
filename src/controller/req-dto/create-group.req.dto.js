@@ -1,5 +1,6 @@
-import { EXCEPTION_INFO } from "../common/exception-info";
-import { BaseReqDTO } from "../controller/base.req.validator";
+import { EXCEPTION_INFO } from "../../common/const/exception-info.js"
+import { BaseReqDTO } from "./base.req.dto.js";
+
 
 export class CreateGroupDTO extends BaseReqDTO {
   constructor(reqData) {

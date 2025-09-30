@@ -1,17 +1,14 @@
 import { Exception } from "../common/exception/exception.js";
 import { BaseController } from "./base.controller.js";
-import { storage } from "../common/storage.js";
 import multer from "multer";
 import path from "path";
 import fs from "fs/promises";
 
 export class ImageController extends BaseController {
-  #service;
   #imageUploader;
 
-  constructor(service) {
+  constructor() {
     super("/images");
-    this.#service = service;
     this.#imageUploader = multer({
       storage: multer.memoryStorage(), // 메모리 저장
 
@@ -36,14 +33,6 @@ export class ImageController extends BaseController {
     );
   }
 
-  mainPage1Middleware = (req, res) => {
-    return res.json("Hello world1!");
-  };
-
-  test1ViewMiddleware = (req, res) => {
-    const test1 = this.#service.getAllTests();
-    return res.json(test1);
-  };
 
   imageUpload = async (req, res) => {
     const files = req.files;

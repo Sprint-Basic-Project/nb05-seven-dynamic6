@@ -1,4 +1,4 @@
-import { EXCEPTION_INFO } from "../../common/exception-info";
+import { EXCEPTION_INFO } from "../../common/const/exception-info.js"
 export class Group {
   #id;
   #name;

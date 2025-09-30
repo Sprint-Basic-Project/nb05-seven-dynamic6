@@ -1,4 +1,4 @@
-import { Group } from "../../03-domain/entity/group.entity.js";
+import { Group } from "../../domain/entity/group.entity.js";
 
 export class GroupMapper {
   static toEntity(record) {
@@ -17,9 +17,9 @@ export class GroupMapper {
       recordCount: record.recordCount ?? record._count?.record ?? 0,
       memberCount: record._count?.userJoinGroup ?? 0,
       ownerId: record.userId,
-      tags: (record.Tag ?? []).map((tag) => tag.name),
+      tags: (record.tags ?? []).map((tag) => tag.name),
       owner: record.user,
-      participants: (record.userJoinGroup ?? []).map((group) => group.user),
+      participants: (record.userJoinGroups ?? []).map((group) => group.user),
       ownerPassword: record.ownerPassword, //ownerPassword 추가
     });
   }

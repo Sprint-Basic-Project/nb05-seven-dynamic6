@@ -1,4 +1,4 @@
-import { User } from "../../03-domain/entity/user.js";
+import { User } from "../../domain/entity/user.js";
 
 export class UserMapper {
   static toEntity(record) {
