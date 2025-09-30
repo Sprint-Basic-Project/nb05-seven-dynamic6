@@ -15,7 +15,7 @@ export class DiscordAdapter {
     } catch (e) {
       throw new Exception(
         EXCEPTION_INFO.SERVICE_UNAVAILABLE.statusCode,
-        EXCEPTION_INFO.SERVICE_UNAVAILABLE.message
+        EXCEPTION_INFO.SERVICE_UNAVAILABLE.message,
       );
     }
   }

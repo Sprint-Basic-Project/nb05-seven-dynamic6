@@ -159,12 +159,11 @@ export const EXCEPTION_INFO = {
     statusCode: 500,
     message: "그룹 탈퇴에 실패했습니다.",
   },
-  // record 관련 
+  // record 관련
   GROUP_ID_INVALID: {
     statusCode: 400,
     path: "groupId",
-    message: 
-      "groupId는 정수여야 합니다.",
+    message: "groupId는 정수여야 합니다.",
   },
 
   EXERCISE_TYPE_INVALID: {
@@ -177,8 +176,7 @@ export const EXCEPTION_INFO = {
   DESCRIPTION_INVALID: {
     statusCode: 400,
     path: "description",
-    message: 
-      "설명(description)이 없거나 형식이 올바르지 않습니다.",
+    message: "설명(description)이 없거나 형식이 올바르지 않습니다.",
   },
 
   TIME_INVALID: {

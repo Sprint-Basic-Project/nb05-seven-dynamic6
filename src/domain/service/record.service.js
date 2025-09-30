@@ -15,7 +15,7 @@ export class RecordService {
     if (!group) {
       throw new Exception(
         EXCEPTION_INFO.GROUP_NOT_FOUND.statusCode,
-        EXCEPTION_INFO.GROUP_NOT_FOUND.message
+        EXCEPTION_INFO.GROUP_NOT_FOUND.message,
       );
     }
     const entity = Record.forCreate(dto);
