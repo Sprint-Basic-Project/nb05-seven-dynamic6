@@ -137,4 +137,25 @@ export const EXCEPTION_INFO = {
     statusCode: 503,
     message: "서비스를 일시적으로 사용할 수 없습니다.",
   },
+  //user & userjoingroup
+  USER_NOT_FOUND: {
+    statusCode:404,
+    message:"user를 찾을 수 없습니다"
+  },
+  NICKNAME_ALREADY_EXISTS: {
+    statusCode:409,
+    message:"이미 존재하는 nickname입니다."
+  },
+  ALREADY_JOINED_GROUP: {
+    statusCode:409,
+    message:"그룹에 참여하고 있는 계정입니다."
+  },
+  PARTICIPANT_NOT_FOUND: {
+    statusCode:404,
+    message:"그룹에 참여하고 있는 계정이 아닙니다."
+  },
+  LEAVE_GROUP_FAILED: {
+    statusCode:500,
+    message:"그룹 탈퇴에 실패했습니다."
+  },
 };
