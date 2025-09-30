@@ -2,6 +2,7 @@
 
 import { BaseReqDTO } from "./base.req.dto.js";
 import { Exception } from "../../common/exception/exception.js";
+import { EXCEPTION_INFO } from "../../common/const/exception-info.js";
 
 export class RecordReqDTO extends BaseReqDTO {
   validate() {
@@ -17,31 +18,64 @@ export class RecordReqDTO extends BaseReqDTO {
     const { groupId } = this.params || {};
 
     if (!groupId) {
-      throw new Exception(400, "그룹ID가 필요");
+      throw new Exception(
+        EXCEPTION_INFO.GROUP_ID_INVALID.statusCode,
+        EXCEPTION_INFO.GROUP_ID_INVALID.message,
+        EXCEPTION_INFO.GROUP_ID_INVALID.path
+      );
     }
+
     if (!exerciseType) {
-      throw new Exception(400, "운동 종류를 입력");
+      throw new Exception(
+        EXCEPTION_INFO.EXERCISE_TYPE_INVALID.statusCode,
+        EXCEPTION_INFO.EXERCISE_TYPE_INVALID.message,
+        EXCEPTION_INFO.EXERCISE_TYPE_INVALID.path
+      );
     }
 
     const desc = description ? String(description).trim() : "";
     if (!desc) {
-      throw new Exception(400, "설명은 필수");
+      throw new Exception(
+        EXCEPTION_INFO.DESCRIPTION_INVALID.statusCode,
+        EXCEPTION_INFO.DESCRIPTION_INVALID.message,
+        EXCEPTION_INFO.DESCRIPTION_INVALID.path
+      );
     }
 
     if (time === undefined || !Number.isFinite(Number(time))) {
-      throw new Exception(400, "시간을 입력");
+      throw new Exception(
+        EXCEPTION_INFO.TIME_INVALID.statusCode,
+        EXCEPTION_INFO.TIME_INVALID.message,
+        EXCEPTION_INFO.TIME_INVALID.path
+      );
     }
     if (distance === undefined || !Number.isFinite(Number(distance))) {
-      throw new Exception(400, "거리를 입력");
+      throw new Exception(
+        EXCEPTION_INFO.DISTANCE_INVALID.statusCode,
+        EXCEPTION_INFO.DISTANCE_INVALID.message,
+        EXCEPTION_INFO.DISTANCE_INVALID.path
+      );
     }
     if (images.length > 3) {
-      throw new Exception(400, "사진은 최대 3장까지 등록 가능");
+      throw new Exception(
+        EXCEPTION_INFO.PHOTOS_COUNT_EXCEEDED.statusCode,
+        EXCEPTION_INFO.PHOTOS_COUNT_EXCEEDED.message,
+        EXCEPTION_INFO.PHOTOS_COUNT_EXCEEDED.path
+      );
     }
     if (!nickname) {
-      throw new Exception(400, "닉네임은 필수");
+      throw new Exception(
+        EXCEPTION_INFO.AUTHOR_NICKNAME_REQUIRE.statusCode,
+        EXCEPTION_INFO.AUTHOR_NICKNAME_REQUIRE.message,
+        EXCEPTION_INFO.AUTHOR_NICKNAME_REQUIRE.path
+      );
     }
     if (!password) {
-      throw new Exception(400, "패스워드는 필수");
+      throw new Exception(
+        EXCEPTION_INFO.AUTHOR_PASSWORD_REQUIRE.statusCode,
+        EXCEPTION_INFO.AUTHOR_PASSWORD_REQUIRE.message,
+        EXCEPTION_INFO.AUTHOR_PASSWORD_REQUIRE.path
+      );
     }
 
     return {
