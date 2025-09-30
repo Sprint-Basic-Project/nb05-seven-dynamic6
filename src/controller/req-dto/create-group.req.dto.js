@@ -1,6 +1,6 @@
-import { EXCEPTION_INFO } from "../../common/const/exception-info.js"
+import { EXCEPTION_INFO } from "../../common/const/exception-info.js";
+import { Exception } from "../../common/exception/exception.js";
 import { BaseReqDTO } from "./base.req.dto.js";
-
 
 export class CreateGroupDTO extends BaseReqDTO {
   constructor(reqData) {
@@ -8,6 +8,12 @@ export class CreateGroupDTO extends BaseReqDTO {
   }
 
   validate() {
+    if (!this.body) {
+      throw new Exception(
+        EXCEPTION_INFO.UNKNOWN_SERVER_ERROR.statusCode,
+        EXCEPTION_INFO.UNKNOWN_SERVER_ERROR.message,
+      );
+    }
     const {
       name,
       description,
@@ -35,7 +41,7 @@ export class CreateGroupDTO extends BaseReqDTO {
         info: EXCEPTION_INFO.PHOTO_URL_REQUIRE,
       });
     }
-    if (!this.isBoolean(goalRep)) {
+    if (!this.isNumber(goalRep)) {
       throw new Exception({
         info: EXCEPTION_INFO.GOAL_REP_REQUIRE,
       });
@@ -49,34 +55,30 @@ export class CreateGroupDTO extends BaseReqDTO {
     }
 
     if (!urlPattern.test(discordInviteUrl)) {
-      throw Exception({
+      throw new Exception({
         info: EXCEPTION_INFO.DESCRIPTION_INVALID_LENGTH,
       });
     }
 
     const tagPattern = /^#[0-9A-Za-z가-힣]+$/;
-    if (!tagPattern.test(tag)) {
-      throw Exception({
+    if (!Array.isArray(tags) || tags.length === 0) {
+      throw new Exception({
         info: EXCEPTION_INFO.TAGS_ITEM_INVALID,
       });
     }
+    tags.forEach((t) => {
+      if (!this.isString(t) || !tagPattern.test(t)) {
+        throw new Exception({ info: EXCEPTION_INFO.TAGS_ITEM_INVALID });
+      }
+    });
 
-    if (!this.isString(tags)) {
-      throw new Exception({
-        info: EXCEPTION_INFO.TAGS_REQUIRE,
-      });
-    }
     if (!this.isString(ownerNickname)) {
-      //nickname
-      throw new Exception({
-        info: EXCEPTION_INFO.OWNER_NICKNAME_REQUIRE,
-      });
+      throw new Exception({ info: EXCEPTION_INFO.OWNER_NICKNAME_REQUIRE });
     }
     if (!this.isString(ownerPassword)) {
-      throw new Exception({
-        info: EXCEPTION_INFO.OWNER_PASSWORD_REQUIRE,
-      });
+      throw new Exception({ info: EXCEPTION_INFO.OWNER_PASSWORD_REQUIRE });
     }
+
     return {
       name,
       description,
@@ -85,7 +87,7 @@ export class CreateGroupDTO extends BaseReqDTO {
       discordWebhookUrl,
       discordInviteUrl,
       tags,
-      userNickanme: ownerNickname,
+      userNickname: ownerNickname,
       userPassword: ownerPassword,
     };
   }

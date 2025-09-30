@@ -1,13 +1,18 @@
 export class CreateGroupResDto {
+  id;
   name;
   description;
   photoUrl;
   goalRep;
   discordWebhookUrl;
   discordInviteUrl;
+  likeCount;
   tags;
-  userId;
-  userPassword;
+  owner;
+  participants;
+  badges;
+  createdAt;
+  updatedAt;
 
   constructor(group) {
     this.id = group.id;
@@ -17,9 +22,11 @@ export class CreateGroupResDto {
     this.goalRep = group.goalRep;
     this.discordWebhookUrl = group.discordWebhookUrl;
     this.discordInviteUrl = group.discordInviteUrl;
+    this.likeCount = group.likeCount;
     this.tags = group.tags;
-    this.userId = group.userId;
-    this.userPassword = group.userPassword;
+    this.owner = group.owner;
+    this.participants = group.participants;
+    this.badges = group.badges;
     this.createdAt = group.createdAt;
     this.updatedAt = group.updatedAt;
     this.deletedAt = group.deletedAt;
