@@ -177,8 +177,9 @@ export class Group {
     discordWebhookUrl,
     discordInviteUrl,
     tags,
-  }) { if (name !== undefined) {
-      Group.validateNameRule(name, []); 
+  }) {
+    if (name !== undefined) {
+      Group.validateNameRule(name, []);
       this.#name = name;
     }
     if (description !== undefined) {
@@ -214,14 +215,14 @@ export class Group {
       throw new Exception(
         EXCEPTION_INFO.NAME_INVALID_LENGTH.statusCode,
         EXCEPTION_INFO.NAME_INVALID_LENGTH.message,
-        "name"
+        "name",
       );
     }
     if (existingGroupNames.includes(name)) {
       throw new Exception(
         EXCEPTION_INFO.NAME_CONFLICT.statusCode,
         EXCEPTION_INFO.NAME_CONFLICT.message,
-        "name"
+        "name",
       );
     }
   }
@@ -230,7 +231,7 @@ export class Group {
       throw new Exception(
         EXCEPTION_INFO.DESCRIPTION_INVALID_LENGTH.statusCode,
         EXCEPTION_INFO.DESCRIPTION_INVALID_LENGTH.message,
-        "description"
+        "description",
       );
     }
   }
@@ -239,7 +240,7 @@ export class Group {
       throw new Exception(
         EXCEPTION_INFO.GOAL_REP_INVALID_RANGE.statusCode,
         EXCEPTION_INFO.GOAL_REP_INVALID_RANGE.message,
-        "goalRep"
+        "goalRep",
       );
     }
   }
