@@ -3,7 +3,7 @@ import { Group } from "../../03-domain/entity/group.entity.js";
 export class GroupMapper {
   static toEntity(record) {
     return new Group({
-      id: record.groupId,
+      id: record.id,
       name: record.name,
       description: record.description,
       imageUrl: record.imageUrl,
@@ -20,7 +20,6 @@ export class GroupMapper {
       tags: (record.Tag ?? []).map((tag) => tag.name),
       owner: record.user,
       participants: (record.userJoinGroup ?? []).map((group) => group.user),
-      ownerPassword: record.ownerPassword, //ownerPassword 추가
     });
   }
   //create
