@@ -14,6 +14,12 @@ export const EXCEPTION_INFO = {
     path: "password",
     message: "Wrong password",
   },
+
+  USER_NOT_FOUND: {
+    statusCode: 404,
+    message: "User not found",
+  },
+
   // 공통
   UNKNOWN_SERVER_ERROR: {
     statusCode: 500,
@@ -98,15 +104,14 @@ export const EXCEPTION_INFO = {
     message: "태그(tags) 항목에 유효하지 않은 값이 포함되어 있습니다.",
   },
 
-  OWNER_NICKNAME_REQUIRE: {
-    statusCode: 400,
-    message: "소유자 닉네임(이메일)을 입력해주세요.",
-  },
   OWNER_NICKNAME_INVALID_LENGTH: {
     statusCode: 400,
     message: "소유자 닉네임(ownerNickname)의 길이가 올바르지 않습니다.",
   },
-
+  OWNER_NICKNAME_REQUIRE: {
+    statusCode: 400,
+    message: "소유자 닉네임(ownerNickname)이 옳바르지 않습니다. .",
+  },
   OWNER_PASSWORD_REQUIRE: {
     statusCode: 400,
     message: "소유자 비밀번호(ownerPassword)를 입력해주세요.",
@@ -114,6 +119,10 @@ export const EXCEPTION_INFO = {
   OWNER_PASSWORD_WEAK: {
     statusCode: 400,
     message: "소유자 비밀번호(ownerPassword)가 보안 기준에 미달합니다.",
+  },
+  OWNER_NICKNAME_CONFLICT: {
+    statusCode: 400,
+    message: "소유자 닉네임(owneNickname) 중복입니다.",
   },
   OWNER_AUTH_FAILED: {
     statusCode: 401,
@@ -142,6 +151,14 @@ export const EXCEPTION_INFO = {
     statusCode: 404,
     message: "user를 찾을 수 없습니다",
   },
+  NICKNAME_TOO_LONG: {
+    statusCode: 409,
+    message: "닉네임이 너무 깁니다.",
+  },
+  PASSWORD_TOO_SHORT: {
+    statusCode: 409,
+    message: "비밀번호가 너무 짧습니다",
+  },
   NICKNAME_ALREADY_EXISTS: {
     statusCode: 409,
     path: "nickname",
@@ -158,5 +175,66 @@ export const EXCEPTION_INFO = {
   LEAVE_GROUP_FAILED: {
     statusCode: 500,
     message: "그룹 탈퇴에 실패했습니다.",
+  },
+  // record 관련
+  GROUP_ID_INVALID: {
+    statusCode: 400,
+    path: "groupId",
+    message: "유효하지 않은 그룹 ID 형식입니다. UUID 문자열이어야 합니다.",
+  },
+
+  EXERCISE_TYPE_INVALID: {
+    statusCode: 400,
+    path: "exerciseType",
+    message:
+      "운동 종류가 없거나 형식이 올바르지 않음. 운동은 RUNNING, SWIMMING, CYCLING 중 하나여야 합니다.",
+  },
+
+  DESCRIPTION_INVALID: {
+    statusCode: 400,
+    path: "description",
+    message: "설명(description)이 없거나 형식이 올바르지 않습니다.",
+  },
+
+  TIME_INVALID: {
+    statusCode: 400,
+    path: "time",
+    message:
+      "시간(time)이 없거나 형식이 올바르지 않음. 시간은 0 이상의 정수여야 합니다.",
+  },
+
+  DISTANCE_INVALID: {
+    statusCode: 400,
+    path: "distance",
+    message:
+      "거리(distance)가 없거나 형식이 올바르지 않음. 거리는 0 이상의 숫자여야 합니다.",
+  },
+
+  PHOTOS_COUNT_EXCEEDED: {
+    statusCode: 400,
+    path: "photos",
+    message: "사진은 최대 3장까지 등록 가능합니다.",
+  },
+
+  AUTHOR_NICKNAME_REQUIRE: {
+    statusCode: 400,
+    path: "authorNickname",
+    message: "닉네임(authorNickname)을 입력하세요.",
+  },
+
+  AUTHOR_PASSWORD_REQUIRE: {
+    statusCode: 400,
+    path: "authorPassword",
+    message: "비밀번호(authorPassword)를 입력하세요.",
+  },
+
+  RECORD_NOT_FOUND: {
+    statusCode: 404,
+    message: "기록이 존재하지 않습니다",
+  },
+
+  RECORD_SAVE_FAILED: {
+    statusCode: 500,
+    message: "운동 기록 저장 중에 오류가 발생했습니다.",
   },
 };

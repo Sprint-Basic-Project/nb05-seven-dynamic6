@@ -19,7 +19,6 @@ export class Group {
   #updatedAt;
   #deletedAt;
   #badges;
-  #ownerPassword;
 
   constructor({
     id,
@@ -38,7 +37,6 @@ export class Group {
     createdAt,
     updatedAt,
     deletedAt,
-    ownerPassword,
   }) {
     this.#id = id;
     this.#description = description;
@@ -57,7 +55,6 @@ export class Group {
     this.#owner = owner;
     this.#participants = participants;
     this.#badges = [];
-    this.#ownerPassword = ownerPassword;
     this.evaluateBadges();
   }
 
@@ -171,6 +168,46 @@ export class Group {
       tags,
       owner: userId,
     });
+  }
+  update({
+    name,
+    description,
+    photoUrl,
+    goalRep,
+    discordWebhookUrl,
+    discordInviteUrl,
+    tags,
+  }) {
+    if (name !== undefined) {
+      Group.validateNameRule(name, []);
+      this.#name = name;
+    }
+    if (description !== undefined) {
+      Group.validateDescriptionRule(description);
+      this.#description = description;
+    }
+    if (photoUrl !== undefined) {
+      this.#photoUrl = photoUrl;
+    }
+    if (goalRep !== undefined) {
+      Group.validateGoalRepRule(goalRep);
+      this.#goalRep = goalRep;
+    }
+    if (discordWebhookUrl !== undefined) {
+      this.#discordWebhookUrl = discordWebhookUrl;
+    }
+    if (discordInviteUrl !== undefined) {
+      this.#discordInviteUrl = discordInviteUrl;
+    }
+    if (tags !== undefined) {
+      this.#tags = tags;
+    }
+
+    this.#updatedAt = new Date();
+  }
+  static forUpdate(existingGroup, updates) {
+    existingGroup.update(updates);
+    return existingGroup;
   }
 
   static validateNameRule(name, existingGroupNames) {

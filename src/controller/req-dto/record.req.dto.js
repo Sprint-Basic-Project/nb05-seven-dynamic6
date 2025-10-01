@@ -1,58 +1,114 @@
 //DTO는 입력값 모양 확인 + 타입변환 / 도메인 규칙검증은 entity에서 함.
 
 import { BaseReqDTO } from "./base.req.dto.js";
+import { EXCEPTION_INFO } from "../../common/const/exception-info.js";
 import { Exception } from "../../common/exception/exception.js";
+
+const normalizeExerciseType = (rawType) => {
+  if (!rawType) return rawType;
+  const map = {
+    run: "RUNNING",
+    running: "RUNNING",
+    swim: "SWIMMING",
+    swimming: "SWIMMING",
+    cycle: "CYCLING",
+    cycling: "CYCLING",
+  };
+  const key = String(rawType).trim().toLowerCase();
+  return map[key] ?? String(rawType).trim().toUpperCase();
+};
 
 export class RecordReqDTO extends BaseReqDTO {
   validate() {
-    const {
-      exerciseType,
-      description,
-      time,
-      distance,
-      images = [],
-      nickname,
-      password,
-    } = this.body || {};
-    const { groupId } = this.params || {};
+    const reqBody = this.body ?? {};
+    const reqParams = this.params ?? {};
+    const { groupId } = reqParams;
+    const isUuid = /^[0-9a-fA-F-]{36}$/.test(groupId);
 
-    if (!groupId) {
-      throw new Exception(400, "그룹ID가 필요");
+    const exerciseType = normalizeExerciseType(reqBody.exerciseType);
+    const description = String(reqBody.description ?? "").trim();
+    const time = Number(reqBody.time);
+    const distance = Number(reqBody.distance);
+    const images = Array.isArray(reqBody.images)
+      ? reqBody.images
+      : Array.isArray(reqBody.photos)
+        ? reqBody.photos
+        : [];
+    const nickname = (reqBody.nickname ?? reqBody.authorNickname)
+      ?.toString()
+      .trim();
+    const password = (reqBody.password ?? reqBody.authorPassword)
+      ?.toString()
+      .trim();
+
+    if (!isUuid) {
+      throw new Exception(
+        EXCEPTION_INFO.GROUP_ID_INVALID.statusCode,
+        EXCEPTION_INFO.GROUP_ID_INVALID.message,
+        "groupId",
+      );
     }
     if (!exerciseType) {
-      throw new Exception(400, "운동 종류를 입력");
+      throw new Exception(
+        EXCEPTION_INFO.EXERCISE_TYPE_INVALID.statusCode,
+        EXCEPTION_INFO.EXERCISE_TYPE_INVALID.message,
+        EXCEPTION_INFO.EXERCISE_TYPE_INVALID.path,
+      );
     }
 
-    const desc = description ? String(description).trim() : "";
-    if (!desc) {
-      throw new Exception(400, "설명은 필수");
+    if (!description) {
+      throw new Exception(
+        EXCEPTION_INFO.DESCRIPTION_INVALID.statusCode,
+        EXCEPTION_INFO.DESCRIPTION_INVALID.message,
+        EXCEPTION_INFO.DESCRIPTION_INVALID.path,
+      );
     }
 
-    if (time === undefined || !Number.isFinite(Number(time))) {
-      throw new Exception(400, "시간을 입력");
+    if (time === undefined || !Number.isFinite(time)) {
+      throw new Exception(
+        EXCEPTION_INFO.TIME_INVALID.statusCode,
+        EXCEPTION_INFO.TIME_INVALID.message,
+        EXCEPTION_INFO.TIME_INVALID.path,
+      );
     }
-    if (distance === undefined || !Number.isFinite(Number(distance))) {
-      throw new Exception(400, "거리를 입력");
+    if (distance === undefined || !Number.isFinite(distance)) {
+      throw new Exception(
+        EXCEPTION_INFO.DISTANCE_INVALID.statusCode,
+        EXCEPTION_INFO.DISTANCE_INVALID.message,
+        EXCEPTION_INFO.DISTANCE_INVALID.path,
+      );
     }
     if (images.length > 3) {
-      throw new Exception(400, "사진은 최대 3장까지 등록 가능");
+      throw new Exception(
+        EXCEPTION_INFO.PHOTOS_COUNT_EXCEEDED.statusCode,
+        EXCEPTION_INFO.PHOTOS_COUNT_EXCEEDED.message,
+        EXCEPTION_INFO.PHOTOS_COUNT_EXCEEDED.path,
+      );
     }
     if (!nickname) {
-      throw new Exception(400, "닉네임은 필수");
+      throw new Exception(
+        EXCEPTION_INFO.AUTHOR_NICKNAME_REQUIRE.statusCode,
+        EXCEPTION_INFO.AUTHOR_NICKNAME_REQUIRE.message,
+        EXCEPTION_INFO.AUTHOR_NICKNAME_REQUIRE.path,
+      );
     }
     if (!password) {
-      throw new Exception(400, "패스워드는 필수");
+      throw new Exception(
+        EXCEPTION_INFO.AUTHOR_PASSWORD_REQUIRE.statusCode,
+        EXCEPTION_INFO.AUTHOR_PASSWORD_REQUIRE.message,
+        EXCEPTION_INFO.AUTHOR_PASSWORD_REQUIRE.path,
+      );
     }
 
     return {
       groupId,
       exerciseType,
-      description: desc,
-      time: Number(time),
-      distance: Number(distance),
+      description,
+      time,
+      distance,
       images,
-      nickname: String(nickname).trim(),
-      password: String(password).trim(),
+      nickname,
+      password,
     };
   }
 }

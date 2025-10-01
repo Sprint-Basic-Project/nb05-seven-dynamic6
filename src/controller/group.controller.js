@@ -3,15 +3,19 @@ import { verifyGroupPassword } from "../common/middleware/auth.js";
 import { CreateGroupDTO } from "./req-dto/create-group.req.dto.js";
 import { CreateGroupResDto } from "./res-dto/create-group.res.dto.js";
 import { Exception } from "../common/exception/exception.js";
+import { UpdateGroupDTO } from "./req-dto/update-group.req.dto.js";
+import { UpdateGroupResDto } from "./res-dto/update-group.res.dto.js";
 
 export class GroupController extends BaseController {
   #groupService;
   #repo;
+  #userRepo;
 
-  constructor(groupService, groupRepo) {
+  constructor(groupService, groupRepo, userRepo) {
     super("/groups");
     this.#groupService = groupService;
     this.#repo = groupRepo;
+    this.#userRepo = userRepo;
     this.registerRoutes();
   }
 
@@ -19,11 +23,15 @@ export class GroupController extends BaseController {
     this.router.get("/", this.getAllGroups);
     this.router.get("/:groupId", this.getGroup);
     this.router.post("/", this.catchException(this.createGroupMiddleware));
+    this.router.patch(
+      "/:groupId",
+      this.catchException(this.updateGroupMiddleware),
+    );
     this.router.post("/:groupId/likes", this.likeGroup);
     this.router.delete("/:groupId/likes", this.unlikeGroup);
     this.router.delete(
       "/:groupId",
-      verifyGroupPassword(this.#repo),
+      verifyGroupPassword(this.#repo, this.#userRepo),
       this.deleteGroup,
     );
     this.router.get("/:groupId/rank", this.getRankings);
@@ -50,14 +58,14 @@ export class GroupController extends BaseController {
 
   likeGroup = async (req, res) => {
     const groupId = req.params.groupId;
-    const result = await this.#groupService.likeGroup({ groupId });
-    return res.status(200).json(result);
+    await this.#groupService.likeGroup({ groupId });
+    return res.sendStatus(200);
   };
 
   unlikeGroup = async (req, res) => {
     const groupId = req.params.groupId;
-    const result = await this.#groupService.unlikeGroup({ groupId });
-    return res.status(200).json(result);
+    await this.#groupService.unlikeGroup({ groupId });
+    return res.sendStatus(200);
   };
 
   deleteGroup = async (req, res) => {
@@ -76,5 +84,19 @@ export class GroupController extends BaseController {
     }
     const resDto = new CreateGroupResDto(group);
     return res.status(201).json(resDto);
+  };
+
+  updateGroupMiddleware = async (req, res, next) => {
+    const reqDto = new UpdateGroupDTO({
+      body: req.body,
+      params: req.params,
+    }).validate();
+    const updatedGroup = await this.#groupService.updateGroup(reqDto);
+
+    if (!updatedGroup) {
+      throw new Exception(404, "그룹을 찾을 수 없습니다.", "groupId");
+    }
+    const resDto = new UpdateGroupResDto(updatedGroup);
+    return res.status(200).json(resDto);
   };
 }
