@@ -36,23 +36,23 @@ export class UserJoinGroupService extends BaseService {
       });
 
     if (existingUserJoinGroup) {
-      if(!existingUserJoinGroup.deletedAt) {
-      throw new Exception(
-        EXCEPTION_INFO.ALREADY_JOINED_GROUP.statusCode,
-        EXCEPTION_INFO.ALREADY_JOINED_GROUP.message,
-      );
+      if (!existingUserJoinGroup.deletedAt) {
+        throw new Exception(
+          EXCEPTION_INFO.ALREADY_JOINED_GROUP.statusCode,
+          EXCEPTION_INFO.ALREADY_JOINED_GROUP.message,
+        );
+      } else {
+        await this.repos.userJoinGroupRepo.reactivate({
+          userId: userEntity.id,
+          groupId,
+        });
+      }
     } else {
-      await this.repos.userJoinGroupRepo.reactivate({
+      await this.repos.userJoinGroupRepo.create({
         userId: userEntity.id,
         groupId,
-      })
+      });
     }
-  } else {
-    await this.repos.userJoinGroupRepo.create({
-      userId: userEntity.id,
-      groupId,
-    })
-  }
 
     const userJoinGroupWithGroup =
       await this.repos.userJoinGroupRepo.findByUserAndGroup({

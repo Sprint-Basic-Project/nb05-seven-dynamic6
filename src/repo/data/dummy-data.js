@@ -1,4 +1,4 @@
-import { v4 as uuid } from "uuid"; 
+import { v4 as uuid } from "uuid";
 import bcrypt from "bcrypt";
 const hash = (s) => bcrypt.hashSync(s, 10);
 
@@ -59,7 +59,6 @@ export const RECORD_IMAGES = Array.from({ length: 10 }).map((_, i) => ({
   imageUrl: ``,
   recordId: RECORDS[i % RECORDS.length].id,
 }));
-
 
 export const TAGS = Array.from({ length: 10 }).map((_, i) => ({
   id: uuid(),

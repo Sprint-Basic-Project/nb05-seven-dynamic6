@@ -39,6 +39,7 @@ export class RecordRepo {
 
     const where = {
       groupId: Number(groupId),
+      deletedAt: null,
       ...(nick
         ? {
             user: { is: { nickname: { contains: nick, mode: "insensitive" } } },
@@ -64,6 +65,7 @@ export class RecordRepo {
     const nick = nickname?.trim();
     const where = {
       groupId: Number(groupId),
+      deletedAt: null,
       ...(nick
         ? {
             user: { is: { nickname: { contains: nick, mode: "insensitive" } } },
@@ -78,6 +80,7 @@ export class RecordRepo {
       where: {
         id: recordId,
         groupId: Number(groupId),
+        deletedAt: null,
       },
       include: {
         recordImages: true,

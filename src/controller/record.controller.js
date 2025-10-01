@@ -40,12 +40,19 @@ export class RecordController extends BaseController {
 
   getRecords = async (req, res) => {
     const { groupId } = req.params;
-    const { orderBy = "latest", nickname, page = 1, pageSize = 10 } = req.query;
+    const {
+      orderBy = "latest",
+      nickname,
+      search,
+      page = 1,
+      pageSize = 10,
+    } = req.query;
+    const filterNickname = (search ?? nickname)?.toString().trim();
 
     const { data, total } = await this.#service.getRecord({
       groupId,
       orderBy,
-      nickname,
+      nickname: filterNickname,
       page: Number(page),
       pageSize: Number(pageSize),
     });

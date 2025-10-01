@@ -1,32 +1,41 @@
-//DTO는 입력값 모양 확인 + 타입변환 / 도메인 규칙검증은 entity에서 함.
-
 import { BaseReqDTO } from "./base.req.dto.js";
 import { EXCEPTION_INFO } from "../../common/const/exception-info.js";
 import { Exception } from "../../common/exception/exception.js";
 
 const normalizeExerciseType = (rawType) => {
-  if (!rawType) return rawType;
+  if (!rawType == null) return undefined;
+
+  const key = String(rawType)
+    .normalize("NFC")
+    .trim()
+    .toLowerCase()
+    .replace(/[\s\u200B\u00A0]+/g, "");
+
   const map = {
     run: "RUNNING",
     running: "RUNNING",
+    러닝: "RUNNING",
     swim: "SWIMMING",
     swimming: "SWIMMING",
+    수영: "SWIMMING",
     cycle: "CYCLING",
     cycling: "CYCLING",
+    bike: "CYCLING",
+    사이클링: "CYCLING",
   };
-  const key = String(rawType).trim().toLowerCase();
-  return map[key] ?? String(rawType).trim().toUpperCase();
+  const result = map[key];
+  return result;
 };
 
 export class RecordReqDTO extends BaseReqDTO {
   validate() {
     const reqBody = this.body ?? {};
     const reqParams = this.params ?? {};
-    const groupId = Number(reqParams.groupId);
-    const isNumber = this.isNumber(groupId);
-    console.log(isNumber);
-
-    const exerciseType = normalizeExerciseType(reqBody.exerciseType);
+    const { groupId } = reqParams;
+    const groupIdNum = Number(groupId);
+    const isNumber = Number.isInteger(groupIdNum);
+    const rawType = reqBody.exerciseType ?? reqBody.type ?? reqBody.kind;
+    const exerciseType = normalizeExerciseType(rawType);
     const description = String(reqBody.description ?? "").trim();
     const time = Number(reqBody.time);
     const distance = Number(reqBody.distance);
@@ -102,7 +111,7 @@ export class RecordReqDTO extends BaseReqDTO {
     }
 
     return {
-      groupId,
+      groupId: groupIdNum,
       exerciseType,
       description,
       time,

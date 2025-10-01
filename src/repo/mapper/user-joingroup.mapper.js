@@ -24,7 +24,10 @@ export class UserJoinGroupMapper {
             discordInviteUrl: record.group.discordInviteUrl,
             likeCount: record.group.likeCount,
             recordCount: record.group.recordCount,
-            memberCount: record.group.userJoinGroups?.length || 0,
+            memberCount:
+              record.group.userJoinGroups?.filter(
+                (ujg) => ujg.deletedAt === null,
+              ).length || 0,
             tags: record.group.tags,
             owner: record.group.user
               ? {
@@ -35,12 +38,14 @@ export class UserJoinGroupMapper {
                 }
               : null,
             participants:
-              record.group.userJoinGroups?.map((ujg) => ({
-                id: ujg.user.id,
-                nickname: ujg.user.nickname,
-                createdAt: ujg.user.createdAt,
-                updatedAt: ujg.user.updatedAt,
-              })) || [],
+              record.group.userJoinGroups
+                ?.filter((ujg) => ujg.deletedAt === null)
+                .map((ujg) => ({
+                  id: ujg.user.id,
+                  nickname: ujg.user.nickname,
+                  createdAt: ujg.user.createdAt,
+                  updatedAt: ujg.user.updatedAt,
+                })) || [],
             createdAt: record.group.createdAt,
             updatedAt: record.group.updatedAt,
             badges: record.group.badges || [],

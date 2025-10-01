@@ -49,72 +49,89 @@ export class UserJoinGroupRepo {
     return record;
   }
 
-  async reactivate({userId, groupId}) {
-    const record = await this.#prisma.userJoinGroup.update({
-      where: {
-        groupId_userId:{
-          groupId: Number(groupId),
-          userId: userId,
-        }
-      },
-      data: {
-        deletedAt: null,
-      }
-    })
-    return UserJoinGroupMapper.toEntity(record);
-  }
-
-  async create({ userId, groupId }) {
-    const record = await this.#prisma.userJoinGroup.create({
-      data: {
-        groupId: Number(groupId),
-        userId: userId,
-      },
-    });
-    return UserJoinGroupMapper.toEntity(record);
-  }
-
-  async delete({ userId, groupId }) {
+  async reactivate({ userId, groupId }) {
     const now = new Date();
 
     return await this.#prisma.$transaction(async (tx) => {
-      const record = await tx.userJoinGroup.findUnique({
+      const reactivatedUser = await tx.userJoinGroup.update({
         where: {
           groupId_userId: {
             groupId: Number(groupId),
             userId: userId,
           },
         },
-        select: {
-          id: true,
-          deletedAt: true,
-        },
-      });
-
-      if (!record || record.deletedAt !== null) {
-        return null;
-      }
-
-      const deleteRecords = await tx.record.updateMany({
-        where: {
-          userJoinGroupId: record.id,
+        data: {
           deletedAt: null,
-        },
-        data: {
-          deletedAt: now,
+          updatedAt: now,
         },
       });
 
-      const deletedUser = await tx.userJoinGroup.update({
+      await tx.record.updateMany({
         where: {
-          id: record.id,
+          userJoinGroupId: reactivatedUser.id,
+          deletedAt: { not: null },
         },
         data: {
-          deletedAt: now,
+          deletedAt: null,
+          updatedAt: now,
+        }
+      })
+
+      return UserJoinGroupMapper.toEntity(reactivatedUser);
+    })
+  }
+    
+  async create({ userId, groupId }) {
+      const record = await this.#prisma.userJoinGroup.create({
+        data: {
+          groupId: Number(groupId),
+          userId: userId,
         },
       });
+      return UserJoinGroupMapper.toEntity(record);
+    }
 
-      return UserJoinGroupMapper.toEntity(deletedUser);
-    });
+  async delete ({ userId, groupId }) {
+      const now = new Date();
+
+      return await this.#prisma.$transaction(async (tx) => {
+        const record = await tx.userJoinGroup.findUnique({
+          where: {
+            groupId_userId: {
+              groupId: Number(groupId),
+              userId: userId,
+            },
+          },
+          select: {
+            id: true,
+            deletedAt: true,
+          },
+        });
+
+        if (!record || record.deletedAt !== null) {
+          return null;
+        }
+
+        const deleteRecords = await tx.record.updateMany({
+          where: {
+            userJoinGroupId: record.id,
+            deletedAt: null,
+          },
+          data: {
+            deletedAt: now,
+          },
+        });
+
+        const deletedUser = await tx.userJoinGroup.update({
+          where: {
+            id: record.id,
+          },
+          data: {
+            deletedAt: now,
+          },
+        });
+
+        return UserJoinGroupMapper.toEntity(deletedUser);
+      });
+    }
   }
-}
