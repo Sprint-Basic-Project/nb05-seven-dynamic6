@@ -1,5 +1,3 @@
-//DTO는 입력값 모양 확인 + 타입변환 / 도메인 규칙검증은 entity에서 함.
-
 import { BaseReqDTO } from "./base.req.dto.js";
 import { EXCEPTION_INFO } from "../../common/const/exception-info.js";
 import { Exception } from "../../common/exception/exception.js";
@@ -23,7 +21,8 @@ export class RecordReqDTO extends BaseReqDTO {
     const reqBody = this.body ?? {};
     const reqParams = this.params ?? {};
     const { groupId } = reqParams;  
-    const isNumber = this.isNumber(groupId);
+    const groupIdNum = Number(groupId);
+    const isNumber = Number.isInteger(groupIdNum);
 
     const exerciseType = normalizeExerciseType(reqBody.exerciseType);
     const description = String(reqBody.description ?? "").trim();
@@ -101,7 +100,7 @@ export class RecordReqDTO extends BaseReqDTO {
     }
 
     return {
-      groupId,
+      groupId: groupIdNum,
       exerciseType,
       description,
       time,
