@@ -55,6 +55,8 @@ export class RecordController extends BaseController {
       page: Number(page),
       pageSize: Number(pageSize),
     });
+    console.log(data);
+    console.log(total);
 
     return res.json({
       data: RecordMapper.toResponseList(data),

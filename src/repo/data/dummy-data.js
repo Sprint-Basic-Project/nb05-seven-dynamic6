@@ -1,4 +1,4 @@
-import { v4 as uuid } from "uuid";
+import { v4 as uuid } from "uuid"; 
 import bcrypt from "bcrypt";
 const hash = (s) => bcrypt.hashSync(s, 10);
 
@@ -16,12 +16,12 @@ export const USERS = Array.from({ length: 10 }).map((_, i) => ({
   deletedAt: null,
 }));
 
-// GROUPS
+// GROUPS (id를 정수로 변경)
 export const GROUPS = Array.from({ length: 10 }).map((_, i) => ({
-  id: uuid(),
+  id: i + 1,
   name: `group${i}`,
   description: `Description for group ${i}`,
-  imageUrl: `https://example.com/group${i}.jpg`,
+  imageUrl: ``,
   goalRep: Math.floor(Math.random() * 100) + 1,
   createdAt: now(),
   updatedAt: now(),
@@ -61,7 +61,7 @@ export const RECORDS = Array.from({ length: 10 }).map((_, i) => ({
 // RECORD_IMAGES
 export const RECORD_IMAGES = Array.from({ length: 10 }).map((_, i) => ({
   id: uuid(),
-  imageUrl: `https://example.com/record${i}.jpg`,
+  imageUrl: ``,
   recordId: RECORDS[i % RECORDS.length].id,
 }));
 

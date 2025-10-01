@@ -180,8 +180,8 @@ export const EXCEPTION_INFO = {
   GROUP_ID_INVALID: {
     statusCode: 400,
     path: "groupId",
-    message: "유효하지 않은 그룹 ID 형식입니다. UUID 문자열이어야 합니다.",
-  },
+    message: "유효하지 않은 그룹 ID 형식입니다. 숫자이어야 합니다.",
+  }, 
 
   EXERCISE_TYPE_INVALID: {
     statusCode: 400,

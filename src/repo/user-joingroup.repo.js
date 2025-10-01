@@ -11,7 +11,7 @@ export class UserJoinGroupRepo {
     const record = await this.#prisma.userJoinGroup.findUnique({
       where: {
         groupId_userId: {
-          groupId: groupId,
+          groupId: Number(groupId),
           userId: userId,
         },
       },
@@ -67,7 +67,7 @@ export class UserJoinGroupRepo {
   async create({ userId, groupId }) {
     const record = await this.#prisma.userJoinGroup.create({
       data: {
-        groupId: groupId,
+        groupId: Number(groupId),
         userId: userId,
       },
     });
@@ -81,7 +81,7 @@ export class UserJoinGroupRepo {
       const record = await tx.userJoinGroup.findUnique({
         where: {
           groupId_userId: {
-            groupId: groupId,
+            groupId: Number(groupId),
             userId: userId,
           },
         },
