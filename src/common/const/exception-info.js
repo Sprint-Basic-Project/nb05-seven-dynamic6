@@ -187,7 +187,7 @@ export const EXCEPTION_INFO = {
     statusCode: 400,
     path: "exerciseType",
     message:
-      "운동 종류가 없거나 형식이 올바르지 않음. 운동은 RUNNING, SWIMMING, CYCLING 중 하나여야 합니다.",
+      "운동 종류가 없거나 형식이 올바르지 않음. 운동은 run, swim, cycle 중 하나여야 합니다.",
   },
 
   DESCRIPTION_INVALID: {
