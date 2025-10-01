@@ -152,12 +152,12 @@ export const EXCEPTION_INFO = {
     message: "user를 찾을 수 없습니다",
   },
   NICKNAME_TOO_LONG: {
-    statusCode:409,
-    message:"닉네임이 너무 깁니다."
+    statusCode: 409,
+    message: "닉네임이 너무 깁니다.",
   },
   PASSWORD_TOO_SHORT: {
-    statusCode:409,
-    message:"비밀번호가 너무 짧습니다"
+    statusCode: 409,
+    message: "비밀번호가 너무 짧습니다",
   },
   NICKNAME_ALREADY_EXISTS: {
     statusCode: 409,

@@ -2,7 +2,9 @@ import { UserJoinGroup } from "../../domain/entity/user-joingroup.js";
 
 export class UserJoinGroupMapper {
   static toEntity(record) {
-    if (!record) {return null;}
+    if (!record) {
+      return null;
+    }
     return new UserJoinGroup({
       id: record.id,
       joinedAt: record.joinedAt,

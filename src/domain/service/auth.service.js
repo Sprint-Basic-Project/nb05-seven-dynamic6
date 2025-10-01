@@ -16,7 +16,7 @@ export class AuthService extends BaseService {
       //   EXCEPTION_INFO.USER_NOT_FOUND.statusCode,
       //   EXCEPTION_INFO.USER_NOT_FOUND.message,
       // );
-      return null
+      return null;
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.passwordHash);
