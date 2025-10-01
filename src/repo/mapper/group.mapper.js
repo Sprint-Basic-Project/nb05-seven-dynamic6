@@ -21,7 +21,9 @@ export class GroupMapper {
       owner: record.user ?? { id: record.userId },
       tags: (record.tags ?? []).map((tag) => tag.name),
       participants: (record.userJoinGroups ?? []).map((group) =>
-      group.user ? { id: group.user.id, nickname: group.user.nickname } : null,
+        group.user
+          ? { id: group.user.id, nickname: group.user.nickname }
+          : null,
       ),
     });
   }
