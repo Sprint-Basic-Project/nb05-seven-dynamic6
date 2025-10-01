@@ -14,12 +14,12 @@ const prisma = new PrismaClient();
 
 async function main() {
   // DB 초기화 필요하면 주석 해제
-  // await prisma.recordImage.deleteMany();
-  // await prisma.record.deleteMany();
-  // await prisma.userJoinGroup.deleteMany();
-  // await prisma.group.deleteMany();
-  // await prisma.user.deleteMany();
-  // await prisma.tag.deleteMany();
+  await prisma.recordImage.deleteMany();
+  await prisma.record.deleteMany();
+  await prisma.userJoinGroup.deleteMany();
+  await prisma.group.deleteMany();
+  await prisma.user.deleteMany();
+  await prisma.tag.deleteMany();
 
   const usersWithHashedPasswords = USERS.map((user) => ({
     ...user,
