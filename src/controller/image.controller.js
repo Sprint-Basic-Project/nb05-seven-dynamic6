@@ -28,7 +28,7 @@ export class ImageController extends BaseController {
   registerRoutes() {
     this.router.post(
       "/",
-      this.#imageUploader.array("images"), // 이미지 최대 3장까지
+      this.#imageUploader.array("files"), // 이미지 최대 3장까지
       this.catchException(this.imageUpload),
     );
   }
