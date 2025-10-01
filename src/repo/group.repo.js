@@ -16,6 +16,15 @@ export class GroupRepo {
       },
       include: {
         user: true,
+        userJoinGroups:{
+          include: {user:true},
+          where: { deletedAt: null },
+        },
+        _count:{
+          select: {
+            userJoinGroups: { where:{deletedAt:null}}
+          }
+        }
       }
     });
 
