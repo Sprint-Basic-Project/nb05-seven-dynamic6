@@ -1,5 +1,3 @@
-// Entity <-> DB 모델 변환
-
 import { Record } from "../../domain/entity/record.js";
 
 const toApiExercise = (e) => {

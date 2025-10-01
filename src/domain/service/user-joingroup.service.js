@@ -10,7 +10,6 @@ export class UserJoinGroupService extends BaseService {
   }
 
   async joinGroup({ groupId, nickname, password }) {
-    // 그룹 체크
     const groupEntity = await this.repos.groupRepo.findById(groupId);
     if (!groupEntity) {
       throw new Exception(
@@ -19,7 +18,6 @@ export class UserJoinGroupService extends BaseService {
       );
     }
 
-    //User 체크
     let userEntity = await this.authService.authenticateUser({
       nickname,
       password,
@@ -31,35 +29,30 @@ export class UserJoinGroupService extends BaseService {
       });
     }
 
-    //중복 가입 체크
     const existingUserJoinGroup =
       await this.repos.userJoinGroupRepo.findByUserAndGroup({
         userId: userEntity.id,
         groupId,
       });
 
-    if (existingUserJoinGroup && !existingUserJoinGroup.deletedAt) {
+    if (existingUserJoinGroup) {
+      if(!existingUserJoinGroup.deletedAt) {
       throw new Exception(
         EXCEPTION_INFO.ALREADY_JOINED_GROUP.statusCode,
         EXCEPTION_INFO.ALREADY_JOINED_GROUP.message,
       );
+    } else {
+      await this.repos.userJoinGroupRepo.reactivate({
+        userId: userEntity.id,
+        groupId,
+      })
     }
-
-    // //닉네임 중복 체크X
-    // const existingNickname =
-    //   await this.repos.userJoinGroupRepo.findByGroupAndNickname({
-    //     groupId,
-    //     nickname,
-    //   });
-    // if (existingNickname && !existingNickname.deletedAt) {
-    //   throw new Exception(EXCEPTION_INFO.NICKNAME_ALREADY_EXISTS_IN_GROUP);
-    // }
-
-    //그룹가입
-    const userJoinGroupEntity = await this.repos.userJoinGroupRepo.create({
+  } else {
+    await this.repos.userJoinGroupRepo.create({
       userId: userEntity.id,
       groupId,
-    });
+    })
+  }
 
     const userJoinGroupWithGroup =
       await this.repos.userJoinGroupRepo.findByUserAndGroup({
@@ -71,7 +64,6 @@ export class UserJoinGroupService extends BaseService {
   }
 
   async leaveGroup({ groupId, nickname, password }) {
-    //group 체크
     const groupEntity = await this.repos.groupRepo.findById(groupId);
     if (!groupEntity) {
       throw new Exception(
@@ -80,7 +72,6 @@ export class UserJoinGroupService extends BaseService {
       );
     }
 
-    //User 체크
     const userEntity = await this.authService.authenticateUser({
       nickname,
       password,
@@ -93,7 +84,6 @@ export class UserJoinGroupService extends BaseService {
       );
     }
 
-    //UserJoinGroup 체크
     const existingUserJoinGroup =
       await this.repos.userJoinGroupRepo.findByUserAndGroup({
         userId: userEntity.id,
@@ -106,7 +96,6 @@ export class UserJoinGroupService extends BaseService {
       );
     }
 
-    //탈퇴(softdelete)
     const deleted = await this.repos.userJoinGroupRepo.delete({
       userId: userEntity.id,
       groupId,

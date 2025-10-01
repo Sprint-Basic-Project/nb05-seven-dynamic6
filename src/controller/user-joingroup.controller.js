@@ -41,17 +41,4 @@ export class UserJoinGroupController extends BaseController {
     });
     res.status(204).send();
   };
-
-  // 현재방식은 서비스에서 인증까지 처리
-  // authenticateUserMiddleware = async (req, res, next) => {
-  //   const { groupId } = req.params;
-  //   const { nickname, password } = req.body;
-  //   const user = await this.#authservice.authenticateUser({
-  //     nickname,
-  //     password,
-  //   });
-
-  //   req.authenticatedUser = user;
-  //   next();
-  // };
 }

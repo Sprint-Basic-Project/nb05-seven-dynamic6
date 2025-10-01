@@ -5,12 +5,11 @@ import { EXCEPTION_INFO } from "../const/exception-info.js";
 export const verifyGroupPassword = (groupRepo, userRepo) => {
   return async (req, res, next) => {
     const groupId = req.params.groupId;
-    const { password } = req.body; // 소문자로 변경
+    const { password } = req.body; 
 
     try {
       const groupEntity = await groupRepo.findById(groupId);
 
-      // 그룹 존재 X --> 404
       if (!groupEntity) {
         throw new Exception(
           EXCEPTION_INFO.GROUP_NOT_FOUND.statusCode,
@@ -18,7 +17,6 @@ export const verifyGroupPassword = (groupRepo, userRepo) => {
         );
       }
 
-      // 유저 조회
       const userEntity = await userRepo.findById(
         groupEntity.owner?.id ?? groupEntity.userId,
       );
@@ -29,7 +27,6 @@ export const verifyGroupPassword = (groupRepo, userRepo) => {
         );
       }
 
-      // 비밀번호 틀렸을 때
       const isMatch = bcrypt.compareSync(password, userEntity.passwordHash);
       if (!isMatch) {
         throw new Exception(

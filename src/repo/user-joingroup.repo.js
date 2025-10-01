@@ -37,32 +37,32 @@ export class UserJoinGroupRepo {
       include: {
         user: true,
         records: {
-          orderBy: { createdAt: "desc" }, // 기록 정렬
+          orderBy: { createdAt: "desc" },
         },
-        _count: { select: { records: true } }, // 기록 개수 포함
+        _count: { select: { records: true } },
       },
       orderBy: {
-        records: { _count: "desc" }, // 기록 개수 기준 내림차순 정렬
+        records: { _count: "desc" },
       },
     });
 
     return record;
   }
 
-  // async findByGroupAndNickname({ groupId, nickname }) {
-  //   const record = await this.#prisma.userJoinGroup.findFirst({
-  //     where: {
-  //       groupId: groupId,
-  //       user: {
-  //         nickname: nickname,
-  //       },
-  //       include: {
-  //         user: true,
-  //       },
-  //     },
-  //   });
-  //   return UserJoinGroupMapper.toEntity(record);
-  // }
+  async reactivate({userId, groupId}) {
+    const record = await this.#prisma.userJoinGroup.update({
+      where: {
+        groupId_userId:{
+          groupId: Number(groupId),
+          userId: userId,
+        }
+      },
+      data: {
+        deletedAt: null,
+      }
+    })
+    return UserJoinGroupMapper.toEntity(record);
+  }
 
   async create({ userId, groupId }) {
     const record = await this.#prisma.userJoinGroup.create({
