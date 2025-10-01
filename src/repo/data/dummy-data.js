@@ -1,4 +1,6 @@
 import { v4 as uuid } from "uuid";
+import bcrypt from "bcrypt";
+const hash = (s) => bcrypt.hashSync(s, 10);
 
 const now = () => new Date().toISOString();
 

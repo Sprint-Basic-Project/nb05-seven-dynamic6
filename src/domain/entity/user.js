@@ -1,7 +1,6 @@
 import { Exception } from "../../common/exception/exception.js";
 import { EXCEPTION_INFO } from "../../common/const/exception-info.js";
 
-
 export class User {
   #id;
   #nickname;

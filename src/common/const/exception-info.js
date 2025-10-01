@@ -152,12 +152,12 @@ export const EXCEPTION_INFO = {
     message: "user를 찾을 수 없습니다",
   },
   NICKNAME_TOO_LONG: {
-    statusCode:409,
-    message:"닉네임이 너무 깁니다."
+    statusCode: 409,
+    message: "닉네임이 너무 깁니다.",
   },
   PASSWORD_TOO_SHORT: {
-    statusCode:409,
-    message:"비밀번호가 너무 짧습니다"
+    statusCode: 409,
+    message: "비밀번호가 너무 짧습니다",
   },
   NICKNAME_ALREADY_EXISTS: {
     statusCode: 409,
@@ -180,7 +180,7 @@ export const EXCEPTION_INFO = {
   GROUP_ID_INVALID: {
     statusCode: 400,
     path: "groupId",
-    message: "groupId는 정수여야 합니다.",
+    message: "유효하지 않은 그룹 ID 형식입니다. UUID 문자열이어야 합니다.",
   },
 
   EXERCISE_TYPE_INVALID: {
