@@ -23,4 +23,11 @@ export class UserRepo {
     });
     return UserMapper.toEntity(record);
   }
+
+  async findById(id) {
+    const record = await this.#prisma.user.findUnique({
+      where: { id },
+    });
+    return record ? UserMapper.toEntity(record) : null;
+  }
 }

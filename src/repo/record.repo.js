@@ -18,6 +18,7 @@ export class RecordRepo {
           recordImages: true,
           user: {
             select: {
+              id: true,
               nickname: true,
             },
           },
@@ -46,6 +47,7 @@ export class RecordRepo {
         recordImages: true,
         user: {
           select: {
+            id: true,
             nickname: true,
           },
         },
@@ -63,7 +65,7 @@ export class RecordRepo {
       include: {
         recordImages: true,
         user: {
-          select: { nickname: true },
+          select: { id: true, nickname: true },
         },
         group: {
           select: { id: true },
