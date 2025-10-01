@@ -1,3 +1,4 @@
+import { EXCEPTION_INFO } from "../common/const/exception-info.js";
 import { Exception } from "../common/exception/exception.js";
 import { GroupMapper } from "./mapper/group.mapper.js";
 
@@ -10,29 +11,35 @@ export class GroupRepo {
 
   async findById(id) {
     const record = await this.#prisma.group.findUnique({
-      where: { id },
+      where: {
+        id,
+      },
       include: {
-        tags: true,
-        user: true, // 그룹 생성자 (owner)
-        userJoinGroups: {
-          include: {
-            user: true, // 그룹에 참여한 유저 (participant)
-          },
-        },
+        user: true, // 그룹 생성자(owner) 정보
       },
     });
 
-    if (!record) throw new Error("그룹을 찾을 수 없습니다.");
+    if (!record) return null;
+
     return GroupMapper.toEntity(record);
   }
 
   async save(groupEntity) {
     const updated = await this.#prisma.group.update({
-      where: { id: groupEntity.id },
+      where: {
+        id: groupEntity.id,
+      },
       data: {
         likeCount: groupEntity.likeCount,
       },
       include: {
+        tags: true,
+        user: true,
+        userJoinGroups: {
+          include: {
+            user: true,
+          },
+        },
         _count: {
           select: {
             userJoinGroups: true,
@@ -41,13 +48,49 @@ export class GroupRepo {
         },
       },
     });
+
     return GroupMapper.toEntity(updated);
   }
 
-  async delete(groupId) {
+  async delete(id) {
+    await this.#prisma.recordImage.deleteMany({
+      where: {
+        record: {
+          groupId: id,
+        },
+      },
+    });
+
+    await this.#prisma.record.deleteMany({
+      where: {
+        groupId: id,
+      },
+    });
+
+    await this.#prisma.userJoinGroup.deleteMany({
+      where: {
+        groupId: id,
+      },
+    });
+
+    await this.#prisma.tag.deleteMany({
+      where: {
+        groupId: id,
+      },
+    });
+
     const deleted = await this.#prisma.group.delete({
-      where: { groupId },
+      where: {
+        id,
+      },
       include: {
+        tags: true,
+        user: true,
+        userJoinGroups: {
+          include: {
+            user: true,
+          },
+        },
         _count: {
           select: {
             userJoinGroups: true,
@@ -147,8 +190,45 @@ export class GroupRepo {
       data: {
         ...GroupMapper.toPersistent(entity),
         user: { connect: { id: userId } },
+        tags: {
+          create:
+            entity.tags?.map((tag) => ({
+              name: tag,
+            })) || [],
+        },
+      },
+      include: {
+        user: true,
+        tags: true,
+        userJoinGroups: { include: { user: true } },
+        _count: { select: { records: true, userJoinGroups: true } },
       },
     });
     return GroupMapper.toEntity(createdGroup);
+  }
+
+  async update(groupId, entity) {
+    const updatedGroup = await this.#prisma.group.update({
+      where: { id: groupId },
+      data: {
+        ...GroupMapper.toPersistent(entity),
+        tags: {
+          set: [],
+          connectOrCreate:
+            entity.tags?.map((tag) => ({
+              where: { name: tag },
+              create: { name: tag },
+            })) || [],
+        },
+      },
+      include: {
+        user: true,
+        tags: true,
+        userJoinGroups: { include: { user: true } },
+        _count: { select: { records: true, userJoinGroup: true } },
+      },
+    });
+
+    return GroupMapper.toEntity(updatedGroup);
   }
 }
