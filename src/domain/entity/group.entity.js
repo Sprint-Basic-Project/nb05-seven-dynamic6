@@ -169,6 +169,46 @@ export class Group {
       owner: userId,
     });
   }
+  update({
+    name,
+    description,
+    photoUrl,
+    goalRep,
+    discordWebhookUrl,
+    discordInviteUrl,
+    tags,
+  }) {
+    if (name !== undefined) {
+      Group.validateNameRule(name, []);
+      this.#name = name;
+    }
+    if (description !== undefined) {
+      Group.validateDescriptionRule(description);
+      this.#description = description;
+    }
+    if (photoUrl !== undefined) {
+      this.#photoUrl = photoUrl;
+    }
+    if (goalRep !== undefined) {
+      Group.validateGoalRepRule(goalRep);
+      this.#goalRep = goalRep;
+    }
+    if (discordWebhookUrl !== undefined) {
+      this.#discordWebhookUrl = discordWebhookUrl;
+    }
+    if (discordInviteUrl !== undefined) {
+      this.#discordInviteUrl = discordInviteUrl;
+    }
+    if (tags !== undefined) {
+      this.#tags = tags;
+    }
+
+    this.#updatedAt = new Date();
+  }
+  static forUpdate(existingGroup, updates) {
+    existingGroup.update(updates);
+    return existingGroup;
+  }
 
   static validateNameRule(name, existingGroupNames) {
     if (!name || name.length <= 1) {

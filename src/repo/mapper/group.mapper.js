@@ -28,13 +28,13 @@ export class GroupMapper {
 
   static toPersistent(entity) {
     return {
-      id: entity.id,
       name: entity.name,
       description: entity.description,
       imageUrl: entity.photoUrl,
       goalRep: entity.goalRep,
       discordWebhookUrl: entity.discordWebhookUrl,
       discordInviteUrl: entity.discordInviteUrl,
+      tags: entity.tags?.map((tag) => ({ name: tag })),
     };
   }
 }

@@ -4,6 +4,7 @@ import { Exception } from "../../common/exception/exception.js";
 import { EXCEPTION_INFO } from "../../common/const/exception-info.js";
 import { Group } from "../entity/group.entity.js";
 import { BaseService } from "./base.service.js";
+import bcrypt from "bcrypt";
 
 export class GroupService extends BaseService {
   #repos;
@@ -63,22 +64,23 @@ export class GroupService extends BaseService {
     discordWebhookUrl,
     discordInviteUrl,
     tags,
-    userNickname,
-    userPassword,
+    ownerNickname,
+    ownerPassword,
   }) {
-    const owner = await this.#repos.userRepo.findByNickname(userNickname);
-    if (!owner) {
+    const existingUser =
+      await this.#repos.userRepo.findByNickname(ownerNickname);
+    if (existingUser) {
       throw new Exception(
-        EXCEPTION_INFO.OWNER_AUTH_FAILED.statusCode,
-        EXCEPTION_INFO.OWNER_AUTH_FAILED.message,
+        EXCEPTION_INFO.OWNER_NICKNAME_CONFLICT.statusCode,
+        EXCEPTION_INFO.OWNER_NICKNAME_CONFLICT.message,
+        "ownerNickname",
       );
     }
-    if (owner.password !== userPassword) {
-      throw new Exception(
-        EXCEPTION_INFO.WRONG_PASSWORD.statusCode,
-        EXCEPTION_INFO.WRONG_PASSWORD.message,
-      );
-    }
+    const newUser = await this.#repos.userRepo.create({
+      nickname: ownerNickname,
+      passwordHash: ownerPassword,
+    });
+
     const group = Group.forCreate({
       name,
       description,
@@ -87,11 +89,71 @@ export class GroupService extends BaseService {
       discordWebhookUrl,
       discordInviteUrl,
       tags,
+      userId: newUser.id,
     });
     const createdGroup = await this.#repos.groupRepo.create({
       entity: group,
-      userId: owner.id,
+      userId: newUser.id,
     });
     return createdGroup;
+  }
+  //update
+  async updateGroup({
+    groupId,
+    name,
+    description,
+    photoUrl,
+    goalRep,
+    discordWebhookUrl,
+    discordInviteUrl,
+    tags,
+    ownerNickname,
+    ownerPassword,
+  }) {
+    const groupEntity = await this.#repos.groupRepo.findById(groupId);
+    if (!groupEntity) {
+      throw new Exception(
+        EXCEPTION_INFO.GROUP_NOT_FOUND.statusCode,
+        EXCEPTION_INFO.GROUP_NOT_FOUND.message,
+        "groupId",
+      );
+    }
+
+    const owner = await this.#repos.userRepo.findByNickname(ownerNickname);
+    if (!owner) {
+      throw new Exception(
+        EXCEPTION_INFO.OWNER_AUTH_FAILED.statusCode,
+        EXCEPTION_INFO.OWNER_AUTH_FAILED.message,
+        "ownerNickname",
+      );
+    }
+    //아래 배포용(hash)
+    // if (!bcrypt.compareSync(ownerPassword, owner.passwordHash)) {
+    //   throw new Exception(
+    //     EXCEPTION_INFO.WRONG_PASSWORD.statusCode,
+    //     EXCEPTION_INFO.WRONG_PASSWORD.message,
+    //     "password"
+    //   );
+    // }
+    //아래 test용
+    if (owner.passwordHash !== ownerPassword) {
+      throw new Exception(
+        EXCEPTION_INFO.WRONG_PASSWORD.statusCode,
+        EXCEPTION_INFO.WRONG_PASSWORD.message,
+        "password",
+      );
+    }
+    groupEntity.update({
+      name,
+      description,
+      photoUrl,
+      goalRep,
+      discordWebhookUrl,
+      discordInviteUrl,
+      tags,
+    });
+
+    const updated = await this.#repos.groupRepo.save(groupEntity);
+    return updated;
   }
 }
