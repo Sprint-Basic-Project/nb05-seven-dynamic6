@@ -27,7 +27,7 @@ export class GroupRepo {
   async save(groupEntity) {
     const updated = await this.#prisma.group.update({
       where: {
-        id: groupEntity.id
+        id: groupEntity.id,
       },
       data: {
         likeCount: groupEntity.likeCount,
