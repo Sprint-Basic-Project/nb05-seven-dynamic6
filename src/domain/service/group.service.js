@@ -4,6 +4,7 @@ import { Exception } from "../../common/exception/exception.js";
 import { EXCEPTION_INFO } from "../../common/const/exception-info.js";
 import { Group } from "../entity/group.entity.js";
 import { BaseService } from "./base.service.js";
+import { RankResDto } from "../../controller/res-dto/rank.res.dto.js";
 
 export class GroupService extends BaseService {
   #repos;
@@ -11,6 +12,15 @@ export class GroupService extends BaseService {
   constructor(repos) {
     super(repos);
     this.#repos = repos;
+  }
+
+  async getRankings(id, duration) {
+    const rankedEntities = await this.#repos.userJoinGroupRepo.findRankings(
+      id,
+      duration,
+    );
+    const rankedDtos = rankedEntities.map((entity) => new RankResDto(entity));
+    return rankedDtos;
   }
 
   async getGroups(query) {
