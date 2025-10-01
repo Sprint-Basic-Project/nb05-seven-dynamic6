@@ -35,25 +35,42 @@ export class RecordRepo {
 
   async findMany({ groupId, orderBy, nickname, skip, take }) {
     const order = orderBy === "time" ? { time: "desc" } : { createdAt: "desc" };
+    const nick = nickname?.trim();
+
+    const where = {
+      groupId,
+      ...(nick
+        ? {
+            user: { is: { nickname: { contains: nick, mode: "insensitive" } } },
+          }
+        : {}),
+    };
+
     const results = await this.#prisma.record.findMany({
-      where: {
-        groupId,
-        user: nickname ? { nickname: { contains: nickname } } : undefined,
-      },
+      where,
       orderBy: order,
       skip,
       take,
       include: {
         recordImages: true,
-        user: {
-          select: {
-            id: true,
-            nickname: true,
-          },
-        },
+        user: { select: { id: true, nickname: true } },
       },
     });
+
     return results.map(RecordMapper.toEntity);
+  }
+
+  async countMany({ groupId, nickname }) {
+    const nick = nickname?.trim();
+    const where = {
+      groupId,
+      ...(nick
+        ? {
+            user: { is: { nickname: { contains: nick, mode: "insensitive" } } },
+          }
+        : {}),
+    };
+    return this.#prisma.record.count({ where });
   }
 
   async findById({ groupId, recordId }) {
