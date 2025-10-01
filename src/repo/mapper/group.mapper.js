@@ -4,8 +4,9 @@ export class GroupMapper {
   static toEntity(record) {
     if (!record) return null;
 
-    const activeParticipants = (record.userJoinGroups ?? [])
-      .filter(ujg => ujg.deletedAt === null);
+    const activeParticipants = (record.userJoinGroups ?? []).filter(
+      (ujg) => ujg.deletedAt === null,
+    );
 
     return new Group({
       id: record.id,
