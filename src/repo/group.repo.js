@@ -90,7 +90,7 @@ export class GroupRepo {
 
     const deleted = await this.#prisma.group.delete({
       where: {
-        id,
+        id: Number(id),
       },
       include: {
         tags: true,
