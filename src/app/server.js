@@ -16,7 +16,7 @@ export class Server {
     this.#server.use(express.json());
     this.#server.use(cors());
     this.#server.use(morgan("dev"));
-    this.#server.use("/images", express.static("photos"));
+    this.#server.use("/images", express.static("public/images"));
   }
 
   registerControllers() {
@@ -30,8 +30,8 @@ export class Server {
   }
 
   listen() {
-    this.#server.listen(3000, () => {
-      console.log("listening at port 3000");
+    this.#server.listen(4000, () => {
+      console.log("listening at port 4000");
     });
   }
 
