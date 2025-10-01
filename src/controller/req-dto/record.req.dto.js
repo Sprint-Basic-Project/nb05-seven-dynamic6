@@ -6,7 +6,7 @@ const normalizeExerciseType = (rawType) => {
   if (!rawType == null) return undefined;
 
   const key = String(rawType)
-    .normalize("NFC")            
+    .normalize("NFC")
     .trim()
     .toLowerCase()
     .replace(/[\s\u200B\u00A0]+/g, "");
@@ -22,7 +22,6 @@ const normalizeExerciseType = (rawType) => {
     cycling: "CYCLING",
     bike: "CYCLING",
     사이클링: "CYCLING",
-    
   };
   const result = map[key];
   return result;
