@@ -11,7 +11,7 @@ export class UserJoinGroupService extends BaseService {
 
   async joinGroup({ groupId, nickname, password }) {
     // 그룹 체크
-    const groupEntity = await this.repos.groupRepo.findById({ groupId });
+    const groupEntity = await this.repos.groupRepo.findById(groupId);
     if (!groupEntity) {
       throw new Exception(
         EXCEPTION_INFO.GROUP_NOT_FOUND.statusCode,
@@ -29,44 +29,44 @@ export class UserJoinGroupService extends BaseService {
         nickname,
         password,
       });
+    }
 
-      //중복 가입 체크
-      const existingUserJoinGroup =
-        await this.repos.userJoinGroupRepo.findByUserAndGroup({
-          userId: user.userId,
-          groupId,
-        });
-
-      if (existingUserJoinGroup && !existingUserJoinGroup.deletedAt) {
-        throw new Exception(
-          EXCEPTION_INFO.ALREADY_JOINED_GROUP.statusCode,
-          EXCEPTION_INFO.ALREADY_JOINED_GROUP.message,
-        );
-      }
-
-      // //닉네임 중복 체크X
-      // const existingNickname =
-      //   await this.repos.userJoinGroupRepo.findByGroupAndNickname({
-      //     groupId,
-      //     nickname,
-      //   });
-      // if (existingNickname && !existingNickname.deletedAt) {
-      //   throw new Exception(EXCEPTION_INFO.NICKNAME_ALREADY_EXISTS_IN_GROUP);
-      // }
-
-      //그룹가입
-      const userJoinGroupEntity = await this.repos.userJoinGroupRepo.create({
+    //중복 가입 체크
+    const existingUserJoinGroup =
+      await this.repos.userJoinGroupRepo.findByUserAndGroup({
         userId: userEntity.id,
         groupId,
       });
 
-      return new UserJoinGroupResDto(userJoinGroupEntity);
+    if (existingUserJoinGroup && !existingUserJoinGroup.deletedAt) {
+      throw new Exception(
+        EXCEPTION_INFO.ALREADY_JOINED_GROUP.statusCode,
+        EXCEPTION_INFO.ALREADY_JOINED_GROUP.message,
+      );
     }
+
+    // //닉네임 중복 체크X
+    // const existingNickname =
+    //   await this.repos.userJoinGroupRepo.findByGroupAndNickname({
+    //     groupId,
+    //     nickname,
+    //   });
+    // if (existingNickname && !existingNickname.deletedAt) {
+    //   throw new Exception(EXCEPTION_INFO.NICKNAME_ALREADY_EXISTS_IN_GROUP);
+    // }
+
+    //그룹가입
+    const userJoinGroupEntity = await this.repos.userJoinGroupRepo.create({
+      userId: userEntity.id,
+      groupId,
+    });
+
+    return new UserJoinGroupResDto(userJoinGroupEntity);
   }
 
   async leaveGroup({ groupId, nickname, password }) {
     //group 체크
-    const groupEntity = await this.repos.groupRepo.findById({ groupId });
+    const groupEntity = await this.repos.groupRepo.findById(groupId);
     if (!groupEntity) {
       throw new Exception(
         EXCEPTION_INFO.GROUP_NOT_FOUND.statusCode,
