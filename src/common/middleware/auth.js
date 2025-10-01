@@ -5,7 +5,7 @@ import { EXCEPTION_INFO } from "../const/exception-info.js";
 export const verifyGroupPassword = (groupRepo, userRepo) => {
   return async (req, res, next) => {
     const groupId = req.params.groupId;
-    const { password } = req.body; 
+    const { password } = req.body;
 
     try {
       const groupEntity = await groupRepo.findById(groupId);

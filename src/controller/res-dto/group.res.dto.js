@@ -1,4 +1,3 @@
-// photoUrl,createdAt, updatedAt, badges, total
 export class GroupResDto {
   id;
   name;

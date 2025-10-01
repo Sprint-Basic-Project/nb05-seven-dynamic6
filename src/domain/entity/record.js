@@ -96,7 +96,7 @@ export class Record {
       images: this.images ?? [],
     };
   }
-  
+
   static forCreate({
     exerciseType,
     description,

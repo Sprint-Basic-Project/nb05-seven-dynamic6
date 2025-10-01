@@ -12,20 +12,20 @@ export class GroupRepo {
   async findById(id) {
     const record = await this.#prisma.group.findUnique({
       where: {
-        id : Number(id),
+        id: Number(id),
       },
       include: {
         user: true,
-        userJoinGroups:{
-          include: {user:true},
+        userJoinGroups: {
+          include: { user: true },
           where: { deletedAt: null },
         },
-        _count:{
+        _count: {
           select: {
-            userJoinGroups: { where:{deletedAt:null}}
-          }
-        }
-      }
+            userJoinGroups: { where: { deletedAt: null } },
+          },
+        },
+      },
     });
 
     if (!record) return null;
@@ -72,7 +72,7 @@ export class GroupRepo {
 
     await this.#prisma.record.deleteMany({
       where: {
-        groupId: Number(id), 
+        groupId: Number(id),
       },
     });
 
@@ -146,7 +146,6 @@ export class GroupRepo {
           },
         }
       : {};
-    
 
     const result = await this.#prisma.group.findMany({
       where,
@@ -158,12 +157,12 @@ export class GroupRepo {
         user: true,
         userJoinGroups: {
           include: {
-            user: true, 
+            user: true,
           },
         },
         _count: {
           select: {
-            userJoinGroups: true, 
+            userJoinGroups: true,
             records: true,
           },
         },
@@ -206,7 +205,7 @@ export class GroupRepo {
 
   async update(groupId, entity) {
     const updatedGroup = await this.#prisma.group.update({
-      where: { id: Number(groupId)  },
+      where: { id: Number(groupId) },
       data: {
         ...GroupMapper.toPersistent(entity),
         tags: {
