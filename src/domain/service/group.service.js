@@ -5,7 +5,6 @@ import { EXCEPTION_INFO } from "../../common/const/exception-info.js";
 import { Group } from "../entity/group.entity.js";
 import { BaseService } from "./base.service.js";
 import { RankResDto } from "../../controller/res-dto/rank.res.dto.js";
-import bcrypt from "bcrypt";
 
 export class GroupService extends BaseService {
   #repos;
@@ -65,7 +64,6 @@ export class GroupService extends BaseService {
     return { message: "그룹 삭제가 완료되었습니다." };
   }
 
-  //create
   async createGroup({
     name,
     description,
@@ -107,7 +105,7 @@ export class GroupService extends BaseService {
     });
     return createdGroup;
   }
-  //update
+ 
   async updateGroup({
     groupId,
     name,
@@ -137,15 +135,8 @@ export class GroupService extends BaseService {
         "ownerNickname",
       );
     }
-    //아래 배포용(hash)
-    // if (!bcrypt.compareSync(ownerPassword, owner.passwordHash)) {
-    //   throw new Exception(
-    //     EXCEPTION_INFO.WRONG_PASSWORD.statusCode,
-    //     EXCEPTION_INFO.WRONG_PASSWORD.message,
-    //     "password"
-    //   );
-    // }
-    //아래 test용
+    
+    
     if (owner.passwordHash !== ownerPassword) {
       throw new Exception(
         EXCEPTION_INFO.WRONG_PASSWORD.statusCode,

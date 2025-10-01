@@ -96,8 +96,7 @@ export class Record {
       images: this.images ?? [],
     };
   }
-  // 검증 + 생성
-  // 1. 운동종류 enum으로 정해져 있음 / 2. 시간 > 0 & 정수 / 3. 거리 > 0, 실수 / 4. 이미지 3장까지만 등록
+  
   static forCreate({
     exerciseType,
     description,
@@ -142,7 +141,7 @@ export class Record {
         EXCEPTION_INFO.DISTANCE_INVALID.path,
       );
     }
-    // 숫자가 DB에 들어가게 변환해야될걸..? 아마도..(거리, 시간)
+
     if (images && images.length > 3) {
       throw new Exception(
         EXCEPTION_INFO.PHOTOS_COUNT_EXCEEDED.statusCode,

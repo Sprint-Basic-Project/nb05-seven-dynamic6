@@ -141,7 +141,6 @@ export class Group {
       this.#badges.push("LIKE_100");
   }
 
-  //create
 
   static forCreate({
     name,

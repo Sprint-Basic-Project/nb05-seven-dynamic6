@@ -29,7 +29,7 @@ export class UpdateGroupDTO extends BaseReqDTO {
         "groupId",
       );
     }
-    //optional하게 검증하도록
+    
     if (name !== undefined && !this.isString(name)) {
       throw new Exception(
         EXCEPTION_INFO.NAME_REQUIRE.statusCode,

@@ -24,8 +24,8 @@ export class UpdateGroupResDto {
     this.discordInviteUrl = group.discordInviteUrl;
     this.likeCount = group.likeCount;
     this.tags = group.tags;
-    this.owner = group.owner; // { id, nickname, createdAt, updatedAt }
-    this.participants = group.participants; // [{ id, nickname, createdAt, updatedAt }]
+    this.owner = group.owner; 
+    this.participants = group.participants; 
     this.badges = group.badges;
     this.createdAt = group.createdAt;
     this.updatedAt = group.updatedAt;

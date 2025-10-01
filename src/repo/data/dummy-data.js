@@ -6,7 +6,6 @@ const now = () => new Date().toISOString();
 
 const EXERCISES = ["RUNNING", "SWIMMING", "CYCLING"];
 
-// USERS
 export const USERS = Array.from({ length: 10 }).map((_, i) => ({
   id: uuid(),
   nickname: `user${i}`,
@@ -16,7 +15,6 @@ export const USERS = Array.from({ length: 10 }).map((_, i) => ({
   deletedAt: null,
 }));
 
-// GROUPS (id를 정수로 변경)
 export const GROUPS = Array.from({ length: 10 }).map((_, i) => ({
   id: i + 1,
   name: `group${i}`,
@@ -33,7 +31,6 @@ export const GROUPS = Array.from({ length: 10 }).map((_, i) => ({
   userId: USERS[i % USERS.length].id,
 }));
 
-// USER_JOIN_GROUPS
 export const USER_JOIN_GROUPS = Array.from({ length: 10 }).map((_, i) => ({
   id: uuid(),
   joinedAt: now(),
@@ -43,7 +40,6 @@ export const USER_JOIN_GROUPS = Array.from({ length: 10 }).map((_, i) => ({
   userId: USERS[i % USERS.length].id,
 }));
 
-// RECORDS
 export const RECORDS = Array.from({ length: 10 }).map((_, i) => ({
   id: uuid(),
   exerciseType: EXERCISES[i % EXERCISES.length],
@@ -58,14 +54,13 @@ export const RECORDS = Array.from({ length: 10 }).map((_, i) => ({
   userId: USERS[i % USERS.length].id,
 }));
 
-// RECORD_IMAGES
 export const RECORD_IMAGES = Array.from({ length: 10 }).map((_, i) => ({
   id: uuid(),
   imageUrl: ``,
   recordId: RECORDS[i % RECORDS.length].id,
 }));
 
-// TAGS
+
 export const TAGS = Array.from({ length: 10 }).map((_, i) => ({
   id: uuid(),
   name: `Tag${i}`,
