@@ -5,7 +5,7 @@ import { EXCEPTION_INFO } from "../const/exception-info.js";
 export const verifyGroupPassword = (groupRepo, userRepo) => {
   return async (req, res, next) => {
     const groupId = req.params.groupId;
-    const { password } = req.body;
+    const { ownerPassword } = req.body;
 
     try {
       const groupEntity = await groupRepo.findById(groupId);
@@ -27,7 +27,8 @@ export const verifyGroupPassword = (groupRepo, userRepo) => {
         );
       }
 
-      const isMatch = bcrypt.compareSync(password, userEntity.passwordHash);
+      const isMatch = bcrypt.compareSync(ownerPassword, userEntity.passwordHash);
+
       if (!isMatch) {
         throw new Exception(
           EXCEPTION_INFO.WRONG_PASSWORD.statusCode,

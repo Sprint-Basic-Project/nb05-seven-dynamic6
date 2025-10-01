@@ -39,7 +39,14 @@ export class GroupRepo {
         id: groupEntity.id,
       },
       data: {
-        likeCount: groupEntity.likeCount,
+        name: groupEntity.name,
+        description: groupEntity.description,
+        // imageUrl: groupEntity.imageUrl,
+        goalRep: groupEntity.goalRep,
+        updatedAt: new Date(),
+        discordWebhookUrl: groupEntity.discordWebhookUrl,
+        discordInviteUrl: groupEntity.discordInviteUrl,
+        tags: { create: groupEntity.tags.map(tag => ({ name: tag })) }
       },
       include: {
         tags: true,
@@ -140,11 +147,11 @@ export class GroupRepo {
 
     const where = search
       ? {
-          name: {
-            contains: search,
-            mode: "insensitive",
-          },
-        }
+        name: {
+          contains: search,
+          mode: "insensitive",
+        },
+      }
       : {};
 
     const result = await this.#prisma.group.findMany({

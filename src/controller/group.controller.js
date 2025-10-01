@@ -5,6 +5,7 @@ import { CreateGroupResDto } from "./res-dto/create-group.res.dto.js";
 import { Exception } from "../common/exception/exception.js";
 import { UpdateGroupDTO } from "./req-dto/update-group.req.dto.js";
 import { UpdateGroupResDto } from "./res-dto/update-group.res.dto.js";
+import bcrypt from "bcrypt";
 
 export class GroupController extends BaseController {
   #groupService;
@@ -75,22 +76,39 @@ export class GroupController extends BaseController {
   };
 
   createGroupMiddleware = async (req, res, next) => {
-    const reqDto = new CreateGroupDTO({
-      body: req.body,
-    }).validate();
-    const group = await this.#groupService.createGroup(reqDto);
-    if (!group) {
-      throw new Exception(400, "그룹 생성에 실패했습니다.");
+    try {
+      const reqDto = new CreateGroupDTO({
+        body: req.body,
+      }).validate();
+
+      // ownerPassword 해시 처리
+      const hashedPassword = bcrypt.hashSync(reqDto.ownerPassword, 10);
+
+      // 서비스로 전달할 때 해시된 비밀번호 사용
+      const group = await this.#groupService.createGroup({
+        ...reqDto,
+        ownerPassword: hashedPassword,
+      });
+
+      if (!group) {
+        throw new Exception(400, "그룹 생성에 실패했습니다.");
+      }
+
+      const resDto = new CreateGroupResDto(group);
+      return res.status(201).json(resDto);
+    } catch (err) {
+      next(err);
     }
-    const resDto = new CreateGroupResDto(group);
-    return res.status(201).json(resDto);
   };
+
 
   updateGroupMiddleware = async (req, res, next) => {
     const reqDto = new UpdateGroupDTO({
       body: req.body,
       params: req.params,
     }).validate();
+
+
     const updatedGroup = await this.#groupService.updateGroup(reqDto);
 
     if (!updatedGroup) {
