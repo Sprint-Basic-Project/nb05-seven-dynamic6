@@ -1,4 +1,4 @@
-import { v4 as uuid } from "uuid"; 
+import { v4 as uuid } from "uuid";
 import bcrypt from "bcrypt";
 const hash = (s) => bcrypt.hashSync(s, 10);
 

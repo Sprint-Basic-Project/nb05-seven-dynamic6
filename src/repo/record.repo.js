@@ -38,7 +38,7 @@ export class RecordRepo {
     const nick = nickname?.trim();
 
     const where = {
-      groupId :  Number(groupId),
+      groupId: Number(groupId),
       ...(nick
         ? {
             user: { is: { nickname: { contains: nick, mode: "insensitive" } } },
@@ -63,7 +63,7 @@ export class RecordRepo {
   async countMany({ groupId, nickname }) {
     const nick = nickname?.trim();
     const where = {
-      groupId : Number(groupId),
+      groupId: Number(groupId),
       ...(nick
         ? {
             user: { is: { nickname: { contains: nick, mode: "insensitive" } } },
@@ -77,7 +77,7 @@ export class RecordRepo {
     const record = await this.#prisma.record.findFirst({
       where: {
         id: recordId,
-        groupId : Number(groupId),
+        groupId: Number(groupId),
       },
       include: {
         recordImages: true,

@@ -20,7 +20,7 @@ export class RecordReqDTO extends BaseReqDTO {
   validate() {
     const reqBody = this.body ?? {};
     const reqParams = this.params ?? {};
-    const { groupId } = reqParams;  
+    const { groupId } = reqParams;
     const groupIdNum = Number(groupId);
     const isNumber = Number.isInteger(groupIdNum);
 
@@ -40,7 +40,7 @@ export class RecordReqDTO extends BaseReqDTO {
       ?.toString()
       .trim();
 
-    if (!isNumber) { 
+    if (!isNumber) {
       throw new Exception(
         EXCEPTION_INFO.GROUP_ID_INVALID.statusCode,
         EXCEPTION_INFO.GROUP_ID_INVALID.message,
