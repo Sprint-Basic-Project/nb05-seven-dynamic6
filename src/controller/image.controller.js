@@ -9,6 +9,7 @@ export class ImageController extends BaseController {
 
   constructor() {
     super("/images");
+
     this.#imageUploader = multer({
       storage: multer.memoryStorage(),
 
@@ -20,6 +21,7 @@ export class ImageController extends BaseController {
         cb(null, true);
       },
     });
+
     this.registerRoutes();
   }
 
@@ -41,9 +43,13 @@ export class ImageController extends BaseController {
       throw new Exception(400, "이미지는 최대 3장까지 올릴 수 있습니다");
     }
 
+    const uploadDir = path.join("public", "images");
+
+    await fs.mkdir(uploadDir, { recursive: true });
+
     for (const file of files) {
       const filename = `${Date.now()}_${file.originalname}`;
-      const uploadPath = path.join("public/images", filename);
+      const uploadPath = path.join(uploadDir, filename);
 
       await fs.writeFile(uploadPath, file.buffer);
 
