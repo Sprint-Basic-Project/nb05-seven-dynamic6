@@ -60,7 +60,7 @@ export class CreateGroupDTO extends BaseReqDTO {
       });
     }
 
-    const tagPattern = /^#[0-9A-Za-z가-힣]+$/;
+    const tagPattern = /^[0-9A-Za-z가-힣]+$/; 
     if (!Array.isArray(tags) || tags.length === 0) {
       throw new Exception({
         info: EXCEPTION_INFO.TAGS_ITEM_INVALID,

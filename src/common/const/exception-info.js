@@ -122,7 +122,7 @@ export const EXCEPTION_INFO = {
   },
   OWNER_NICKNAME_CONFLICT: {
     statusCode: 400,
-    message: "소유자 닉네임(owneNickname) 중복입니다.",
+    message: "소유자 닉네임(ownerNickname) 중복입니다.",
   },
   OWNER_AUTH_FAILED: {
     statusCode: 401,
