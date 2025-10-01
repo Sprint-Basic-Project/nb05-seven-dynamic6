@@ -3,6 +3,7 @@ import { Router } from "express";
 import { Exception } from "../common/exception/exception.js";
 import { EXCEPTION_INFO } from "../common/const/exception-info.js";
 import { RecordReqDTO } from "./req-dto/record.req.dto.js";
+import { RecordMapper } from "../repo/mapper/record.mapper.js";
 import { BaseController } from "./base.controller.js";
 
 export class RecordController extends BaseController {
@@ -39,7 +40,7 @@ export class RecordController extends BaseController {
       userId,
       userJoinGroupId,
     });
-    return res.status(201).json(created);
+    return res.status(201).json(RecordMapper.toResponse(created));
   };
 
   // 목록 조회
@@ -47,7 +48,7 @@ export class RecordController extends BaseController {
     const { groupId } = req.params;
     const { orderBy = "latest", nickname, page = 1, pageSize = 10 } = req.query;
 
-    const records = await this.#service.getRecord({
+    const { data, total } = await this.#service.getRecord({
       groupId,
       orderBy,
       nickname,
@@ -55,7 +56,10 @@ export class RecordController extends BaseController {
       pageSize: Number(pageSize),
     });
 
-    return res.json(records);
+    return res.json({
+      data: RecordMapper.toResponseList(data),
+      total,
+    });
   };
 
   // 상세 조회
@@ -73,6 +77,6 @@ export class RecordController extends BaseController {
       );
     }
 
-    return res.json(record);
+    return res.json(RecordMapper.toResponse(record));
   };
 }

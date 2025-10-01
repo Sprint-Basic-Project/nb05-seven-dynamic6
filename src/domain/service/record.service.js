@@ -82,13 +82,17 @@ export class RecordService {
   }
 
   async getRecord({ groupId, orderBy, nickname, page, pageSize }) {
-    return await this.#repos.recordRepo.findMany({
-      groupId,
-      orderBy,
-      nickname,
-      skip: (page - 1) * pageSize,
-      take: pageSize,
-    });
+    const [data, total] = await Promise.all([
+      this.#repos.recordRepo.findMany({
+        groupId,
+        orderBy,
+        nickname,
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+      }),
+      this.#repos.recordRepo.countMany({ groupId, nickname }),
+    ]);
+    return { data, total };
   }
 
   async getRecordById({ groupId, recordId }) {

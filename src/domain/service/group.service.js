@@ -7,7 +7,6 @@ import { BaseService } from "./base.service.js";
 import { RankResDto } from "../../controller/res-dto/rank.res.dto.js";
 import bcrypt from "bcrypt";
 
-
 export class GroupService extends BaseService {
   #repos;
 
