@@ -60,7 +60,6 @@ export const RECORD_IMAGES = Array.from({ length: 10 }).map((_, i) => ({
   recordId: RECORDS[i % RECORDS.length].id,
 }));
 
-
 export const TAGS = Array.from({ length: 10 }).map((_, i) => ({
   id: uuid(),
   name: `Tag${i}`,

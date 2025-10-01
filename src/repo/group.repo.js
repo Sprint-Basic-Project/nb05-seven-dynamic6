@@ -16,7 +16,16 @@ export class GroupRepo {
       },
       include: {
         user: true,
-      }
+        userJoinGroups: {
+          include: { user: true },
+          where: { deletedAt: null },
+        },
+        _count: {
+          select: {
+            userJoinGroups: { where: { deletedAt: null } },
+          },
+        },
+      },
     });
 
     if (!record) return null;
@@ -137,7 +146,6 @@ export class GroupRepo {
           },
         }
       : {};
-    
 
     const result = await this.#prisma.group.findMany({
       where,
@@ -149,12 +157,12 @@ export class GroupRepo {
         user: true,
         userJoinGroups: {
           include: {
-            user: true, 
+            user: true,
           },
         },
         _count: {
           select: {
-            userJoinGroups: true, 
+            userJoinGroups: true,
             records: true,
           },
         },

@@ -105,7 +105,7 @@ export class GroupService extends BaseService {
     });
     return createdGroup;
   }
- 
+
   async updateGroup({
     groupId,
     name,
@@ -135,8 +135,7 @@ export class GroupService extends BaseService {
         "ownerNickname",
       );
     }
-    
-    
+
     if (owner.passwordHash !== ownerPassword) {
       throw new Exception(
         EXCEPTION_INFO.WRONG_PASSWORD.statusCode,

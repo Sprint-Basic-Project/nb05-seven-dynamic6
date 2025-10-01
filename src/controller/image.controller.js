@@ -26,7 +26,7 @@ export class ImageController extends BaseController {
   registerRoutes() {
     this.router.post(
       "/",
-      this.#imageUploader.array("files"), 
+      this.#imageUploader.array("files"),
       this.catchException(this.imageUpload),
     );
   }

@@ -49,18 +49,18 @@ export class UserJoinGroupRepo {
     return record;
   }
 
-  async reactivate({userId, groupId}) {
+  async reactivate({ userId, groupId }) {
     const record = await this.#prisma.userJoinGroup.update({
       where: {
-        groupId_userId:{
+        groupId_userId: {
           groupId: Number(groupId),
           userId: userId,
-        }
+        },
       },
       data: {
         deletedAt: null,
-      }
-    })
+      },
+    });
     return UserJoinGroupMapper.toEntity(record);
   }
 

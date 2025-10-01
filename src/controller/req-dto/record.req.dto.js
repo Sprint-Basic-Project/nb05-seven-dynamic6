@@ -34,7 +34,6 @@ export class RecordReqDTO extends BaseReqDTO {
     const { groupId } = reqParams;
     const groupIdNum = Number(groupId);
     const isNumber = Number.isInteger(groupIdNum);
-
     const rawType = reqBody.exerciseType ?? reqBody.type ?? reqBody.kind;
     const exerciseType = normalizeExerciseType(rawType);
     const description = String(reqBody.description ?? "").trim();

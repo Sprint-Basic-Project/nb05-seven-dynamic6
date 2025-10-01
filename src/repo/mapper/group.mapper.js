@@ -4,6 +4,10 @@ export class GroupMapper {
   static toEntity(record) {
     if (!record) return null;
 
+    const activeParticipants = (record.userJoinGroups ?? []).filter(
+      (ujg) => ujg.deletedAt === null,
+    );
+
     return new Group({
       id: record.id,
       name: record.name,
@@ -17,10 +21,10 @@ export class GroupMapper {
       discordWebhookUrl: record.discordWebhookUrl,
       discordInviteUrl: record.discordInviteUrl,
       recordCount: record.recordCount ?? record._count?.records ?? 0,
-      memberCount: record._count?.userJoinGroups ?? 0,
+      memberCount: activeParticipants.length,
       owner: record.user ?? { id: record.userId },
       tags: (record.tags ?? []).map((tag) => tag.name),
-      participants: (record.userJoinGroups ?? []).map((group) =>
+      participants: activeParticipants.map((group) =>
         group.user
           ? { id: group.user.id, nickname: group.user.nickname }
           : null,

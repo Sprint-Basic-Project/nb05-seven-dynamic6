@@ -26,10 +26,10 @@ export class UserJoinGroupResDto {
     this.discordInviteUrl = entity.discordInviteUrl;
     this.likeCount = entity.likeCount ?? 0;
     this.recordCount = entity.recordCount ?? 0;
-    this.memberCount = entity.memberCount ?? 1;
+    this.memberCount = entity.participants?.length ?? 1;
     this.tags = entity.tags;
     this.owner = entity.owner;
-    this.participants = entity.participants;
+    this.participants = entity.participants ?? [];
     this.createdAt = entity.createdAt;
     this.updatedAt = entity.updatedAt;
     this.badges = entity.badges ?? [];
