@@ -11,37 +11,24 @@ export class GroupRepo {
 
   async findById(id) {
     const record = await this.#prisma.group.findUnique({
-      where: { id },
+      where: {
+        id,
+      },
       include: {
-        tags: true,
-        user: true, // 그룹 생성자 (owner)
-        userJoinGroups: {
-          include: {
-            user: true, // 그룹에 참여한 유저 (participant)
-          },
-        },
-        _count: {
-          select: {
-            userJoinGroups: true,
-            records: true,
-          },
-        },
+        user: true, // 그룹 생성자(owner) 정보
       },
     });
 
-    if (!record) {
-      throw new Exception(
-        EXCEPTION_INFO.GROUP_NOT_FOUND.statusCode,
-        EXCEPTION_INFO.GROUP_NOT_FOUND.message,
-      );
-    }
+    if (!record) return null;
 
     return GroupMapper.toEntity(record);
   }
 
   async save(groupEntity) {
     const updated = await this.#prisma.group.update({
-      where: { id: groupEntity.id },
+      where: {
+        id: groupEntity.id
+      },
       data: {
         likeCount: groupEntity.likeCount,
       },
@@ -66,8 +53,36 @@ export class GroupRepo {
   }
 
   async delete(id) {
+    await this.#prisma.recordImage.deleteMany({
+      where: {
+        record: {
+          groupId: id,
+        },
+      },
+    });
+
+    await this.#prisma.record.deleteMany({
+      where: {
+        groupId: id,
+      },
+    });
+
+    await this.#prisma.userJoinGroup.deleteMany({
+      where: {
+        groupId: id,
+      },
+    });
+
+    await this.#prisma.tag.deleteMany({
+      where: {
+        groupId: id,
+      },
+    });
+
     const deleted = await this.#prisma.group.delete({
-      where: { id },
+      where: {
+        id,
+      },
       include: {
         tags: true,
         user: true,

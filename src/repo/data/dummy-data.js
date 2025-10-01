@@ -10,7 +10,7 @@ const EXERCISES = ["RUNNING", "SWIMMING", "CYCLING"];
 export const USERS = Array.from({ length: 10 }).map((_, i) => ({
   id: uuid(),
   nickname: `user${i}`,
-  passwordHash: hash(`hashed_password_${i}`),
+  passwordHash: `password_${i}`,
   createdAt: now(),
   updatedAt: now(),
   deletedAt: null,
