@@ -15,8 +15,38 @@ export class UserJoinGroupRepo {
           userId: userId,
         },
       },
+      include: {
+        group: {
+          include: {
+            user: true,
+            userJoinGroups: {
+              include: {
+                user: true,
+              },
+            },
+          },
+        },
+      },
     });
     return UserJoinGroupMapper.toEntity(record);
+  }
+
+  async findRankings(id, duration) {
+    const record = await this.#prisma.userJoinGroup.findMany({
+      where: { groupId: id },
+      include: {
+        user: true,
+        records: {
+          orderBy: { createdAt: "desc" }, // 기록 정렬
+        },
+        _count: { select: { records: true } }, // 기록 개수 포함
+      },
+      orderBy: {
+        records: { _count: "desc" }, // 기록 개수 기준 내림차순 정렬
+      },
+    });
+
+    return record;
   }
 
   // async findByGroupAndNickname({ groupId, nickname }) {

@@ -61,7 +61,13 @@ export class UserJoinGroupService extends BaseService {
       groupId,
     });
 
-    return new UserJoinGroupResDto(userJoinGroupEntity);
+    const userJoinGroupWithGroup =
+      await this.repos.userJoinGroupRepo.findByUserAndGroup({
+        userId: userEntity.id,
+        groupId,
+      });
+
+    return new UserJoinGroupResDto(userJoinGroupWithGroup.group);
   }
 
   async leaveGroup({ groupId, nickname, password }) {
