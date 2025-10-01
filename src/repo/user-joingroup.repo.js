@@ -15,6 +15,18 @@ export class UserJoinGroupRepo {
           userId: userId,
         },
       },
+      include: {
+        group: {
+          include: {
+            user: true,
+            userJoinGroups: {
+              include: {
+                user: true,
+              },
+            },
+          },
+        },
+      },
     });
     return UserJoinGroupMapper.toEntity(record);
   }
