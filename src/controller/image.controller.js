@@ -50,7 +50,7 @@ export class ImageController extends BaseController {
       // 메모리 → 디스크 저장
       await fs.writeFile(uploadPath, file.buffer);
 
-      urls.push(`/images/${filename}`);
+      urls.push(`http://localhost:4000/images/${filename}`);
     }
 
     res.status(200).json({ urls });
