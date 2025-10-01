@@ -13,7 +13,6 @@ import {
 const prisma = new PrismaClient();
 
 async function main() {
-  // DB 초기화 필요하면 주석 해제
   await prisma.recordImage.deleteMany();
   await prisma.record.deleteMany();
   await prisma.userJoinGroup.deleteMany();

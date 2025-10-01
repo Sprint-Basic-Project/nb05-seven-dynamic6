@@ -12,11 +12,10 @@ export class AuthService extends BaseService {
   async authenticateUser({ nickname, password }) {
     const user = await this.repos.userRepo.findByNickname(nickname);
     if (!user) {
-      // throw new Exception(
-      //   EXCEPTION_INFO.USER_NOT_FOUND.statusCode,
-      //   EXCEPTION_INFO.USER_NOT_FOUND.message,
-      // );
-      return null;
+      throw new Exception(
+        EXCEPTION_INFO.USER_NOT_FOUND.statusCode,
+        EXCEPTION_INFO.USER_NOT_FOUND.message,
+      );
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.passwordHash);

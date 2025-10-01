@@ -17,22 +17,17 @@ export class RecordController extends BaseController {
   }
 
   registerRoutes() {
-    // 운동기록 등록
     this.router.post("/", this.catchException(this.createRecord));
-    // 운동기록 목록 조회
     this.router.get("/", this.catchException(this.getRecords));
-    // 운동기록 상세 조회
     this.router.get("/:recordId", this.catchException(this.getRecordById));
   }
 
-  // 등록
   createRecord = async (req, res) => {
     const dto = new RecordReqDTO({
       body: req.body,
       params: req.params,
     }).validate();
 
-    // 참여자 인증은 미들웨어에서 닉네임+비밀번호 검증하고 req.author 담을 것
     const { userId, userJoinGroupId } = req.author || {};
 
     const created = await this.#service.createRecord({
@@ -43,7 +38,6 @@ export class RecordController extends BaseController {
     return res.status(201).json(RecordMapper.toResponse(created));
   };
 
-  // 목록 조회
   getRecords = async (req, res) => {
     const { groupId } = req.params;
     const { orderBy = "latest", nickname, page = 1, pageSize = 10 } = req.query;
@@ -64,7 +58,6 @@ export class RecordController extends BaseController {
     });
   };
 
-  // 상세 조회
   getRecordById = async (req, res) => {
     const { groupId, recordId } = req.params;
 

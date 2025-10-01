@@ -6,6 +6,6 @@ export class Exception extends Error {
     super(message);
     this.statusCode = statusCode;
     this.message = message;
-    if (path) this.path = path; //path추가
+    if (path) this.path = path;
   }
 }

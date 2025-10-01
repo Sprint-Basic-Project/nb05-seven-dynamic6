@@ -10,11 +10,9 @@ export class ImageController extends BaseController {
   constructor() {
     super("/images");
     this.#imageUploader = multer({
-      storage: multer.memoryStorage(), // 메모리 저장
+      storage: multer.memoryStorage(),
 
-      // storage: storage,  // 이미지 저장소 설정
       fileFilter: (req, file, cb) => {
-        // 이미지인 파일만 필터링
         if (!file.mimetype.startsWith("image/")) {
           return cb(new Exception(400, "File should be an image file"), false);
         }
@@ -28,7 +26,7 @@ export class ImageController extends BaseController {
   registerRoutes() {
     this.router.post(
       "/",
-      this.#imageUploader.array("files"), // 이미지 최대 3장까지
+      this.#imageUploader.array("files"), 
       this.catchException(this.imageUpload),
     );
   }
@@ -47,7 +45,6 @@ export class ImageController extends BaseController {
       const filename = `${Date.now()}_${file.originalname}`;
       const uploadPath = path.join("public/images", filename);
 
-      // 메모리 → 디스크 저장
       await fs.writeFile(uploadPath, file.buffer);
 
       urls.push(`http://localhost:4000/images/${filename}`);
