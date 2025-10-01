@@ -3,17 +3,29 @@ import { EXCEPTION_INFO } from "../../common/const/exception-info.js";
 import { Exception } from "../../common/exception/exception.js";
 
 const normalizeExerciseType = (rawType) => {
-  if (!rawType) return rawType;
+  if (!rawType == null) return undefined;
+
+  const key = String(rawType)
+    .normalize("NFC")            
+    .trim()
+    .toLowerCase()
+    .replace(/[\s\u200B\u00A0]+/g, "");
+
   const map = {
     run: "RUNNING",
     running: "RUNNING",
+    러닝: "RUNNING",
     swim: "SWIMMING",
     swimming: "SWIMMING",
+    수영: "SWIMMING",
     cycle: "CYCLING",
     cycling: "CYCLING",
+    bike: "CYCLING",
+    사이클링: "CYCLING",
+    
   };
-  const key = String(rawType).trim().toLowerCase();
-  return map[key] ?? String(rawType).trim().toUpperCase();
+  const result = map[key];
+  return result;
 };
 
 export class RecordReqDTO extends BaseReqDTO {
@@ -24,7 +36,8 @@ export class RecordReqDTO extends BaseReqDTO {
     const groupIdNum = Number(groupId);
     const isNumber = Number.isInteger(groupIdNum);
 
-    const exerciseType = normalizeExerciseType(reqBody.exerciseType);
+    const rawType = reqBody.exerciseType ?? reqBody.type ?? reqBody.kind;
+    const exerciseType = normalizeExerciseType(rawType);
     const description = String(reqBody.description ?? "").trim();
     const time = Number(reqBody.time);
     const distance = Number(reqBody.distance);
