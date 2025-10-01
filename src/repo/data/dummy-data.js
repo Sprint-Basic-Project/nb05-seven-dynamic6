@@ -1,4 +1,6 @@
 import { v4 as uuid } from "uuid";
+import bcrypt from "bcrypt";
+const hash = (s) => bcrypt.hashSync(s, 10);
 
 const now = () => new Date().toISOString();
 
@@ -8,7 +10,7 @@ const EXERCISES = ["RUNNING", "SWIMMING", "CYCLING"];
 export const USERS = Array.from({ length: 10 }).map((_, i) => ({
   id: uuid(),
   nickname: `user${i}`,
-  passwordHash: `hashed_password_${i}`,
+  passwordHash: hash(`hashed_password_${i}`),
   createdAt: now(),
   updatedAt: now(),
   deletedAt: null,
