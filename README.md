@@ -3,11 +3,12 @@
 </br>
 
 ## 팀원 구성
-| 프로젝트 관리 | UX 디자인 | 서버 개발 | UI 디자인 | 보안 개발 | 데이터 분석 |
-|---------------------|---------------------------|---------------------|----------------|----------------|----------------|
-| **juho-creator** | **lapel0314** | **gyeongyeonkmy** | **june5815** | **try08253-crypto** | **918-jihye** |
-| ![Juho](https://avatars.githubusercontent.com/juho-creator) | ![Lapel](https://avatars.githubusercontent.com/lapel0314) | ![Gyeongyeon](https://avatars.githubusercontent.com/gyeongyeonkmy) | ![June](https://avatars.githubusercontent.com/june5815) | ![Younghwan](https://avatars.githubusercontent.com/try08253-crypto) | ![Jihye](https://avatars.githubusercontent.com/918-jihye) |
-| <div align="center">[김주호](https://github.com/juho-creator)</div> | <div align="center">[고우진](https://github.com/lapel0314)</div> | <div align="center">[김경연](https://github.com/gyeongyeonkmy)</div> | <div align="center">[양다온](https://github.com/june5815)</div> | <div align="center">[장영환](https://github.com/try08253-crypto)</div> | <div align="center">[최지혜](https://github.com/918-jihye)</div> |
+
+| 그룹/이미지/랭킹 API | 그룹 생성·수정 | 그룹 삭제/추천 | 그룹 참여 | 운동 기록 |
+|----------------------|----------------|----------------|-----------|-----------|
+| [juho-creator](https://github.com/juho-creator) | [june5815](https://github.com/june5815) | [try08253-crypto](https://github.com/try08253-crypto) | [gyeongyeonkmy](https://github.com/gyeongyeonkmy) | [918-jihye](https://github.com/918-jihye) |
+| <div align="center"><img src="https://avatars.githubusercontent.com/juho-creator" width="80"/></div> | <div align="center"><img src="https://avatars.githubusercontent.com/june5815" width="80"/></div> | <div align="center"><img src="https://avatars.githubusercontent.com/try08253-crypto" width="80"/></div> | <div align="center"><img src="https://avatars.githubusercontent.com/gyeongyeonkmy" width="80"/></div> | <div align="center"><img src="https://avatars.githubusercontent.com/918-jihye" width="80"/></div> |
+| <div align="center">김주호</div> | <div align="center">양다온</div> | <div align="center">장영환</div> | <div align="center">김경연</div> | <div align="center">최지혜</div> |
 
 
 </br>
