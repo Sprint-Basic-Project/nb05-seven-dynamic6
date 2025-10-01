@@ -14,15 +14,23 @@ export class Server {
 
   registerMiddleware() {
     this.#server.use(express.json());
-    this.#server.use(cors());
+
+    this.#server.use(
+      cors({
+        origin: "http://localhost:3000",
+        methods: ["GET", "POST", "PATCH", "DELETE"],
+        credentials: true,
+      })
+    );
+
     this.#server.use(morgan("dev"));
-    this.#server.use("/images", express.static("public/images"));
   }
 
   registerControllers() {
     for (const controller of this.#controller) {
       this.#server.use(controller.basePath, controller.router);
     }
+    this.#server.use("/images", express.static("public/images"));
   }
 
   registerExceptions() {
