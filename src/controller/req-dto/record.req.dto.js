@@ -22,8 +22,9 @@ export class RecordReqDTO extends BaseReqDTO {
   validate() {
     const reqBody = this.body ?? {};
     const reqParams = this.params ?? {};
-    const { groupId } = reqParams;  
+    const groupId = Number(reqParams.groupId);
     const isNumber = this.isNumber(groupId);
+    console.log(isNumber);
 
     const exerciseType = normalizeExerciseType(reqBody.exerciseType);
     const description = String(reqBody.description ?? "").trim();
@@ -41,7 +42,7 @@ export class RecordReqDTO extends BaseReqDTO {
       ?.toString()
       .trim();
 
-    if (!isNumber) { 
+    if (!isNumber) {
       throw new Exception(
         EXCEPTION_INFO.GROUP_ID_INVALID.statusCode,
         EXCEPTION_INFO.GROUP_ID_INVALID.message,
