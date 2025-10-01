@@ -18,7 +18,7 @@ export class RecordMapper {
     };
   }
   static toEntity(recordModel) {
-    return new Record({
+    const entity = new Record({
       id: recordModel.id,
       exerciseType: recordModel.exerciseType,
       description: recordModel.description,
@@ -32,5 +32,10 @@ export class RecordMapper {
       userJoinGroupId: recordModel.userJoinGroupId,
       images: recordModel.recordImages?.map((img) => img.imageUrl) || [],
     });
+    if (recordModel.user) {
+      entity.authorId = recordModel.user.id;
+      entity.authorNickname = recordModel.user.nickname;
+    }
+    return entity;
   }
 }
