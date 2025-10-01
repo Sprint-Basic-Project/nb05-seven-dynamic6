@@ -75,7 +75,7 @@ export class RecordService {
           authorNickname: dto.nickname,
         });
       } catch (e2) {
-        console.error("[Discird 재시도 실패]:", e2.message);
+        console.error("[Discord 재시도 실패]:", e2.message);
       }
     }
     return saved;
