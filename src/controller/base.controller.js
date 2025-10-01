@@ -6,7 +6,7 @@ export class BaseController {
 
   constructor(basePath) {
     this.basePath = basePath;
-    this.router = express.Router();
+    this.router = express.Router({ mergeParams: true });
   }
 
   registerRoutes() {

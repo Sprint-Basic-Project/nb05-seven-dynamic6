@@ -34,7 +34,15 @@ export class GroupController extends BaseController {
       verifyGroupPassword(this.#repo, this.#userRepo),
       this.deleteGroup,
     );
+    this.router.get("/:groupId/rank", this.getRankings);
   }
+
+  getRankings = async (req, res) => {
+    const duration = req.query.duration;
+    const id = req.params.groupId;
+    const result = await this.#groupService.getRankings(id, duration);
+    return res.status(200).json(result);
+  };
 
   getAllGroups = async (req, res) => {
     const query = req.query;
