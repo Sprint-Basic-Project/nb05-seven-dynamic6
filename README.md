@@ -1,174 +1,166 @@
-[![English](https://img.shields.io/badge/lang-English-blue.svg)](https://github.com/Sprint-Basic-Project/nb05-seven-dynamic6/tree/develop/README.EN.md)
-[![한국어](https://img.shields.io/badge/lang-한국어-red.svg)](https://github.com/Sprint-Basic-Project/nb05-seven-dynamic6/tree/develop)
+# 🧗 다이나믹 6
+## 📕 프로젝트 소개
 
-# 다이나믹 6
+- 🏋️ **프로젝트 개요**  
+  - 운동 기록과 그룹 활동을 지원하는 **커뮤니티 서비스 백엔드** 개발 프로젝트  
 
-(팀 협업 문서 링크 게시)
+- 📅 **프로젝트 기간**
+  - 2025.09.15 ~ 2025.10.02  
 
-  </br>
-  
-  ## 팀원 구성
-  | 프로젝트 관리 | UX 디자인 | 서버 개발 | UI 디자인 | 보안 개발 | 데이터 분석 |
-  |---------------------|---------------------------|---------------------|----------------|----------------|----------------|
-  | **juho-creator** | **lapel0314** | **gyeongyeonkmy** | **june5815** | **try08253-crypto** | **918-jihye** |
-  | ![Juho](https://avatars.githubusercontent.com/juho-creator) | ![Lapel](https://avatars.githubusercontent.com/lapel0314) | ![Gyeongyeon](https://avatars.githubusercontent.com/gyeongyeonkmy) | ![June](https://avatars.githubusercontent.com/june5815) | ![Younghwan](https://avatars.githubusercontent.com/try08253-crypto) | ![Jihye](https://avatars.githubusercontent.com/918-jihye) |
-  | <div align="center">[김주호](https://github.com/juho-creator)</div> | <div align="center">[고우진](https://github.com/lapel0314)</div> | <div align="center">[김경연](https://github.com/gyeongyeonkmy)</div> | <div align="center">[양다온](https://github.com/june5815)</div> | <div align="center">[장영환](https://github.com/try08253-crypto)</div> | <div align="center">[최지혜](https://github.com/918-jihye)</div> |
-  
-  
-  </br>
-  
-  -------
-  </br>
-  
-  # 프로젝트 소개
-  프로그래밍 교육 사이트의 백엔드 시스템 구축 </br>
-  프로젝트 기간: 2025.09.15 ~ 2025.10.02
-  </br>
-  
-  ----
-  </br>
-  
-  ## 기술 스택
-  - Backend: Express.js, PrismaORM
-  - Database: Postgresql
-  - 공통 Tool: Git & Github, Discord, Notion
-  </br>
-  
-  ----
-  
-  </br>
-  
-  
-  ## 팀원별 구현 기능 상세
-  
-  **양다온**  
-  (자신이 개발한 기능에 대한 사진이나 gif 파일 첨부)  
-  </br>
-  
-  - **그룹 CRUD/검색 API**
-    - `POST /groups`, `GET /groups/{groupId}`, `PATCH /groups/{groupId}` 구현
-    - Prisma 모델 설계 및 마이그레이션 수행
-    - 그룹 생성/수정 시 비밀번호 해싱 및 검증 처리
-    - 그룹 목록 검색 및 정렬(최신/추천/참여자 순) 기능 구현
-  - **기타 기능**
-    - 검색/정렬/페이지네이션 설계
-    - DTO 설계 및 단위 테스트, 통합 테스트, cURL 예시 작성
-  
-  </br>
-  
-  **김경연**  
-  (자신이 개발한 기능에 대한 사진이나 gif 파일 첨부)  
-  </br>
-  
-  - **그룹 참여 및 권한 API**
-    - `POST /groups/{groupId}/participants`, `DELETE /groups/{groupId}/participants` 구현
-    - 닉네임, 비밀번호 등록 및 검증 처리 (닉네임 중복 제한)
-    - 그룹 탈퇴 시 운동 기록 일괄 삭제 처리 (Prisma transaction 사용)
-  - **공통 미들웨어 구현**
-    - `ensureParticipantAuth` 미들웨어 구현 및 재사용 설계
-    - 단위 테스트 및 E2E 테스트 구현
-  
-  </br>
-  
-  **최지혜**  
-  (자신이 개발한 기능에 대한 사진이나 gif 파일 첨부)  
-  </br>
-  
-  - **운동 기록 등록 API**
-    - `POST /groups/{groupId}/records` 구현
-    - 참여자 인증 미들웨어 적용, 운동 기록 필드 검증(종류, 시간, 거리, 사진)
-  - **Discord Webhook 연동**
-    - `DiscordAdapter` 구현 및 비동기 전송, 실패 시 재시도 로직 처리
-    - 외부 API mocking 테스트 및 통합 테스트 구현
-  
-  </br>
-  
-  **고우진**  
-  (자신이 개발한 기능에 대한 사진이나 gif 파일 첨부)  
-  </br>
-  
-  - **그룹 추천 및 정렬 유틸 API**
-    - `GET /groups`, `GET /groups/{groupId}/rank` 구현
-    - Record 집계(횟수, 누적시간) 및 주/월 기준 통계 제공
-    - relation count 기반 정렬 및 페이지네이션 유틸 구현 → R1, R5 재사용
-  - **성능 최적화**
-    - 인덱스 튜닝 가이드 작성
-    - Prisma groupBy 활용, 날짜 쿼리 최적화
-  
-  </br>
-  
-  **장영환**  
-  (자신이 개발한 기능에 대한 사진이나 gif 파일 첨부)  
-  </br>
-  
-  - **추천 및 배지 부여 API**
-    - `POST /groups/{groupId}/likes`, `DELETE /groups/{groupId}/likes`, `DELETE /groups/{groupId}` 구현
-    - 좋아요 기능(1회 제한 여부 팀 결정), 삭제 시 연관 데이터 처리
-  - **BadgeEvaluator 도메인 서비스**
-    - 참여자 수/기록 수/좋아요 수 조건 만족 시 배지 자동 부여
-    - 그룹 상세 응답 시 배지 포함 처리
-    - 조건부 집계, 경계 테스트 수행
-  
-  </br>
-  
-  **김주호**  
-  (자신이 개발한 기능에 대한 사진이나 gif 파일 첨부)  
-  </br>
-  
-  - **운동 기록 목록/상세 조회 API**
-    - `GET /groups/{groupId}/records` 구현
-    - 기록 목록 정렬(최신/운동시간), 닉네임 검색 기능 포함
-  - **이미지 업로드 기능**
-    - `POST /images` 구현
-    - multer를 활용한 멀티파트 이미지 업로드(최대 3장), 확장자 및 용량 검증
-    - `StorageProvider` 인터페이스 설계(local | S3 대응)
-  
+- **관련 문서**  
+  - [다이나믹6 Dev협업 문서](https://www.notion.so/1-2025-09-15-25ee9d59f596808f8dbde297962d624b?source=copy_link)
+
+
+</br>
+
+## 👨‍💻👨‍💻 팀원 구성
+
+| 그룹 목록·상세 조회 · 랭킹 · 이미지 | 그룹 생성 · 수정 | 그룹 삭제 · 추천 · 추천취소 | 그룹 참여 · 취소 | 운동 기록 생성 · 조회 |
+|------------------------------------|------------------|-----------------------------|------------------|------------------------|
+| <div align="center">[juho-creator](https://github.com/juho-creator)</div> | <div align="center">[june5815](https://github.com/june5815)</div> | <div align="center">[try08253-crypto](https://github.com/try08253-crypto)</div> | <div align="center">[gyeongyeonkmy](https://github.com/gyeongyeonkmy)</div> | <div align="center">[918-jihye](https://github.com/918-jihye)</div> |
+| <div align="center"><img src="https://avatars.githubusercontent.com/juho-creator" width="80"/></div> | <div align="center"><img src="https://avatars.githubusercontent.com/june5815" width="80"/></div> | <div align="center"><img src="https://avatars.githubusercontent.com/try08253-crypto" width="80"/></div> | <div align="center"><img src="https://avatars.githubusercontent.com/gyeongyeonkmy" width="80"/></div> | <div align="center"><img src="https://avatars.githubusercontent.com/918-jihye" width="80"/></div> |
+| <div align="center"><b>김주호</b></div> | <div align="center"><b>양다온</b></div> | <div align="center"><b>장영환</b></div> | <div align="center"><b>김경연</b></div> | <div align="center"><b>최지혜</b></div> |
+
+
+
+</br>
+
+## 🕹️ 기술 스택
+- Backend: Express.js, PrismaORM
+- Database: PostgresSQL
+- 공통 Tool: Git & Github, Discord, Notion
+</br>
+</br>
+
+</br>
+
+## 🛠️ 팀원별 구현 기능 상세
+### 👨‍💻 김주호
+- 그룹 목록 조회 API
+  - 페이지네이션(page, limit), 정렬(order, orderBy), 검색(search) 기능 제공
+  - 잘못된 정렬 기준(orderBy) 입력 시 `400 BAD REQUEST` 반환
+- 그룹 상세 조회 API
+  - 그룹 ID를 기반으로 단일 그룹 상세 정보 반환
+  - 존재하지 않는 그룹 ID 요청 시 `404 NOT FOUND` 반환
+- 그룹 랭킹 조회 API
+  - 그룹 ID와 기간(duration: monthly/weekly)에 따라 참여자 랭킹 데이터 반환
+  - 잘못된 groupId 입력 시 `400 BAD REQUEST` 반환
+- 이미지 업로드 API
+  - 멀티파트 폼 데이터로 이미지 파일 업로드
+  - 정상 업로드 시 이미지 URL 목록 반환
+  - 이미지 파일이 아닌 경우 `400 BAD REQUEST` 반환
+</br>
+
+### 👨‍💻 양다온
+- 그룹 생성 API
+  - 그룹 이름, 설명, 대표 이미지, 목표 횟수(goalRep), 태그, Discord 연동 URL 등을 입력받아 새로운 그룹을 생성
+  - 생성 시 그룹장(ownerNickname, ownerPassword) 정보 포함
+  - 유효성 검증 실패 시 `400 BAD REQUEST` 반환 (예: goalRep이 정수가 아닌 경우)
+- 그룹 수정 API
+  - 기존 그룹 정보를 업데이트 (이름, 설명, 이미지, 목표 횟수, 태그, Discord URL 등)
+  - 수정 시 비밀번호(ownerPassword) 검증 필요
+  - 비밀번호 불일치 시 `401 UNAUTHORIZED` 반환
+  - 잘못된 값 입력 시 `400 BAD REQUEST` 반환
+</br>
+ 
+### 👨‍💻 장영환 </br>
+- 그룹 삭제 API
+  - 그룹 ID를 기반으로 그룹 삭제
+  - 삭제 시 비밀번호 검증 필요
+  - 잘못된 비밀번호 입력 시 `401 UNAUTHORIZED` 반환
+  - 존재하지 않는 그룹 ID 요청 시 `404 NOT FOUND` 반환
+- 그룹 좋아요 API
+  - 특정 그룹에 좋아요를 추가
+  - 그룹 ID를 기준으로 처리
+  - 잘못된 비밀번호 입력 시 `401 UNAUTHORIZED` 반환
+  - 존재하지 않는 그룹 ID 요청 시 `404 NOT FOUND` 반환
+- 그룹 좋아요 취소
+  - 특정 그룹에 추가된 좋아요를 취소
+  - 그룹 ID를 기준으로 처리
+  - 정상 취소 시 `200 OK` 반환
+</br>
+
+### 👨‍💻 김경연 </br>
+- 그룹 참여 API
+  - 그룹 ID와 사용자 정보(nickname, password)를 입력받아 그룹에 참여
+  - 정상 참여 시 그룹 정보와 참여자 목록 반환 (`201 CREATED`)
+  - 잘못된 요청 시 `400 BAD REQUEST` 반환 (예: nickname 누락)
+- 그룹 참여 취소 API
+  - 그룹 ID와 사용자 정보(nickname, password)를 입력받아 그룹 참여를 취소
+  - 정상 취소 시 `204 NO CONTENT` 반환
+  - 잘못된 요청 시 `400 BAD REQUEST` 반환 (예: nickname 누락)
+  - 비밀번호 불일치 시 `401 UNAUTHORIZED` 반환
+</br>
+
+### 👨‍💻 최지혜 </br>
+- 운동 기록 생성 API
+  - 그룹 ID와 운동 정보(exerciseType, description, time, distance, photos, authorNickname, authorPassword)를 입력받아 새로운 운동 기록 생성
+  - 정상 생성 시 생성된 운동 기록 데이터 반환 (`201 CREATED`)
+  - 잘못된 요청 시 `400 BAD REQUEST` 반환 (예: groupId가 정수가 아닌 경우)
+- 운동 기록 조회 API
+  - 그룹 ID를 기준으로 운동 기록 목록을 조회
+  - 페이지네이션(page, limit), 정렬(order, orderBy), 닉네임 검색(search) 지원
+  - 정상 조회 시 운동 기록 목록과 전체 개수 반환 (`200 OK`)
+  - 잘못된 요청 시 `400 BAD REQUEST` 반환 (예: groupId가 정수가 아닌 경우)
   </br></br>
-  
-  
-  
-  ## 파일 구조
-  ```plaintext
-  src
-  ┣ 01-app
-  ┃ ┗ server.js
-  ┣ 02-controller
-  ┃ ┣ req-validator
-  ┃ ┗ res-dto
-  ┃ ┗ base.controller.js
-  ┃ ┗ test1.controller.js
-  ┣ 03-domain
-  ┃ ┣ entity
-  ┃ ┗ service
-  ┣ 04-repo
-  ┃ ┣ mapper
-  ┃ ┗ base.repo.js
-  ┣ common
-  ┃ ┣ const
-  ┃ ┗ exception
-  ┃ ┗ lib
-  ┣ dependency-injector.js
-  ┗ index.js
-  prisma
-  ┗ schema.prisma
-  .gitignore
-  package.json
-  package-lock.json
-  README.md
-  ```
-  
-  ----
-  
-  ## 구현 홈페이지
-  (개발한 홈페이지에 대한 링크 게시) </br>
-  https://www.codeit.kr/
-  
-  </br>
-  
-  ----
-  
-  </br>
-  
-  # 프로젝트 회고록 
-  (제작한 발표자료 링크 혹은 첨부파일 첨부)
-  - [노션 페이지](https://www.notion.so/1-2025-09-15-25ee9d59f596808f8dbde297962d624b)
+</br>
+
+##  📂 파일 구조
+```
+nb01-seven-team3
+├── .github/ # PR 템플릿 및 GitHub 관련 설정
+│ └── pull_request_template.md
+├── .husky/ # Git hook 관리 (pre-commit 등)
+├── prisma/ # Prisma ORM 설정 및 마이그레이션
+│ ├── migrations/ # DB 마이그레이션 파일
+│ ├── schema.prisma # Prisma 스키마 정의
+│ └── migration_lock.toml
+├── public/ # 정적 파일 관리
+├── src/
+│ ├── app/
+│ │ └── server.js # 서버 실행 진입점
+│ ├── common/ # 공통 모듈
+│ │ ├── adapter/ # 어댑터 계층
+│ │ ├── const/ # 상수 정의
+│ │ ├── exception/ # 예외 처리 클래스
+│ │ └── middleware/ # 인증, 에러핸들러 등 미들웨어
+│ ├── controller/ # 컨트롤러 (요청/응답 DTO 포함)
+│ │ ├── req-dto/ # 요청 DTO
+│ │ ├── res-dto/ # 응답 DTO
+│ │ ├── group.controller.js
+│ │ ├── record.controller.js
+│ │ ├── image.controller.js
+│ │ └── user-joingroup.controller.js
+│ ├── domain/ # 도메인 계층 (Entity)
+│ │ ├── entity/ # 그룹, 유저, 기록 등 엔티티 정의
+│ │ └── service/ # 비즈니스 로직 서비스 계층
+│ ├── repo/ # Repository 계층
+│ │ ├── data/ # 더미 데이터, Seed 파일
+│ │ ├── mapper/ # 엔티티 <-> DTO 매퍼
+│ │ ├── group.repo.js
+│ │ ├── record.repo.js
+│ │ └── user.repo.js
+│ └── app.js # 애플리케이션 초기화
+├── .gitignore
+├── package.json
+├── package-lock.json
+├── README.md
+└── README.EN.md
+```
+
+<br>
+
+<br>
+
+## 🌐 서비스 배포 주소 </br>
+- [다이나믹6's 운동 인증 커뮤니티 서비스](https://www.codeit.kr/)
+
+</br>
+</br>
+
+</br>
+
+## 📝 프로젝트 회고록 
+- [다이나믹6 개발자들의 회고록](https://www.notion.so/1-2025-09-15-25ee9d59f596808f8dbde297962d624b)
+
+
