@@ -1,3 +1,7 @@
+import { Exception } from "../../common/exception/exception.js";
+import { EXCEPTION_INFO } from "../../common/const/exception-info.js";
+
+
 export class User {
   #id;
   #nickname;
@@ -31,7 +35,7 @@ export class User {
   }) {
     this.validateNickname(nickname);
     this.validatePassword(passwordHash);
-    return new participant({
+    return new User({
       nickname,
       passwordHash,
       createdAt,
@@ -42,17 +46,19 @@ export class User {
 
   static validateNickname(nickname) {
     if (nickname.length > 10) {
-      throw new Exception({
-        info: EXCEPTION_INFO.NICKNAME_TOO_LONG,
-      });
+      throw new Exception(
+        EXCEPTION_INFO.NICKNAME_TOO_LONG.statusCode,
+        EXCEPTION_INFO.NICKNAME_TOO_LONG.message,
+      );
     }
   }
 
   static validatePassword(passwordHash) {
-    if (passwordHash.length > 5) {
-      throw new Exception({
-        info: EXCEPTION_INFO.PASSWORD_TOO_SHORT,
-      });
+    if (passwordHash.length < 5) {
+      throw new Exception(
+        EXCEPTION_INFO.PASSWORD_TOO_SHORT.statusCode,
+        EXCEPTION_INFO.PASSWORD_TOO_SHORT.message,
+      );
     }
   }
   get id() {
