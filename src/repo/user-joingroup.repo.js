@@ -33,7 +33,7 @@ export class UserJoinGroupRepo {
 
   async findRankings(id, duration) {
     const record = await this.#prisma.userJoinGroup.findMany({
-      where: { groupId: id },
+      where: { groupId: Number(id) },
       include: {
         user: true,
         records: {
