@@ -33,7 +33,6 @@ export class GroupRepo {
     return GroupMapper.toEntity(record);
   }
 
-
   async save(groupEntity) {
     const updated = await this.#prisma.group.update({
       where: {
@@ -74,7 +73,6 @@ export class GroupRepo {
 
     return GroupMapper.toEntity(updated);
   }
-
 
   async delete(id) {
     await this.#prisma.recordImage.deleteMany({
@@ -155,11 +153,11 @@ export class GroupRepo {
 
     const where = search
       ? {
-        name: {
-          contains: search,
-          mode: "insensitive",
-        },
-      }
+          name: {
+            contains: search,
+            mode: "insensitive",
+          },
+        }
       : {};
 
     const result = await this.#prisma.group.findMany({
@@ -192,12 +190,11 @@ export class GroupRepo {
       });
     }
 
-
     const total = await this.#prisma.group.count({ where });
 
     return {
       entities: result.map((record) => GroupMapper.toEntity(record)),
-      total: total
+      total: total,
     };
   }
 
