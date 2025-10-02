@@ -33,20 +33,27 @@ export class GroupRepo {
     return GroupMapper.toEntity(record);
   }
 
+
   async save(groupEntity) {
     const updated = await this.#prisma.group.update({
       where: {
         id: groupEntity.id,
       },
       data: {
+        likeCount: groupEntity.likeCount,
         name: groupEntity.name,
         description: groupEntity.description,
-        // imageUrl: groupEntity.imageUrl,
         goalRep: groupEntity.goalRep,
         updatedAt: new Date(),
         discordWebhookUrl: groupEntity.discordWebhookUrl,
         discordInviteUrl: groupEntity.discordInviteUrl,
-        tags: { create: groupEntity.tags.map(tag => ({ name: tag })) }
+        tags: {
+          deleteMany: {}, // 기존 태그 모두 삭제
+          create:
+            groupEntity.tags?.map((tag) => ({
+              name: tag,
+            })) || [],
+        },
       },
       include: {
         tags: true,
@@ -67,6 +74,7 @@ export class GroupRepo {
 
     return GroupMapper.toEntity(updated);
   }
+
 
   async delete(id) {
     await this.#prisma.recordImage.deleteMany({
@@ -184,8 +192,13 @@ export class GroupRepo {
       });
     }
 
-    const entities = result.map((record) => GroupMapper.toEntity(record));
-    return entities;
+
+    const total = await this.#prisma.group.count({ where });
+
+    return {
+      entities: result.map((record) => GroupMapper.toEntity(record)),
+      total: total
+    };
   }
 
   async create({ entity, userId }) {
@@ -210,28 +223,28 @@ export class GroupRepo {
     return GroupMapper.toEntity(createdGroup);
   }
 
-  async update(groupId, entity) {
-    const updatedGroup = await this.#prisma.group.update({
-      where: { id: Number(groupId) },
-      data: {
-        ...GroupMapper.toPersistent(entity),
-        tags: {
-          set: [],
-          connectOrCreate:
-            entity.tags?.map((tag) => ({
-              where: { name: tag },
-              create: { name: tag },
-            })) || [],
-        },
-      },
-      include: {
-        user: true,
-        tags: true,
-        userJoinGroups: { include: { user: true } },
-        _count: { select: { records: true, userJoinGroup: true } },
-      },
-    });
+  // async update(groupId, entity) {
+  //   const updatedGroup = await this.#prisma.group.update({
+  //     where: { id: Number(groupId) },
+  //     data: {
+  //       ...GroupMapper.toPersistent(entity),
+  //       tags: {
+  //         set: [],
+  //         connectOrCreate:
+  //           entity.tags?.map((tag) => ({
+  //             where: { name: tag },
+  //             create: { name: tag },
+  //           })) || [],
+  //       },
+  //     },
+  //     include: {
+  //       user: true,
+  //       tags: true,
+  //       userJoinGroups: { include: { user: true } },
+  //       _count: { select: { records: true, userJoinGroup: true } },
+  //     },
+  //   });
 
-    return GroupMapper.toEntity(updatedGroup);
-  }
+  //   return GroupMapper.toEntity(updatedGroup);
+  // }
 }

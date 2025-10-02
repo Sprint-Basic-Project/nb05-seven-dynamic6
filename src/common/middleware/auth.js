@@ -27,7 +27,10 @@ export const verifyGroupPassword = (groupRepo, userRepo) => {
         );
       }
 
-      const isMatch = bcrypt.compareSync(ownerPassword, userEntity.passwordHash);
+      const isMatch = bcrypt.compareSync(
+        ownerPassword,
+        userEntity.passwordHash,
+      );
 
       if (!isMatch) {
         throw new Exception(

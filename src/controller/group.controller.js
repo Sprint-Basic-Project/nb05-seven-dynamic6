@@ -101,13 +101,11 @@ export class GroupController extends BaseController {
     }
   };
 
-
   updateGroupMiddleware = async (req, res, next) => {
     const reqDto = new UpdateGroupDTO({
       body: req.body,
       params: req.params,
     }).validate();
-
 
     const updatedGroup = await this.#groupService.updateGroup(reqDto);
 

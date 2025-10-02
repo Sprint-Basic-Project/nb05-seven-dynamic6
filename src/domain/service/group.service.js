@@ -25,9 +25,9 @@ export class GroupService extends BaseService {
   }
 
   async getGroups(query) {
-    const groupEntities = await this.#repos.groupRepo.findAll(query);
-    const groupDtos = groupEntities.map((entity) => new GroupResDto(entity));
-    return new GroupsResDto(groupDtos);
+    const { entities, total } = await this.#repos.groupRepo.findAll(query);
+    const groupDtos = entities.map((entity) => new GroupResDto(entity));
+    return new GroupsResDto(groupDtos,total);
   }
 
   async getGroup(id) {
@@ -137,7 +137,6 @@ export class GroupService extends BaseService {
       );
     }
 
-
     const isMatch = bcrypt.compareSync(ownerPassword, owner.passwordHash);
     if (!isMatch) {
       throw new Exception(
@@ -156,7 +155,6 @@ export class GroupService extends BaseService {
       discordInviteUrl,
       tags,
     });
-    
 
     const updated = await this.#repos.groupRepo.save(groupEntity);
     return updated;
