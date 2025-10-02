@@ -198,27 +198,26 @@ export class GroupRepo {
     };
   }
 
-  async create({ entity, userId }) {
-    const createdGroup = await this.#prisma.group.create({
-      data: {
-        ...GroupMapper.toPersistent(entity),
-        user: { connect: { id: userId } },
-        tags: {
-          create:
-            entity.tags?.map((tag) => ({
-              name: tag,
-            })) || [],
-        },
+async create({ entity, userId }) {
+  const { id, ...rest } = GroupMapper.toPersistent(entity);
+  const createdGroup = await this.#prisma.group.create({
+    data: {
+      ...rest,
+      user: { connect: { id: userId } },
+      tags: {
+        create: entity.tags?.map((tag) => ({ name: tag })) || [],
       },
-      include: {
-        user: true,
-        tags: true,
-        userJoinGroups: { include: { user: true } },
-        _count: { select: { records: true, userJoinGroups: true } },
-      },
-    });
-    return GroupMapper.toEntity(createdGroup);
-  }
+    },
+    include: {
+      user: true,
+      tags: true,
+      userJoinGroups: { include: { user: true } },
+      _count: { select: { records: true, userJoinGroups: true } },
+    },
+  });
+  return GroupMapper.toEntity(createdGroup);
+}
+
 
   // async update(groupId, entity) {
   //   const updatedGroup = await this.#prisma.group.update({

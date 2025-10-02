@@ -11,7 +11,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "format": "prettier --write .",
     "prepare": "husky",
-    "dev": "nodemon ./src/app.js"
+    "dev": "cross-env NODE_ENV=dev nodemon ./src/app.js",
+    "prod": "cross-env NODE_ENV=prod node ./src/app.js"
   },
   "repository": {
     "type": "git",
@@ -29,6 +30,8 @@
     "axios": "^1.12.2",
     "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
+    "cross-env": "^10.1.0",
+    "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "morgan": "^1.10.1",
     "multer": "^2.0.2",

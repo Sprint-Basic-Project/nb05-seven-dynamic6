@@ -85,10 +85,12 @@ export class GroupService extends BaseService {
         "ownerNickname",
       );
     }
+    
     const newUser = await this.#repos.userRepo.create({
       nickname: ownerNickname,
       passwordHash: ownerPassword,
     });
+
 
     const group = Group.forCreate({
       name,
@@ -104,6 +106,8 @@ export class GroupService extends BaseService {
       entity: group,
       userId: newUser.id,
     });
+
+    console.log(createdGroup);
     return createdGroup;
   }
 
