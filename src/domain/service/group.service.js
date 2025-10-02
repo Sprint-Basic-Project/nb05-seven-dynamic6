@@ -27,7 +27,7 @@ export class GroupService extends BaseService {
   async getGroups(query) {
     const { entities, total } = await this.#repos.groupRepo.findAll(query);
     const groupDtos = entities.map((entity) => new GroupResDto(entity));
-    return new GroupsResDto(groupDtos,total);
+    return new GroupsResDto(groupDtos, total);
   }
 
   async getGroup(id) {

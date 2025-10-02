@@ -3,7 +3,7 @@ export class GroupsResDto {
   total = 0;
 
   constructor(entities = [], total) {
-    this.data = entities; 
-    this.total = total; 
+    this.data = entities;
+    this.total = total;
   }
 }
