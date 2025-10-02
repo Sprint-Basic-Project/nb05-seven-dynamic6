@@ -47,7 +47,7 @@ export class ImageController extends BaseController {
 
       await fs.writeFile(uploadPath, file.buffer);
 
-      urls.push(`${process.env.NODE_ENV}/images/${filename}`);
+      urls.push(`${process.env.IMAGE_BASE_URL}/images/${filename}`);
     }
 
     res.status(200).json({ urls });
