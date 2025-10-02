@@ -1,4 +1,4 @@
-export class GroupResDto {
+export class GroupResDto { 
   id;
   name;
   description;

@@ -5,6 +5,7 @@ import { EXCEPTION_INFO } from "../../common/const/exception-info.js";
 import { Group } from "../entity/group.entity.js";
 import { BaseService } from "./base.service.js";
 import { RankResDto } from "../../controller/res-dto/rank.res.dto.js";
+import bcrypt from "bcrypt";
 
 export class GroupService extends BaseService {
   #repos;
@@ -24,9 +25,9 @@ export class GroupService extends BaseService {
   }
 
   async getGroups(query) {
-    const groupEntities = await this.#repos.groupRepo.findAll(query);
-    const groupDtos = groupEntities.map((entity) => new GroupResDto(entity));
-    return new GroupsResDto(groupDtos);
+    const { entities, total } = await this.#repos.groupRepo.findAll(query);
+    const groupDtos = entities.map((entity) => new GroupResDto(entity));
+    return new GroupsResDto(groupDtos,total);
   }
 
   async getGroup(id) {
@@ -136,13 +137,15 @@ export class GroupService extends BaseService {
       );
     }
 
-    if (owner.passwordHash !== ownerPassword) {
+    const isMatch = bcrypt.compareSync(ownerPassword, owner.passwordHash);
+    if (!isMatch) {
       throw new Exception(
         EXCEPTION_INFO.WRONG_PASSWORD.statusCode,
         EXCEPTION_INFO.WRONG_PASSWORD.message,
         "password",
       );
     }
+
     groupEntity.update({
       name,
       description,

@@ -89,7 +89,7 @@ export class UpdateGroupDTO extends BaseReqDTO {
           "tags",
         );
       }
-      const tagPattern = /^#[0-9A-Za-z가-힣]+$/;
+      const tagPattern = /^[0-9A-Za-z가-힣]+$/;
       tags.forEach((t) => {
         if (!this.isString(t) || !tagPattern.test(t)) {
           throw new Exception(
